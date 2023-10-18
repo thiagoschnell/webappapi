@@ -1,0 +1,116 @@
+package com.after_project.webappapi;
+
+import android.net.Uri;
+import android.os.Build;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.webkit.WebResourceErrorCompat;
+import androidx.webkit.WebViewAssetLoader;
+
+import org.json.JSONObject;
+public class WebApp {
+    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
+        this.webView = webView1;
+        LocalContentWebViewClient LC = new LocalContentWebViewClient(webViewAssetLoader);
+        this.webView.setWebViewClient(LC);
+        this.webView.getSettings().setJavaScriptEnabled(true);
+        this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        this.webView.addJavascriptInterface(new WebAppInterface(), "android");
+    }
+    static final String DEFAULT_REQUEST_CONFIG_OPTIONS = "{\"type\":\"POST\", \"headers\":{}}";
+    private AppMessageReceiver.ReceiverCallback webAppMessageReceiverCallback;
+    private WebView webView;
+    private WebViewClientCallback webViewClientCallback;
+    CorsApi corsApi = new CorsApi();
+    public void setWebAppMessageReceiverCallback(AppMessageReceiver.ReceiverCallback appMessageReceiverCallback) {
+        this.webAppMessageReceiverCallback = appMessageReceiverCallback;
+    }
+    void evalJavaScript(String js, ValueCallback valueCallback){
+        webView.evaluateJavascript(js,valueCallback);
+    }
+    void runJavaScript(String url){
+        webView.loadUrl("javascript: " + url);
+    }
+    void detachWebAppCallback(){
+        webViewClientCallback = null;
+    }
+    class CorsApi{
+        protected void request(String api_url,String options,JSONObject callback) throws Exception{
+            JSONObject jo = new JSONObject();
+            jo.put("url",api_url);
+            jo.put("callback",callback);
+            jo.put("options",new JSONObject(options));
+            webAppMessageReceiverCallback.onReceiveMessage(0, "request_url", jo.toString());
+        }
+    }
+    private class LocalContentWebViewClient extends androidx.webkit.WebViewClientCompat {
+        private final androidx.webkit.WebViewAssetLoader mAssetLoader;
+        LocalContentWebViewClient(WebViewAssetLoader assetLoader) {
+            mAssetLoader = assetLoader;
+        }
+        @Override
+        @SuppressWarnings("deprecation")
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if(webViewClientCallback != null){
+                Boolean r = webViewClientCallback.onshouldOverrideUrlLoading(view,url);
+                if(r !=null){
+                    return r;
+                }
+            }
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+        @Override
+        public void onReceivedError(@NonNull WebView view, @NonNull WebResourceRequest request, @NonNull WebResourceErrorCompat error) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                super.onReceivedError(view, request, error);
+            }
+            if(webViewClientCallback != null) webViewClientCallback.onLoadError(view, request, error);
+        }
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if(webViewClientCallback != null) webViewClientCallback.onLoadFinish(view,url);
+        }
+        @Override
+        @RequiresApi(21)
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            return mAssetLoader.shouldInterceptRequest(request.getUrl());
+        }
+        @Override
+        @SuppressWarnings("deprecation")
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            return mAssetLoader.shouldInterceptRequest(Uri.parse(url));
+        }
+    }
+    void abort(){
+        webView.stopLoading();
+        detachWebAppCallback();
+    }
+    void load(String server_url,WebViewClientCallback webViewClientCallback){
+        this.webViewClientCallback = webViewClientCallback;
+        webView.loadUrl(server_url);
+    }
+    void load(String server_url){
+        load(server_url, null);    }
+
+    private class WebAppInterface {
+        WebAppInterface() {
+        }
+        @JavascriptInterface
+        public void response_url(String response) {
+            webAppMessageReceiverCallback.onReceiveMessage(0, "response_url", response);
+        }
+    }
+    protected interface WebViewClientCallback {
+        void onLoadFinish(WebView view, String url);
+        Boolean onshouldOverrideUrlLoading(WebView view, String url);
+        void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error);
+    }
+}
