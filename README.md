@@ -12,7 +12,10 @@ _**License**_
     Free for hobbies, Dev/Test and small projects
 
 **To run the samples** **[Download Android studio Canary](https://developer.android.com/studio/preview)**
-  
+
+## Become a sponsor
+[![sponsor-button75](https://github.com/thiagoschnell/webappapi/assets/78884351/4703d079-9098-45f6-9e79-d50c76ebb745)](https://github.com/sponsors/thiagoschnell)
+
 ## Developer sources
 
 
