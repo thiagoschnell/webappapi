@@ -7,7 +7,9 @@ This sample WebApp app uses App Message integration for send and receive message
 
 Through the integrated AppMessage allow request Api by activity A and Return the Response to activity B or A.
 
-_**License**_ Free
+_**License**_
+    
+    Free for hobbies, Dev/Test and small projects
 
 **To run the samples** **[Download Android studio Canary](https://developer.android.com/studio/preview)**
   
