@@ -1,5 +1,5 @@
 
-# WebApp Api for Android [<img alt="alt_text" width="70px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
+# WebApp Api for Android
 
 WebApp Api is Android extended Webview Client are flexible, safe and easier request your Api and supports for using **Cross-Origin Resource Sharing (CORS)**. 
 
