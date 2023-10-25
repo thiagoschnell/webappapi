@@ -1,5 +1,5 @@
 
-# WebApp Api for Android [![sponsor-button54](https://github.com/thiagoschnell/webappapi/assets/78884351/52939df4-66cd-4d2c-8d07-e64ebdb8be1b)](https://github.com/sponsors/thiagoschnell)
+# WebApp Api for Android [<img alt="alt_text" width="70px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
 
 WebApp Api is Android extended Webview Client are flexible, safe and easier request your Api and supports for using **Cross-Origin Resource Sharing (CORS)**. 
 
@@ -15,7 +15,7 @@ _**License**_
 
 ## Become a sponsor
 
-[<img alt="alt_text" width="140px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
+[<img alt="alt_text" width="90px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
 
 ## Developer sources
 
