@@ -14,7 +14,8 @@ _**License**_
 **To run the samples** **[Download Android studio Canary](https://developer.android.com/studio/preview)**
 
 ## Become a sponsor
-[![sponsor-button75](https://github.com/thiagoschnell/webappapi/assets/78884351/e72144e8-475d-42fa-a08d-0703b55716c7)](https://github.com/sponsors/thiagoschnell)
+
+[<img alt="alt_text" width="140px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
 
 ## Developer sources
 
