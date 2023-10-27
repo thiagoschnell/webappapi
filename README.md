@@ -34,7 +34,7 @@ Server Files for this WebApp app sample
 
 
 ## User guide
-* [wiki page](https://github.com/thiagoschnell/webappapi/wiki) This guide contains examples on how to use WebApp Api in your code
+* [user guide page](https://github.com/thiagoschnell/webappapi/wiki/User-Guide) This guide contains examples on how to use WebApp Api in your code
 
 
 ## Examples 
