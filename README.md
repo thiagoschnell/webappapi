@@ -33,7 +33,11 @@ Server Files for this WebApp app sample
 * [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
 
 
-## Example 
+## User guide
+* [wiki page](https://github.com/thiagoschnell/webappapi/wiki) This guide contains examples on how to use WebApp Api in your code
+
+
+## Examples 
 
 **REQUEST SUCCESS**
 
