@@ -41,12 +41,12 @@ Server Files for this WebApp app sample
 
 **REQUEST SUCCESS**
 
-![webappapi-example1-success](https://github.com/thiagoschnell/webappapi/assets/78884351/75631452-b365-45e2-8277-63df70329815)
+![webapp-api-example1-success](https://github.com/thiagoschnell/webappapi/assets/78884351/1782751c-f7b3-47e8-a42d-bb922ad940cc)
 
 
 **REQUEST WITH NO INTERNET**
 
-![webappapi-example1-request-error](https://github.com/thiagoschnell/webappapi/assets/78884351/f03d9350-9124-49af-a9aa-eeeee5d66157)
+![webapp-api-example1-connection_error](https://github.com/thiagoschnell/webappapi/assets/78884351/831a7668-d758-4bdd-bb09-7747205a7308)
 
 
 **LOADING WITH NO INTERNET**
