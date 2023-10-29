@@ -27,11 +27,15 @@ public class MainActivity2 extends AppCompatActivity {
             mainActivity2AppMessageReceiver = new AppMessageReceiver(mainActivity2AppMessageReceiverCallback);
             mainActivity2AppMessage.registerReceiver(MainActivity2.className,mainActivity2AppMessageReceiver.receiver);
         }
+
         //create AppMessageReceiver for WebApp and set Receiver Callback as mainActivity2WebAppMessageReceiverCallback then registerReceiver
         {
+            /*
             mainActivity2WebAppMessageReceiver = new AppMessageReceiver(mainActivity2WebAppMessageReceiverCallback);
-            mainActivity2AppMessage.registerReceiver("App",mainActivity2WebAppMessageReceiver.receiver);
+            mainActivity2AppMessage.registerReceiver("WebApp",mainActivity2WebAppMessageReceiver.receiver);
+            */
         }
+
         //WebApp
         {
             WebView webview = new WebView(this);
@@ -59,13 +63,13 @@ public class MainActivity2 extends AppCompatActivity {
                         mainActivity2WebApp.detachWebAppCallback();
                         try {
                             mainActivity2WebApp.corsApi.request(
-                                    "config.php", //  your api_url , can be config.php or full url https://webappapi-server.azurewebsites.net/config.php
+                                    "api.php", //  your api_url , can be "api.php" or full url "https://webappapi-server.azurewebsites.net/api.php"
                                     WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS,
                                     new JSONObject() {{
                                         //can also change the receiverName to MainActivity.class
                                         put("receiverName",MainActivity2.className);
                                         put("param",0);
-                                        put("event","request_url_main_config");
+                                        put("event","my_request_event_name");
                                     }} );
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -98,9 +102,9 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public void onReceiveMessage ( int param, String event, String data){
             switch (event) {
-                case "request_url_main_config": {
-                    System.out.println("request_url_main_config data " + data);
-                    Add_Loading_Text("\n mainActivity2 Broadcast Message Received: request_url_main_config \n Done.");
+                case "my_request_event_name": {
+                    System.out.println("my_request_event_name data " + data);
+                    Add_Loading_Text("\n mainActivity2 Broadcast Message Received: my_request_event_name \n Done.");
                     break;
                 }
                 case "test": {
@@ -113,8 +117,8 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         public void onReceiveMessage ( int param, String event, String data){
             switch (event) {
-                case "request_url": {
-                    Add_Loading_Text("\n WebApp Broadcast Message Received: request_url");
+                case "request_api": {
+                    Add_Loading_Text("\n WebApp Broadcast Message Received: request_api");
 
                     {
                         mainActivity2WebApp.evalJavaScript("typeof $", new ValueCallback() {
@@ -152,9 +156,9 @@ public class MainActivity2 extends AppCompatActivity {
                     }
                     break;
                 }
-                case "response_url" : {
+                case "response_api" : {
                     {
-                        Add_Loading_Text("\n WebApp Broadcast Message Received: response_url");
+                        Add_Loading_Text("\n WebApp Broadcast Message Received: response_api");
 
                         try {
                             JsonObject json = JsonParser.parseString(data).getAsJsonObject();

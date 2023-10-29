@@ -47,7 +47,7 @@ public class WebApp {
             jo.put("url",api_url);
             jo.put("callback",callback);
             jo.put("options",new JSONObject(options));
-            webAppMessageReceiverCallback.onReceiveMessage(0, "request_url", jo.toString());
+            webAppMessageReceiverCallback.onReceiveMessage(0, "request_api", jo.toString());
         }
     }
     private class LocalContentWebViewClient extends androidx.webkit.WebViewClientCompat {
@@ -105,7 +105,7 @@ public class WebApp {
         }
         @JavascriptInterface
         public void response_url(String response) {
-            webAppMessageReceiverCallback.onReceiveMessage(0, "response_url", response);
+            webAppMessageReceiverCallback.onReceiveMessage(0, "response_api", response);
         }
     }
     protected interface WebViewClientCallback {
