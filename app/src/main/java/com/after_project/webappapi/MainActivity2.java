@@ -52,59 +52,8 @@ public class MainActivity2 extends AppCompatActivity {
                                         put("param",0);
                                         put("event","my_request_event_name");
                                     }},
-                                    new IWebAppApi(){
-                                        @Override
-                                        public Boolean onInterceptRequestApi() {
-                                            {
-                                                cancelRequest = null;
-                                                mainActivity2WebApp.evalJavaScript("typeof $", new ValueCallback() {
-                                                    @Override
-                                                    public void onReceiveValue(Object value) {
-                                                        if(value.toString().equals("\"function\"")){
-                                                            //Android app Assets jquery-3.6.1.min.js loaded success
-                                                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load success");
-                                                            mainActivity2WebApp.evalJavaScript("typeof request_url", new ValueCallback() {
-                                                                @Override
-                                                                public void onReceiveValue(Object value) {
-                                                                    if(value.toString().equals("\"function\"")){
-                                                                        //Android app Assets c.js loaded success
-                                                                        Add_Loading_Text("\n Assets c.js load success");
-                                                                        cancelRequest = false;
-                                                                    }else{
-                                                                        // Assets c.js load error
-                                                                        Add_Loading_Text("\n Assets c.js load error");
-                                                                        cancelRequest = true;
-                                                                    }
-                                                                }
-                                                            });
-                                                        }else{
-                                                            //Assets jquery-3.6.1.min.js load error
-                                                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load error");
-                                                            cancelRequest = true;
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                            return false;
-                                        }
-                                        @Override
-                                        public void onRequestCanceled() {
-                                            Add_Loading_Text("request canceled");
-                                            Toast.makeText(MainActivity2.this,"Request Api has canceled.",Toast.LENGTH_LONG).show();
-                                        }
-                                        @Override
-                                        public void onResponseApiSuccess(String receiverName, int param, String event, String data) {
-                                            mainActivity2AppMessage.sendTo(receiverName,param,event,data);
-                                        }
-                                        @Override
-                                        public void onResponseApiErrorConnection() {
-                                            Add_Loading_Text("connection error");
-                                        }
-                                        @Override
-                                        public void onResponseApiErrorScript() {
-                                            Add_Loading_Text("script error");
-                                        }
-                                    });
+                                    webAppApiCallback);
+
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -146,6 +95,59 @@ public class MainActivity2 extends AppCompatActivity {
                     break;
                 }
             }
+        }
+    };
+    private IWebAppApi webAppApiCallback = new IWebAppApi(){
+        @Override
+        public Boolean onInterceptRequestApi(String url) {
+            {
+                cancelRequest = null;
+                mainActivity2WebApp.evalJavaScript("typeof $", new ValueCallback() {
+                    @Override
+                    public void onReceiveValue(Object value) {
+                        if(value.toString().equals("\"function\"")){
+                            //Android app Assets jquery-3.6.1.min.js loaded success
+                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load success");
+                            mainActivity2WebApp.evalJavaScript("typeof request_url", new ValueCallback() {
+                                @Override
+                                public void onReceiveValue(Object value) {
+                                    if(value.toString().equals("\"function\"")){
+                                        //Android app Assets c.js loaded success
+                                        Add_Loading_Text("\n Assets c.js load success");
+                                        cancelRequest = false;
+                                    }else{
+                                        // Assets c.js load error
+                                        Add_Loading_Text("\n Assets c.js load error");
+                                        cancelRequest = true;
+                                    }
+                                }
+                            });
+                        }else{
+                            //Assets jquery-3.6.1.min.js load error
+                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load error");
+                            cancelRequest = true;
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+        @Override
+        public void onRequestCanceled() {
+            Add_Loading_Text("request canceled");
+            Toast.makeText(MainActivity2.this,"Request Api has canceled.",Toast.LENGTH_LONG).show();
+        }
+        @Override
+        public void onResponseApiSuccess(String receiverName, int param, String event, String data) {
+            mainActivity2AppMessage.sendTo(receiverName,param,event,data);
+        }
+        @Override
+        public void onResponseApiErrorConnection() {
+            Add_Loading_Text("connection error");
+        }
+        @Override
+        public void onResponseApiErrorScript() {
+            Add_Loading_Text("script error");
         }
     };
     void Add_Loading_Text(String text){

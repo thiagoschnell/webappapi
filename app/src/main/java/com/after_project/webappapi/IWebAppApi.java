@@ -1,6 +1,6 @@
 package com.after_project.webappapi;
 interface WebAppApiInterface {
-    Boolean onInterceptRequestApi();
+    Boolean onInterceptRequestApi(String url);
     void onBeforeRequest();
     void onRequestCanceled();
     void onRequestApiException(Exception e);
@@ -12,8 +12,8 @@ interface WebAppApiInterface {
 public abstract class IWebAppApi implements WebAppApiInterface {
     Boolean cancelRequest = false;
     @Override
-    public Boolean onInterceptRequestApi() {
-        return null;
+    public Boolean onInterceptRequestApi(String url) {
+        return false;
     }
     @Override
     public void onBeforeRequest() {

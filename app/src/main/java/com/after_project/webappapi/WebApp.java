@@ -79,7 +79,7 @@ public class WebApp {
                         }
                         @Override
                         protected void onPreExecute() {
-                            Boolean b = iWebAppApi.onInterceptRequestApi();
+                            Boolean b = iWebAppApi.onInterceptRequestApi(api_url);
                             if(webAppApiCallback.cancelRequest!=null){
                                 webAppApiCallback.cancelRequest = b;
                             }
