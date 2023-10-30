@@ -7,6 +7,8 @@ This sample WebApp app uses App Message integration for send and receive message
 
 Through the integrated AppMessage allow request Api by activity A and Return the Response to activity B or A.
 
+_**minimum SDK version**: Android 5.1 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
+
 _**License**_
     
     Free for hobbies, Dev/Test and small projects
