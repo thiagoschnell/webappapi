@@ -37,14 +37,14 @@ public class MainActivity2 extends AppCompatActivity {
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
-                mainActivity2WebApp.load("https://webappapi-server.azurewebsites.net/index.html",new WebAppClient() {
+                mainActivity2WebApp.load("https://webappapi-server.azurewebsites.net/index.html",new WebAppCallback() {
                     @Override
                     public void onLoadFinish(WebView view, String url) {
                         //load server_url finished
                         Add_Loading_Text("\n load finished.");
                         mainActivity2WebApp.detachWebAppCallback();
                         try {
-                            mainActivity2WebApp.corsApi.request(
+                            mainActivity2WebApp.api.request(
                                     "api.php", //  your api_url , can be "api.php" or full url "https://webappapi-server.azurewebsites.net/api.php"
                                     WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS,
                                     new JSONObject() {{
@@ -53,7 +53,6 @@ public class MainActivity2 extends AppCompatActivity {
                                         put("event","my_request_event_name");
                                     }},
                                     webAppApiCallback);
-
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -97,7 +96,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
     };
-    private IWebAppApi webAppApiCallback = new IWebAppApi(){
+    private WebAppApiCallback webAppApiCallback = new WebAppApiCallback(){
         @Override
         public Boolean onInterceptRequestApi(String url) {
             {
@@ -138,15 +137,20 @@ public class MainActivity2 extends AppCompatActivity {
             Toast.makeText(MainActivity2.this,"Request Api has canceled.",Toast.LENGTH_LONG).show();
         }
         @Override
-        public void onResponseApiSuccess(String receiverName, int param, String event, String data) {
+        public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
+            String js = "request_url('" + api_url + "',$.parseJSON( '" + options + "' ) ,$.parseJSON( '" + callback + "' ))";
+            mainActivity2WebApp.runJavaScript(js);
+        }
+        @Override
+        public void onResponseApi(String receiverName, int param, String event, String data) {
             mainActivity2AppMessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiErrorConnection() {
+        public void onResponseApiConnectionError() {
             Add_Loading_Text("connection error");
         }
         @Override
-        public void onResponseApiErrorScript() {
+        public void onResponseApiScriptError() {
             Add_Loading_Text("script error");
         }
     };

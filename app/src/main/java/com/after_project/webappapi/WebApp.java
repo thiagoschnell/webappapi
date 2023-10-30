@@ -1,9 +1,7 @@
 package com.after_project.webappapi;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.SystemClock;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -17,9 +15,29 @@ import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.json.JSONException;
-import org.json.JSONObject;
+interface WebAppInterface {
+    void onLoadFinish(WebView view, String url);
+    Boolean onshouldOverrideUrlLoading(WebView view, String url);
+    void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error);
+    void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error);
+}
+class WebAppCallback implements WebAppInterface {
+    @Override
+    public void onLoadFinish(WebView view, String url) {
+    }
+    @Override
+    public Boolean onshouldOverrideUrlLoading(WebView view, String url) {
+        return null;
+    }
+    @Override
+    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
+    }
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+    }
+}
 public class WebApp {
+    WebAppApi api = new WebAppApi();
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
         this.webView = webView1;
         LocalContentWebViewClient LC = new LocalContentWebViewClient(webViewAssetLoader);
@@ -30,9 +48,7 @@ public class WebApp {
     }
     static final String DEFAULT_REQUEST_CONFIG_OPTIONS = "{\"type\":\"POST\", \"headers\":{}}";
     private WebView webView;
-    private WebAppClient webViewClientCallback;
-    private IWebAppApi webAppApiCallback;
-    CorsApi corsApi = new CorsApi();
+    private WebAppCallback webAppCallback;
     void evalJavaScript(String js, ValueCallback valueCallback){
         webView.evaluateJavascript(js,valueCallback);
     }
@@ -40,55 +56,7 @@ public class WebApp {
         webView.loadUrl("javascript: " + url);
     }
     void detachWebAppCallback(){
-        webViewClientCallback = null;
-    }
-    class CorsApi{
-        protected void request(String api_url,String options,JSONObject callback,IWebAppApi iWebAppApi) throws Exception{
-            webAppApiCallback = iWebAppApi;
-            {
-                if(iWebAppApi!=null){
-                    AsyncTask<Void, Void, String > task = new AsyncTask<Void, Void, String>() {
-                        @Override
-                        protected String doInBackground(Void... params) {
-                            int count = 0;
-                            while (webAppApiCallback.cancelRequest==null){
-                                SystemClock.sleep(300);
-                                if(count>=5){
-                                    webAppApiCallback.cancelRequest = true;
-                                }
-                                count++;
-                            }
-                            return null;
-                        }
-                        @Override
-                        protected void onPostExecute(String token) {
-                            if(!webAppApiCallback.cancelRequest){
-                                String js = null;
-                                try {
-                                    js = "request_url('" + api_url + "',$.parseJSON( '" + new JSONObject(options) + "' ) ,$.parseJSON( '" + callback + "' ))";
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    if(iWebAppApi!=null){
-                                        iWebAppApi.onRequestApiException(e);
-                                    }
-                                }
-                                runJavaScript(js);
-                            }else{
-                                webAppApiCallback.onRequestCanceled();
-                            }
-                        }
-                        @Override
-                        protected void onPreExecute() {
-                            Boolean b = iWebAppApi.onInterceptRequestApi(api_url);
-                            if(webAppApiCallback.cancelRequest!=null){
-                                webAppApiCallback.cancelRequest = b;
-                            }
-                        }
-                    };
-                    task.execute();// if you want parallel execution use task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            }
-        }
+        webAppCallback = null;
     }
     private class LocalContentWebViewClient extends androidx.webkit.WebViewClientCompat {
         private final androidx.webkit.WebViewAssetLoader mAssetLoader;
@@ -98,8 +66,8 @@ public class WebApp {
         @Override
         @SuppressWarnings("deprecation")
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(webViewClientCallback != null){
-                Boolean r = webViewClientCallback.onshouldOverrideUrlLoading(view,url);
+            if(webAppCallback != null){
+                Boolean r = webAppCallback.onshouldOverrideUrlLoading(view,url);
                 if(r !=null){
                     return r;
                 }
@@ -111,12 +79,12 @@ public class WebApp {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 super.onReceivedError(view, request, error);
             }
-            if(webViewClientCallback != null) webViewClientCallback.onLoadError(view, request, error);
+            if(webAppCallback != null) webAppCallback.onLoadError(view, request, error);
         }
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if(webViewClientCallback != null) webViewClientCallback.onLoadFinish(view,url);
+            if(webAppCallback != null) webAppCallback.onLoadFinish(view,url);
         }
         @Override
         @RequiresApi(21)
@@ -130,9 +98,8 @@ public class WebApp {
         }
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            //super.onReceivedSslError(view, handler, error);
-            if(webViewClientCallback != null){
-                webViewClientCallback.onReceivedSslError(view, handler, error);
+            if(webAppCallback != null){
+                webAppCallback.onReceivedSslError(view, handler, error);
             }
         }
     }
@@ -140,8 +107,8 @@ public class WebApp {
         webView.stopLoading();
         detachWebAppCallback();
     }
-    void load(String server_url,WebAppClient webAppClient){
-        this.webViewClientCallback = webAppClient;
+    void load(String server_url, WebAppCallback wb){
+        this.webAppCallback = wb;
         webView.loadUrl(server_url);
     }
     void load(String server_url){
@@ -154,14 +121,14 @@ public class WebApp {
             try {
                 JsonObject json = JsonParser.parseString(response).getAsJsonObject();
                 if(json.getAsJsonObject("error").has("xhr")){
-                    webAppApiCallback.onResponseApiErrorConnection();
+                    api.webAppApiCallback.onResponseApiConnectionError();
                 }
                 else if (json.getAsJsonObject("error").has("message")){
-                    webAppApiCallback.onResponseApiErrorScript();
+                    api.webAppApiCallback.onResponseApiScriptError();
                 }
                 else {
                     JsonObject cb = JsonParser.parseString(json.get("cb").getAsString()).getAsJsonObject();
-                    webAppApiCallback.onResponseApiSuccess(
+                    api.webAppApiCallback.onResponseApi(
                                 cb.get("receiverName").getAsString(),
                                 cb.get("param").getAsInt(),
                                 cb.get("event").getAsString(),
@@ -170,7 +137,7 @@ public class WebApp {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                webAppApiCallback.onResponseApiException(e);
+                api.webAppApiCallback.onResponseApiException(e);
             }
         }
     }
