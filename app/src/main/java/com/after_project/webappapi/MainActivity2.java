@@ -2,7 +2,10 @@ package com.after_project.webappapi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -34,7 +37,7 @@ public class MainActivity2 extends AppCompatActivity {
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
-                mainActivity2WebApp.load("https://webappapi-server.azurewebsites.net/index.html",new WebApp.WebViewClientCallback() {
+                mainActivity2WebApp.load("https://webappapi-server.azurewebsites.net/index.html",new WebAppClient() {
                     @Override
                     public void onLoadFinish(WebView view, String url) {
                         //load server_url finished
@@ -48,7 +51,8 @@ public class MainActivity2 extends AppCompatActivity {
                                         put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.class
                                         put("param",0);
                                         put("event","my_request_event_name");
-                                    }},new IWebAppApi(){
+                                    }},
+                                    new IWebAppApi(){
                                         @Override
                                         public Boolean onInterceptRequestApi() {
                                             {
@@ -106,9 +110,11 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
                     @Override
-                    public Boolean onshouldOverrideUrlLoading(WebView view, String url) {
-                        // return false|true or null default
-                        return null;
+                    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                        handleSslError(error);
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                            handler.proceed();
+                        }
                     }
                     @Override
                     public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
@@ -150,5 +156,21 @@ public class MainActivity2 extends AppCompatActivity {
                         .append("\n" + text);
             }
         });
+    }
+    void handleSslError(SslError error){
+        switch (error.getPrimaryError()) {
+            case SslError.SSL_UNTRUSTED:
+                System.out.println( "onReceivedSslError: The certificate authority is not trusted.");
+                break;
+            case SslError.SSL_EXPIRED:
+                System.out.println( "onReceivedSslError: The certificate has expired.");
+                break;
+            case SslError.SSL_IDMISMATCH:
+                System.out.println( "onReceivedSslError: The certificate Hostname mismatch.");
+                break;
+            case SslError.SSL_NOTYETVALID:
+                System.out.println( "onReceivedSslError: The certificate is not yet valid.");
+                break;
+        }
     }
 }

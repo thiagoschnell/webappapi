@@ -1,9 +1,11 @@
 package com.after_project.webappapi;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.SystemClock;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -28,7 +30,7 @@ public class WebApp {
     }
     static final String DEFAULT_REQUEST_CONFIG_OPTIONS = "{\"type\":\"POST\", \"headers\":{}}";
     private WebView webView;
-    private WebViewClientCallback webViewClientCallback;
+    private WebAppClient webViewClientCallback;
     private IWebAppApi webAppApiCallback;
     CorsApi corsApi = new CorsApi();
     void evalJavaScript(String js, ValueCallback valueCallback){
@@ -126,13 +128,20 @@ public class WebApp {
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
             return mAssetLoader.shouldInterceptRequest(Uri.parse(url));
         }
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            //super.onReceivedSslError(view, handler, error);
+            if(webViewClientCallback != null){
+                webViewClientCallback.onReceivedSslError(view, handler, error);
+            }
+        }
     }
     void abort(){
         webView.stopLoading();
         detachWebAppCallback();
     }
-    void load(String server_url,WebViewClientCallback webViewClientCallback){
-        this.webViewClientCallback = webViewClientCallback;
+    void load(String server_url,WebAppClient webAppClient){
+        this.webViewClientCallback = webAppClient;
         webView.loadUrl(server_url);
     }
     void load(String server_url){
@@ -164,10 +173,5 @@ public class WebApp {
                 webAppApiCallback.onResponseApiException(e);
             }
         }
-    }
-    protected interface WebViewClientCallback {
-        void onLoadFinish(WebView view, String url);
-        Boolean onshouldOverrideUrlLoading(WebView view, String url);
-        void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error);
     }
 }
