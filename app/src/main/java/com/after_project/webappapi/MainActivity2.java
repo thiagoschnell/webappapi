@@ -85,6 +85,7 @@ public class MainActivity2 extends AppCompatActivity {
                                         }
                                         @Override
                                         public void onRequestCanceled() {
+                                            Add_Loading_Text("request canceled");
                                             Toast.makeText(MainActivity2.this,"Request Api has canceled.",Toast.LENGTH_LONG).show();
                                         }
                                         @Override

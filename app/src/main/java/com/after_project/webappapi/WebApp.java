@@ -48,8 +48,13 @@ public class WebApp {
                     AsyncTask<Void, Void, String > task = new AsyncTask<Void, Void, String>() {
                         @Override
                         protected String doInBackground(Void... params) {
+                            int count = 0;
                             while (webAppApiCallback.cancelRequest==null){
                                 SystemClock.sleep(300);
+                                if(count>=5){
+                                    webAppApiCallback.cancelRequest = true;
+                                }
+                                count++;
                             }
                             return null;
                         }
