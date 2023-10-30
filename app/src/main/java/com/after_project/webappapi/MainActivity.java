@@ -13,11 +13,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
+        setContentView(R.layout.activity_main);        
+        appMessage = new AppMessage(this);
         //AppMessageReceiver for MainActivity
         {
-            appMessage = new AppMessage(this);
             appMessageReceiver = new AppMessageReceiver(appMessageReceiverCallback);
             appMessage.registerReceiver(MainActivity.className,appMessageReceiver.receiver);
         }
