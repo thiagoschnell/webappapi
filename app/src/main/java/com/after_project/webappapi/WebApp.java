@@ -83,7 +83,7 @@ public class WebApp {
                             }
                         }
                     };
-                    task.execute();// task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    task.execute();// if you want parallel execution use task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         }
