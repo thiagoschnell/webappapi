@@ -118,6 +118,7 @@ public class WebApp {
         }
         @JavascriptInterface
         public void response_url(String response) {
+            if(api.response()!=null)
             try {
                 JsonObject json = JsonParser.parseString(response).getAsJsonObject();
                 if(json.getAsJsonObject("error").has("xhr")){

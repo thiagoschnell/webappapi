@@ -64,7 +64,7 @@ public class MainActivity3 extends AppCompatActivity {
                             }};
                             mainActivity3WebApp.api.setWebAppApiResponse(webAppApiResponse);
                             WebAppApiTask webAppApiTask1 = new WebAppApiTask(){{
-                                setWebAppTaskCallback(new WebAppTaskCallback() {
+                                setWebAppApiTaskCallback(new WebAppApiTaskCallback() {
                                     @Override
                                     public void onPreExecute() {
                                         cancelRequest = null;
@@ -148,7 +148,8 @@ public class MainActivity3 extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mainActivity3AppMessage.unregisterReceiver(mainActivity3AppMessageReceiver.receiver);
-    }  private AppMessageReceiver.ReceiverCallback mainActivity3AppMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
+    }
+    private AppMessageReceiver.ReceiverCallback mainActivity3AppMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
         public void onReceiveMessage ( int param, String event, String data){
             switch (event) {
@@ -167,11 +168,6 @@ public class MainActivity3 extends AppCompatActivity {
                     break;
                 }
             }
-        }
-    };
-    WebAppTaskCallback webAppTaskCallback = new WebAppTaskCallback() {
-        @Override
-        public void onPreExecute() {
         }
     };
     private WebAppApiRequest webAppApiRequest = new WebAppApiRequest(){

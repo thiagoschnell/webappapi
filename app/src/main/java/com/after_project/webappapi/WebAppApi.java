@@ -14,23 +14,25 @@ interface WebAppApiResponseInterface {
     void onResponseApiScriptError();
     void onResponseApiException(Exception e);
 }
-interface WebAppTaskCallback{
+interface WebAppApiTaskCallback{
     void onPreExecute();
 }
 class WebAppApiTask extends AsyncTask  {
     private String api_url;
     private JSONObject options;
     private JSONObject callback;
-    private WebAppTaskCallback webAppTaskCallback;
+    private WebAppApiTaskCallback webAppApiTaskCallback;
     WebAppApiRequest webAppApiRequest = null;
     WebAppApiTask(){
     }
     WebAppApiTask(WebAppApiRequest webAppApiRequest){
         this.webAppApiRequest = webAppApiRequest;
     }
-    void setWebAppTaskCallback(WebAppTaskCallback webAppTaskCallback) {
-        this.webAppTaskCallback = webAppTaskCallback;
+
+    public void setWebAppApiTaskCallback(WebAppApiTaskCallback webAppApiTaskCallback) {
+        this.webAppApiTaskCallback = webAppApiTaskCallback;
     }
+
     void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
         this.webAppApiRequest = webAppApiRequest;
     }
@@ -70,8 +72,8 @@ class WebAppApiTask extends AsyncTask  {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(webAppTaskCallback!= null){
-            webAppTaskCallback.onPreExecute();
+        if(webAppApiTaskCallback!= null){
+            webAppApiTaskCallback.onPreExecute();
         }else{
             Boolean b = webAppApiRequest.onInterceptRequestApi(api_url);
             if(cancelRequest!=null){

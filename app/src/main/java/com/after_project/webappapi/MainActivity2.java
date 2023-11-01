@@ -96,11 +96,6 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
     };
-    WebAppTaskCallback webAppTaskCallback = new WebAppTaskCallback() {
-        @Override
-        public void onPreExecute() {
-        }
-    };
     private WebAppApiRequest webAppApiRequest = new WebAppApiRequest(){
         @Override
         public void onRequestCanceled() {
