@@ -48,7 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
                                     prepare("api.php",
                                             new JSONObject(WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS),
                                             new JSONObject() {{
-                                                put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.class
+                                                put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.className
                                                 put("param",0);
                                                 put("event","my_request_event_name");
                                             }})
