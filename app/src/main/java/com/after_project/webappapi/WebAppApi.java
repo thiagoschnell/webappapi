@@ -1,20 +1,86 @@
 package com.after_project.webappapi;
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import org.json.JSONException;
 import org.json.JSONObject;
-interface WebAppApiInterface {
+interface WebAppApiRequestInterface {
     Boolean onInterceptRequestApi(String url);
-    void onRequestApi(String api_url,JSONObject options, JSONObject callback);
+    void onRequestApi(String api_url, JSONObject options, JSONObject callback);
     void onRequestCanceled();
     void onRequestApiException(Exception e);
+}
+interface WebAppApiResponseInterface {
     void onResponseApi(String receiverName, int param, String event, String data);
     void onResponseApiConnectionError();
     void onResponseApiScriptError();
     void onResponseApiException(Exception e);
 }
-abstract class WebAppApiCallback implements WebAppApiInterface {
+interface WebAppTaskCallback{
+    void onPreExecute();
+}
+class WebAppApiTask extends AsyncTask  {
+    private String api_url;
+    private JSONObject options;
+    private JSONObject callback;
+    private WebAppTaskCallback webAppTaskCallback;
+    WebAppApiRequest webAppApiRequest = null;
+    WebAppApiTask(){
+    }
+    WebAppApiTask(WebAppApiRequest webAppApiRequest){
+        this.webAppApiRequest = webAppApiRequest;
+    }
+    void setWebAppTaskCallback(WebAppTaskCallback webAppTaskCallback) {
+        this.webAppTaskCallback = webAppTaskCallback;
+    }
+    void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
+        this.webAppApiRequest = webAppApiRequest;
+    }
+    synchronized WebAppApiTask prepare(String api_url, JSONObject options, JSONObject callback) {
+        this.api_url = api_url;
+        this.options = options;
+        this.callback = callback;
+        return this;
+    }
     Boolean cancelRequest = false;
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+        if(cancelRequest){
+            webAppApiRequest.onRequestCanceled();
+        }else{
+            try {
+                webAppApiRequest.onRequestApi(api_url,options,callback);
+            } catch (Exception e) {
+                e.printStackTrace();
+                webAppApiRequest.onRequestApiException(e);
+            }
+        }
+    }
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        int count = 0;
+        while (cancelRequest==null){
+            SystemClock.sleep(300);
+            if(count>=5){
+                cancelRequest = true;
+            }
+            count++;
+        }
+        return null;
+    }
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        if(webAppTaskCallback!= null){
+            webAppTaskCallback.onPreExecute();
+        }else{
+            Boolean b = webAppApiRequest.onInterceptRequestApi(api_url);
+            if(cancelRequest!=null){
+                cancelRequest = b;
+            }
+        }
+    }
+}
+class WebAppApiRequest  implements WebAppApiRequestInterface{
     @Override
     public Boolean onInterceptRequestApi(String url) {
         return false;
@@ -28,6 +94,8 @@ abstract class WebAppApiCallback implements WebAppApiInterface {
     @Override
     public void onRequestApiException(Exception e) {
     }
+}
+class WebAppApiResponse implements WebAppApiResponseInterface {
     @Override
     public void onResponseApi(String receiverName, int param, String event, String data) {
     }
@@ -41,50 +109,19 @@ abstract class WebAppApiCallback implements WebAppApiInterface {
     public void onResponseApiException(Exception e) {
     }
 }
-public class WebAppApi {
-    WebAppApiCallback webAppApiCallback;
-    protected void request(String api_url, String options, JSONObject callback, WebAppApiCallback webAppApiCallback1) throws Exception{
-        this.webAppApiCallback = webAppApiCallback1;
-        {
-            if(webAppApiCallback1!=null){
-                AsyncTask<Void, Void, String > task = new AsyncTask<Void, Void, String>() {
-                    @Override
-                    protected String doInBackground(Void... params) {
-                        int count = 0;
-                        while (webAppApiCallback.cancelRequest==null){
-                            SystemClock.sleep(300);
-                            if(count>=5){
-                                webAppApiCallback.cancelRequest = true;
-                            }
-                            count++;
-                        }
-                        return null;
-                    }
-                    @Override
-                    protected void onPostExecute(String token) {
-                        if(!webAppApiCallback.cancelRequest){
-                            try {
-                                webAppApiCallback.onRequestApi(api_url,new JSONObject(options),callback);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                if(webAppApiCallback1!=null){
-                                    webAppApiCallback1.onRequestApiException(e);
-                                }
-                            }
-                        }else{
-                            webAppApiCallback.onRequestCanceled();
-                        }
-                    }
-                    @Override
-                    protected void onPreExecute() {
-                        Boolean b = webAppApiCallback1.onInterceptRequestApi(api_url);
-                        if(webAppApiCallback.cancelRequest!=null){
-                            webAppApiCallback.cancelRequest = b;
-                        }
-                    }
-                };
-                task.execute();// parallel task execution use task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-        }
+public class WebAppApi  {
+    private WebAppApiResponse webAppApiResponse = null;
+    private WebAppApiRequest webAppApiRequest = null;
+    void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
+        this.webAppApiRequest = webAppApiRequest;
+    }
+    void setWebAppApiResponse(WebAppApiResponse webAppApiResponse) {
+        this.webAppApiResponse = webAppApiResponse;
+    }
+    synchronized WebAppApiTask newTask(WebAppApiTask webAppApiTask){
+        return webAppApiTask;
+    }
+    synchronized WebAppApiResponse response (){
+        return this.webAppApiResponse;
     }
 }

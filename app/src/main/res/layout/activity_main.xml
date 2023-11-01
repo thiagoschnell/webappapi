@@ -14,7 +14,17 @@
       android:id="@+id/ButtonOpenActivity2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="WebApp Api Example 1"></Button>
+      android:text="Single Request"></Button>
+  <Button
+      android:id="@+id/ButtonOpenActivity3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="On Demand Requests"></Button>
+  <Button
+      android:id="@+id/ButtonOpenActivity3Parallel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="On Demand Parallel Requests"></Button>
 </LinearLayout>
 
 

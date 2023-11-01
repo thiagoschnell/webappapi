@@ -59,7 +59,7 @@ public class WebApp {
         webAppCallback = null;
     }
     private class LocalContentWebViewClient extends androidx.webkit.WebViewClientCompat {
-        private final androidx.webkit.WebViewAssetLoader mAssetLoader;
+        private final WebViewAssetLoader mAssetLoader;
         LocalContentWebViewClient(WebViewAssetLoader assetLoader) {
             mAssetLoader = assetLoader;
         }
@@ -121,14 +121,14 @@ public class WebApp {
             try {
                 JsonObject json = JsonParser.parseString(response).getAsJsonObject();
                 if(json.getAsJsonObject("error").has("xhr")){
-                    api.webAppApiCallback.onResponseApiConnectionError();
+                    api.response().onResponseApiConnectionError();
                 }
                 else if (json.getAsJsonObject("error").has("message")){
-                    api.webAppApiCallback.onResponseApiScriptError();
+                    api.response().onResponseApiScriptError();
                 }
                 else {
                     JsonObject cb = JsonParser.parseString(json.get("cb").getAsString()).getAsJsonObject();
-                    api.webAppApiCallback.onResponseApi(
+                    api.response().onResponseApi(
                                 cb.get("receiverName").getAsString(),
                                 cb.get("param").getAsInt(),
                                 cb.get("event").getAsString(),
@@ -137,7 +137,7 @@ public class WebApp {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                api.webAppApiCallback.onResponseApiException(e);
+                api.response().onResponseApiException(e);
             }
         }
     }

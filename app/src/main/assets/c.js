@@ -23,14 +23,8 @@ function request_url(url,options,vardata) {
         result.opt = JSON.stringify(options);
         result.request_url = url;
         result.error = Object();
-        $.extend(
-            options.headers
-            );
         if (typeof $ !== 'undefined') {
-            $.ajax(url, {
-                type: options.type,
-                headers: options.headers,
-            }).done(function (data) {
+            $.ajax(url, options).done(function (data) {
                 try {
                     result.data = data;
                     android.response_url(JSON.stringify(result));

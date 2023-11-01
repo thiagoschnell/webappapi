@@ -27,6 +27,9 @@ android {
 }
 
 dependencies {
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
     dependencies {
         implementation 'com.google.code.gson:gson:2.10.1'
         implementation 'androidx.webkit:webkit:1.8.0'

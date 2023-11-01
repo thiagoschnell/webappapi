@@ -6,7 +6,6 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.SslErrorHandler;
-import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -44,15 +43,16 @@ public class MainActivity2 extends AppCompatActivity {
                         Add_Loading_Text("\n load finished.");
                         mainActivity2WebApp.detachWebAppCallback();
                         try {
-                            mainActivity2WebApp.api.request(
-                                    "api.php", //  your api_url , can be "api.php" or full url "https://webappapi-server.azurewebsites.net/api.php"
-                                    WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS,
-                                    new JSONObject() {{
-                                        put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.class
-                                        put("param",0);
-                                        put("event","my_request_event_name");
-                                    }},
-                                    webAppApiCallback);
+                            mainActivity2WebApp.api.setWebAppApiResponse(webAppApiResponse);
+                            mainActivity2WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).
+                                    prepare("api.php",
+                                            new JSONObject(WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS),
+                                            new JSONObject() {{
+                                                put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.class
+                                                put("param",0);
+                                                put("event","my_request_event_name");
+                                            }})
+                                    .execute();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -96,41 +96,12 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
     };
-    private WebAppApiCallback webAppApiCallback = new WebAppApiCallback(){
+    WebAppTaskCallback webAppTaskCallback = new WebAppTaskCallback() {
         @Override
-        public Boolean onInterceptRequestApi(String url) {
-            {
-                cancelRequest = null;
-                mainActivity2WebApp.evalJavaScript("typeof $", new ValueCallback() {
-                    @Override
-                    public void onReceiveValue(Object value) {
-                        if(value.toString().equals("\"function\"")){
-                            //Android app Assets jquery-3.6.1.min.js loaded success
-                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load success");
-                            mainActivity2WebApp.evalJavaScript("typeof request_url", new ValueCallback() {
-                                @Override
-                                public void onReceiveValue(Object value) {
-                                    if(value.toString().equals("\"function\"")){
-                                        //Android app Assets c.js loaded success
-                                        Add_Loading_Text("\n Assets c.js load success");
-                                        cancelRequest = false;
-                                    }else{
-                                        // Assets c.js load error
-                                        Add_Loading_Text("\n Assets c.js load error");
-                                        cancelRequest = true;
-                                    }
-                                }
-                            });
-                        }else{
-                            //Assets jquery-3.6.1.min.js load error
-                            Add_Loading_Text("\n Assets jquery-3.6.1.min.js load error");
-                            cancelRequest = true;
-                        }
-                    }
-                });
-            }
-            return false;
+        public void onPreExecute() {
         }
+    };
+    private WebAppApiRequest webAppApiRequest = new WebAppApiRequest(){
         @Override
         public void onRequestCanceled() {
             Add_Loading_Text("request canceled");
@@ -141,6 +112,8 @@ public class MainActivity2 extends AppCompatActivity {
             String js = "request_url('" + api_url + "',$.parseJSON( '" + options + "' ) ,$.parseJSON( '" + callback + "' ))";
             mainActivity2WebApp.runJavaScript(js);
         }
+    };
+    private WebAppApiResponse webAppApiResponse = new WebAppApiResponse(){
         @Override
         public void onResponseApi(String receiverName, int param, String event, String data) {
             mainActivity2AppMessage.sendTo(receiverName,param,event,data);
