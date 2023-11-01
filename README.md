@@ -41,9 +41,22 @@ Server Files for this WebApp app sample
 
 ## Examples 
 
-**REQUEST SUCCESS**
 
-![webapp-api-example1-success](https://github.com/thiagoschnell/webappapi/assets/78884351/1782751c-f7b3-47e8-a42d-bb922ad940cc)
+**Single Request**
+
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1782751c-f7b3-47e8-a42d-bb922ad940cc" />
+
+
+**On Demand Requests**
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/e2bfec3a-66dd-4c24-9dc7-b3372c27e735" />
+
+
+
+**On Demand "Parallel" Requests**
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/fdea0168-75a7-4b7f-96f6-f505abfb0589" />
 
 
 **REQUEST WITH NO INTERNET**
