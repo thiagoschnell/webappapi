@@ -1,3 +1,6 @@
+// Copyright (c) Thiago Schnell.
+// Licensed under the MIT License.
+
 $(function(){
     $.StackError = function(e) {
         try{
