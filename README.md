@@ -9,15 +9,12 @@ Through the integrated AppMessage allow request Api by activity A and Return the
 
 _**minimum SDK version**: Android 5.1 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
-_**License**_
-    
-    Free for hobbies, Dev/Test and small projects
 
 **To run the samples** **[Download Android studio Canary](https://developer.android.com/studio/preview)**
 
-## Become a sponsor
+## License
 
-[<img alt="alt_text" width="90px" src="https://user-images.githubusercontent.com/78884351/277841243-c93af54b-1d8f-401d-b361-c493654a8316.png" />](https://github.com/sponsors/thiagoschnell)
+This repository is available under the [MIT License](https://github.com/thiagoschnell/webappapi/blob/main/LICENSE).
 
 ## Developer sources
 
