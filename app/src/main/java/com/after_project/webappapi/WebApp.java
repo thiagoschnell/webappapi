@@ -1,6 +1,3 @@
-// Copyright (c) Thiago Schnell.
-// Licensed under the MIT License.
-
 package com.after_project.webappapi;
 import android.net.Uri;
 import android.net.http.SslError;
