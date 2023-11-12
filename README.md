@@ -44,14 +44,12 @@ Server Files for this WebApp app sample
 
 **Single Request**
 
-
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1782751c-f7b3-47e8-a42d-bb922ad940cc" />
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/46e95abb-4bd2-4614-97b6-cc0c59d52330" />
 
 
 **On Demand Requests**
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/e2bfec3a-66dd-4c24-9dc7-b3372c27e735" />
-
 
 
 **On Demand "Parallel" Requests**
