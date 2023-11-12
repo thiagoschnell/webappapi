@@ -48,7 +48,9 @@ public class WebApp {
         this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         this.webView.addJavascriptInterface(new WebAppInterface(), "android");
     }
-    static final String DEFAULT_REQUEST_CONFIG_OPTIONS = "{\"type\":\"POST\", \"headers\":{}}";
+    static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
+    static final String DEFAULT_REQUEST_API_OPTIONS_WITH_SERIALIZE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
+    static final String DEFAULT_REQUEST_JSON_OPTIONS = "{'type':'GET','dataType':'json'}";
     private WebView webView;
     private WebAppCallback webAppCallback;
     void evalJavaScript(String js, ValueCallback valueCallback){
@@ -120,27 +122,27 @@ public class WebApp {
         }
         @JavascriptInterface
         public void response_url(String response) {
-            if(api.response()!=null)
-            try {
-                JsonObject json = JsonParser.parseString(response).getAsJsonObject();
-                if(json.getAsJsonObject("error").has("xhr")){
-                    api.response().onResponseApiConnectionError();
-                }
-                else if (json.getAsJsonObject("error").has("message")){
-                    api.response().onResponseApiScriptError();
-                }
-                else {
-                    JsonObject cb = JsonParser.parseString(json.get("cb").getAsString()).getAsJsonObject();
-                    api.response().onResponseApi(
+            if(api.response()!=null) {
+                try {
+                    JsonObject json = JsonParser.parseString(response).getAsJsonObject();
+                    JsonObject cb = json.get("cb").getAsJsonObject();
+                    if (json.getAsJsonObject("error").has("xhr")) {
+                        api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString());
+                    } else if (json.getAsJsonObject("error").has("message")) {
+                        api.response().onResponseApiScriptError();
+                    } else {
+                        JsonObject data = json.get("data").getAsJsonObject();
+                        api.response().onResponseApi(
                                 cb.get("receiverName").getAsString(),
                                 cb.get("param").getAsInt(),
                                 cb.get("event").getAsString(),
-                                json.get("data").getAsString()
-                            );
+                                data.toString()
+                        );
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    api.response().onResponseApiException(e);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                api.response().onResponseApiException(e);
             }
         }
     }

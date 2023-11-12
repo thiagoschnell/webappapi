@@ -55,7 +55,7 @@ public class MainActivity3 extends AppCompatActivity {
                         Add_Loading_Text("\n load finished.");
                         mainActivity3WebApp.detachWebAppCallback();
                         try {
-                            JSONObject joptions = new JSONObject(WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS);
+                            JSONObject joptions = new JSONObject(WebApp.DEFAULT_REQUEST_API_OPTIONS);
                             joptions.put("async",false);
                             JSONObject jcallback = new JSONObject() {{
                                 put("receiverName",MainActivity3.className);
@@ -178,7 +178,7 @@ public class MainActivity3 extends AppCompatActivity {
         }
         @Override
         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-            String js = "request_url('" + api_url + "',$.parseJSON( '" + options + "' ) ,$.parseJSON( '" + callback + "' ))";
+            String js = "request_url('"+api_url+"',"+options+","+callback+")";
             mainActivity3WebApp.evalJavaScript(js, new ValueCallback() {
                 @Override
                 public void onReceiveValue(Object value) {
@@ -194,7 +194,7 @@ public class MainActivity3 extends AppCompatActivity {
             mainActivity3AppMessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiConnectionError() {
+        public void onResponseApiConnectionError(String receiverName) {
             Add_Loading_Text("connection error");
         }
         @Override

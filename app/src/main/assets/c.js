@@ -21,14 +21,13 @@ $(function(){
 function request_url(url,options,vardata) {
     try {
         result = Object();
-        result.cb = JSON.stringify(vardata);
-        result.opt = JSON.stringify(options);
+        result.cb = vardata;
         result.request_url = url;
         result.error = Object();
         if (typeof $ !== 'undefined') {
-            $.ajax(url, options).done(function (data) {
+            $.ajax(url,options).done(function (data) {
                 try {
-                    result.data = data;
+                    result.data = typeof data === 'object'? data : JSON.parse(data);
                     android.response_url(JSON.stringify(result));
                 } catch (e) {
                     result.error.message = $.ReferenceError(e);

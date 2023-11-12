@@ -12,7 +12,7 @@ interface WebAppApiRequestInterface {
 }
 interface WebAppApiResponseInterface {
     void onResponseApi(String receiverName, int param, String event, String data);
-    void onResponseApiConnectionError();
+    void onResponseApiConnectionError(String receiverName);
     void onResponseApiScriptError();
     void onResponseApiException(Exception e);
 }
@@ -104,7 +104,7 @@ class WebAppApiResponse implements WebAppApiResponseInterface {
     public void onResponseApi(String receiverName, int param, String event, String data) {
     }
     @Override
-    public void onResponseApiConnectionError() {
+    public void onResponseApiConnectionError(String receiverName) {
     }
     @Override
     public void onResponseApiScriptError() {

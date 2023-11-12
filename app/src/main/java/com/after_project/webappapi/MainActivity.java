@@ -52,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Reall App
+        {
+            Button buttonOpenRealApp = (Button) findViewById(R.id.ButtonOpenRealApp);
+            buttonOpenRealApp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, RealAppMainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

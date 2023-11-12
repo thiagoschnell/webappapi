@@ -10,21 +10,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-  <Button
-      android:id="@+id/ButtonOpenActivity2"
-      android:layout_width="wrap_content"
+
+  <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Single Request"></Button>
-  <Button
-      android:id="@+id/ButtonOpenActivity3"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="On Demand Requests"></Button>
-  <Button
-      android:id="@+id/ButtonOpenActivity3Parallel"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="On Demand Parallel Requests"></Button>
+      android:orientation="vertical">
+    <Button
+        android:id="@+id/ButtonOpenActivity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Request"></Button>
+    <Button
+        android:id="@+id/ButtonOpenActivity3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On Demand Requests"></Button>
+    <Button
+        android:id="@+id/ButtonOpenActivity3Parallel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On Demand Parallel Requests"></Button>
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center|center">
+    <Button
+        android:id="@+id/ButtonOpenRealApp"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:text="Click here to see a demo of one\n Real App example"></Button>
+  </LinearLayout>
+
 </LinearLayout>
 
 

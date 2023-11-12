@@ -46,7 +46,7 @@ public class MainActivity2 extends AppCompatActivity {
                             mainActivity2WebApp.api.setWebAppApiResponse(webAppApiResponse);
                             mainActivity2WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).
                                     prepare("api.php",
-                                            new JSONObject(WebApp.DEFAULT_REQUEST_CONFIG_OPTIONS),
+                                            new JSONObject(WebApp.DEFAULT_REQUEST_API_OPTIONS),
                                             new JSONObject() {{
                                                 put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.className
                                                 put("param",0);
@@ -104,7 +104,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
         @Override
         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-            String js = "request_url('" + api_url + "',$.parseJSON( '" + options + "' ) ,$.parseJSON( '" + callback + "' ))";
+            String js = "request_url('"+api_url+"',"+options+","+callback+")";
             mainActivity2WebApp.runJavaScript(js);
         }
     };
@@ -114,7 +114,7 @@ public class MainActivity2 extends AppCompatActivity {
             mainActivity2AppMessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiConnectionError() {
+        public void onResponseApiConnectionError(String receiverName) {
             Add_Loading_Text("connection error");
         }
         @Override

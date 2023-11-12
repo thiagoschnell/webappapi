@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WebApp Api</string>
+    <string name="welcome_messages">Hello, %1$s! You have %2$d new messages.</string>
+    <string name="customer_profile_name">name: %1$s</string>
+    <string name="customer_profile_email">email: %1$s</string>
+    <string name="customer_profile_phone">phone: %1$s</string>
+    <string name="purchase_list_append_text">product_id: %1$s product_name: %2$s purchase_quantity: %3$s purchase_status: %4$s purchase_stage: %5$s \n --------------\n</string>
+    <string name="shop_product_list_append_text">product_id: %1$s product_name: %2$s amount: %3$s \n --------------\n</string>
 </resources>
