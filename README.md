@@ -35,8 +35,11 @@ Server Files for this WebApp app sample
 ## User guide
 * [user guide page](https://github.com/thiagoschnell/webappapi/wiki/User-Guide) This guide contains examples on how to use WebApp Api in your code
 
-
 ## Examples 
+
+**Demo usage of one Real App Example** 
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
 
 **Single Request**
