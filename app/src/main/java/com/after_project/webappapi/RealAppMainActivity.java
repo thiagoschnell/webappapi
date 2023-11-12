@@ -120,7 +120,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                                         prepare("https://webappapi-server.azurewebsites.net/purchases.json",
                                                 new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                                 new JSONObject() {{
-                                                    put("receiverName",RealAppMyPurchasesActivity.className); //can also change the receiverName to MainActivity.className
+                                                    put("receiverName",RealAppMyPurchasesActivity.className);
                                                     put("param",0);
                                                     put("event","request_my_purchases");
                                                 }})
@@ -141,7 +141,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                                         prepare("https://webappapi-server.azurewebsites.net/products.json",
                                                 new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                                 new JSONObject() {{
-                                                    put("receiverName",RealAppShopActivity.className); //can also change the receiverName to MainActivity.className
+                                                    put("receiverName",RealAppShopActivity.className);
                                                     put("param",0);
                                                     put("event","request_shop_products");
                                                 }})
