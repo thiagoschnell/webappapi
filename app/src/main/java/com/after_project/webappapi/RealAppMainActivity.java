@@ -50,7 +50,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                                     prepare("https://webappapi-server.azurewebsites.net/customer_profile.json",
                                             new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                             new JSONObject() {{
-                                                put("receiverName",RealAppMainActivity.className); //can also change the receiverName to MainActivity.className
+                                                put("receiverName",RealAppMainActivity.className);
                                                 put("param",0);
                                                 put("event","request_customer_profile");
                                             }})
