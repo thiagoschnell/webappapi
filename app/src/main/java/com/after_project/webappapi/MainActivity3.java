@@ -36,7 +36,7 @@ public class MainActivity3 extends AppCompatActivity {
         //AppMessageReceiver for MainActivity3
         {
             mainActivity3AppMessageReceiver = new AppMessageReceiver(mainActivity3AppMessageReceiverCallback);
-            mainActivity3AppMessage.registerReceiver(MainActivity3.className,mainActivity3AppMessageReceiver.receiver);
+            mainActivity3AppMessage.registerReceiver(MainActivity3.className,mainActivity3AppMessageReceiver);
         }
         //WebApp
         {
@@ -147,7 +147,7 @@ public class MainActivity3 extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivity3AppMessage.unregisterReceiver(mainActivity3AppMessageReceiver.receiver);
+        mainActivity3AppMessage.unregisterReceiver(mainActivity3AppMessageReceiver);
     }
     private AppMessageReceiver.ReceiverCallback mainActivity3AppMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

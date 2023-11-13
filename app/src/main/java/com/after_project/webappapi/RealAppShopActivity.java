@@ -65,13 +65,13 @@ public class RealAppShopActivity extends AppCompatActivity {
                     }
                 }
             });
-            appmessage.registerReceiver(RealAppShopActivity.className,appMessageReceiver.receiver);
+            appmessage.registerReceiver(RealAppShopActivity.className,appMessageReceiver);
             appmessage.sendTo(RealAppMainActivity.className,0,"get_shop_products",null);
         }
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        appmessage.unregisterReceiver(appMessageReceiver.receiver);
+        appmessage.unregisterReceiver(appMessageReceiver);
     }
 }

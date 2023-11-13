@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         //AppMessageReceiver for MainActivity
         {
             appMessageReceiver = new AppMessageReceiver(appMessageReceiverCallback);
-            appMessage.registerReceiver(MainActivity.className,appMessageReceiver.receiver);
+            appMessage.registerReceiver(MainActivity.className,appMessageReceiver);
         }
         //Button Single Request
         {

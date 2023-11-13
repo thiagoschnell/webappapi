@@ -67,13 +67,13 @@ public class RealAppMyPurchasesActivity extends AppCompatActivity {
                     }
                 }
             });
-            appmessage.registerReceiver(RealAppMyPurchasesActivity.className,appMessageReceiver.receiver);
+            appmessage.registerReceiver(RealAppMyPurchasesActivity.className,appMessageReceiver);
             appmessage.sendTo(RealAppMainActivity.className,0,"get_my_purchases",null);
         }
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        appmessage.unregisterReceiver(appMessageReceiver.receiver);
+        appmessage.unregisterReceiver(appMessageReceiver);
     }
 }

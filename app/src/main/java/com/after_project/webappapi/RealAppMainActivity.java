@@ -35,7 +35,7 @@ public class RealAppMainActivity extends AppCompatActivity {
         //AppMessageReceiver for RealAppMainActivity
         {
             appMessageReceiver = new AppMessageReceiver(appMessageReceiverCallback);
-            appmessage.registerReceiver(RealAppMainActivity.className,appMessageReceiver.receiver);
+            appmessage.registerReceiver(RealAppMainActivity.className,appMessageReceiver);
         }
         //WebApp
         {
@@ -85,7 +85,7 @@ public class RealAppMainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        appmessage.unregisterReceiver(appMessageReceiver.receiver);
+        appmessage.unregisterReceiver(appMessageReceiver);
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

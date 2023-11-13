@@ -16,12 +16,15 @@ public class AppMessage {
     void unregisterReceiver(BroadcastReceiver receiver){
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(receiver);
     }
+    private String getIntentFilter(String action){
+        return String.format("%s.%s",BuildConfig.APPLICATION_ID,action);
+    }
     void registerReceiver( String receiverName, BroadcastReceiver receiver){
         LocalBroadcastManager.getInstance(mContext)
-                .registerReceiver(receiver, new IntentFilter(receiverName));
+                .registerReceiver(receiver, new IntentFilter(getIntentFilter(receiverName)));
     }
     private void send(String receiverName, int param, String event, String data, Boolean sync){
-        Intent intent = new Intent(receiverName);
+        Intent intent = new Intent(getIntentFilter(receiverName));
         intent.putExtra("param", param);
         intent.putExtra("event", event);
         intent.putExtra("data", data);
