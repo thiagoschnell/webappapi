@@ -12,15 +12,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class RealAppShopActivity extends AppCompatActivity {
+    private AppMessage appmessage;
+    private AppMessageReceiver appMessageReceiver;
     static String className = RealAppShopActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_app_shop);
-        AppMessage appmessage = new AppMessage(this);
+        appmessage = new AppMessage(this);
         //AppMessageReceiver for RealAppShopActivity
         {
-            AppMessageReceiver appMessageReceiver = new AppMessageReceiver(new AppMessageReceiver.ReceiverCallback() {
+            appMessageReceiver = new AppMessageReceiver(new AppMessageReceiver.ReceiverCallback() {
                 @Override
                 public void onReceiveMessage(int param, String event, String data) {
                     switch (event){
@@ -66,5 +68,10 @@ public class RealAppShopActivity extends AppCompatActivity {
             appmessage.registerReceiver(RealAppShopActivity.className,appMessageReceiver.receiver);
             appmessage.sendTo(RealAppMainActivity.className,0,"get_shop_products",null);
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appmessage.unregisterReceiver(appMessageReceiver.receiver);
     }
 }

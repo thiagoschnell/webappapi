@@ -2,10 +2,14 @@ package com.after_project.webappapi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 public class RealAppMainActivity extends AppCompatActivity {
@@ -55,7 +60,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                                                 put("event","request_customer_profile");
                                             }})
                                     .execute();
-                        } catch (Exception e) {
+                        } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -63,6 +68,13 @@ public class RealAppMainActivity extends AppCompatActivity {
                     public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
                         webapp.detachWebAppCallback();
                         Add_Loading_Text("\n load error.");
+                    }
+                    @TargetApi(19)
+                    @Override
+                    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                            handler.proceed();
+                        }
                     }
                 });
             } catch (Exception e) {
@@ -80,6 +92,7 @@ public class RealAppMainActivity extends AppCompatActivity {
         public void onReceiveMessage ( int param, String event, String data){
             switch (event) {
                 case "request_customer_profile": {
+                    try
                     {
                         ((LinearLayout)findViewById(R.id.RealAppLoadingLayout)).setVisibility(View.GONE);
                         ((LinearLayout)findViewById(R.id.RealAppLayout)).setVisibility(View.VISIBLE);
@@ -108,49 +121,41 @@ public class RealAppMainActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
+                    }catch (Exception e){
+                        throw new RuntimeException(e);
                     }
                     break;
                 }
                 case "get_my_purchases": {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                        prepare("https://webappapi-server.azurewebsites.net/purchases.json",
-                                                new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
-                                                new JSONObject() {{
-                                                    put("receiverName",RealAppMyPurchasesActivity.className);
-                                                    put("param",0);
-                                                    put("event","request_my_purchases");
-                                                }})
-                                        .execute();
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
+                    try {
+                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
+                                prepare("https://webappapi-server.azurewebsites.net/purchases.json",
+                                        new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
+                                        new JSONObject() {{
+                                            put("receiverName",RealAppMyPurchasesActivity.className);
+                                            put("param",0);
+                                            put("event","request_my_purchases");
+                                        }})
+                                .execute();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 }
                 case "get_shop_products": {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                        prepare("https://webappapi-server.azurewebsites.net/products.json",
-                                                new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
-                                                new JSONObject() {{
-                                                    put("receiverName",RealAppShopActivity.className);
-                                                    put("param",0);
-                                                    put("event","request_shop_products");
-                                                }})
-                                        .execute();
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
+                    try {
+                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
+                                prepare("https://webappapi-server.azurewebsites.net/products.json",
+                                        new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
+                                        new JSONObject() {{
+                                            put("receiverName",RealAppShopActivity.className);
+                                            put("param",0);
+                                            put("event","request_shop_products");
+                                        }})
+                                .execute();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     break;
                 }
                 case "connection_error":{

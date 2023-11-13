@@ -12,15 +12,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class RealAppMyPurchasesActivity extends AppCompatActivity {
+    private AppMessage appmessage;
+    private AppMessageReceiver appMessageReceiver;
     static String className = RealAppMyPurchasesActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_app_my_purchases);
-        AppMessage appmessage = new AppMessage(this);
+        appmessage = new AppMessage(this);
         //AppMessageReceiver for RealAppMyPurchasesActivity
         {
-            AppMessageReceiver appMessageReceiver = new AppMessageReceiver(new AppMessageReceiver.ReceiverCallback() {
+            appMessageReceiver = new AppMessageReceiver(new AppMessageReceiver.ReceiverCallback() {
                 @Override
                 public void onReceiveMessage(int param, String event, String data) {
                     switch (event){
@@ -68,5 +70,10 @@ public class RealAppMyPurchasesActivity extends AppCompatActivity {
             appmessage.registerReceiver(RealAppMyPurchasesActivity.className,appMessageReceiver.receiver);
             appmessage.sendTo(RealAppMainActivity.className,0,"get_my_purchases",null);
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appmessage.unregisterReceiver(appMessageReceiver.receiver);
     }
 }
