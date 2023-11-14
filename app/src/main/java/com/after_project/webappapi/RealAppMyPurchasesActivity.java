@@ -6,11 +6,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 public class RealAppMyPurchasesActivity extends AppCompatActivity {
     private AppMessage appmessage;
     private AppMessageReceiver appMessageReceiver;
@@ -27,26 +25,24 @@ public class RealAppMyPurchasesActivity extends AppCompatActivity {
                 public void onReceiveMessage(int param, String event, String data) {
                     switch (event){
                         case "request_my_purchases": {
+                            try
                             {
                                 JsonObject my_purchases_json = JsonParser.parseString(data).getAsJsonObject();
                                 {
-                                    JSONArray arr = null;
-                                    try {
-                                        arr = new JSONArray(my_purchases_json.getAsJsonArray("purchases_list").toString());
-                                        for (int i=0; i<arr.length(); i++){
-                                            JSONObject jsonProductObject = arr.getJSONObject(i);
-                                            String product_id = jsonProductObject.getString("product_id");
-                                            String product_name = jsonProductObject.getString("product_name");
-                                            String purchase_quantity = jsonProductObject.getString("purchase_quantity");
-                                            String purchase_status = jsonProductObject.getString("purchase_status");
-                                            String purchase_stage = jsonProductObject.getString("purchase_stage");
-                                            ((TextView)findViewById(R.id.RealAppMyPurchasesLayoutTextviewPurchasesList))
-                                                    .append(getResources().getString(R.string.purchase_list_append_text,product_id,product_name,purchase_quantity,purchase_status,purchase_stage));
-                                        }
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
+                                    JsonArray purchases_list = my_purchases_json.getAsJsonArray("purchases_list");
+                                    for (int i=0; i<purchases_list.size(); i++){
+                                        JsonObject jsonPurchaseObject = purchases_list.get(i).getAsJsonObject();
+                                        String product_id = jsonPurchaseObject.get("product_id").getAsString();
+                                        String product_name = jsonPurchaseObject.get("product_name").getAsString();
+                                        String purchase_quantity = jsonPurchaseObject.get("purchase_quantity").getAsString();
+                                        String purchase_status = jsonPurchaseObject.get("purchase_status").getAsString();
+                                        String purchase_stage = jsonPurchaseObject.get("purchase_stage").getAsString();
+                                        ((TextView)findViewById(R.id.RealAppMyPurchasesLayoutTextviewPurchasesList))
+                                                .append(getResources().getString(R.string.purchase_list_append_text,product_id,product_name,purchase_quantity,purchase_status,purchase_stage));
                                     }
                                 }
+                            }catch (Exception e){
+                                throw new RuntimeException(e);
                             }
                             break;
                         }

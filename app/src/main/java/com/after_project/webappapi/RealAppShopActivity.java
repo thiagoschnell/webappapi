@@ -6,11 +6,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 public class RealAppShopActivity extends AppCompatActivity {
     private AppMessage appmessage;
     private AppMessageReceiver appMessageReceiver;
@@ -27,24 +25,22 @@ public class RealAppShopActivity extends AppCompatActivity {
                 public void onReceiveMessage(int param, String event, String data) {
                     switch (event){
                         case "request_shop_products": {
+                            try
                             {
                                 JsonObject shop_products_json = JsonParser.parseString(data).getAsJsonObject();
                                 {
-                                    JSONArray arr = null;
-                                    try {
-                                        arr = new JSONArray(shop_products_json.getAsJsonArray("products_list").toString());
-                                        for (int i=0; i<arr.length(); i++){
-                                            JSONObject jsonProductObject = arr.getJSONObject(i);
-                                            String product_id = jsonProductObject.getString("product_id");
-                                            String product_name = jsonProductObject.getString("product_name");
-                                            String amount = jsonProductObject.getString("amount");
-                                            ((TextView)findViewById(R.id.RealAppShopLayoutTextviewProductsList))
-                                                    .append(getResources().getString(R.string.shop_product_list_append_text,product_id,product_name,amount));
-                                        }
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
+                                    JsonArray products_list = shop_products_json.getAsJsonArray("products_list");
+                                    for (int i=0; i<products_list.size(); i++){
+                                        JsonObject jsonProductObject = products_list.get(i).getAsJsonObject();
+                                        String product_id = jsonProductObject.get("product_id").getAsString();
+                                        String product_name = jsonProductObject.get("product_name").getAsString();
+                                        String amount = jsonProductObject.get("amount").getAsString();
+                                        ((TextView)findViewById(R.id.RealAppShopLayoutTextviewProductsList))
+                                                .append(getResources().getString(R.string.shop_product_list_append_text,product_id,product_name,amount));
                                     }
                                 }
+                            }catch (Exception e){
+                                throw new RuntimeException(e);
                             }
                             break;
                         }
