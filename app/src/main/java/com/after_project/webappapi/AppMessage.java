@@ -1,12 +1,10 @@
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
 package com.after_project.webappapi;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 public class AppMessage {
     private Context mContext;
@@ -16,15 +14,15 @@ public class AppMessage {
     void unregisterReceiver(BroadcastReceiver receiver){
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(receiver);
     }
-    private String getIntentFilter(String action){
-        return String.format("%s.%s",BuildConfig.APPLICATION_ID,action);
+    private String action(String action){
+        return String.format("%s.APP_MESSAGE_%s",BuildConfig.APPLICATION_ID,action.toUpperCase());
     }
     void registerReceiver( String receiverName, BroadcastReceiver receiver){
         LocalBroadcastManager.getInstance(mContext)
-                .registerReceiver(receiver, new IntentFilter(getIntentFilter(receiverName)));
+                .registerReceiver(receiver, new IntentFilter(action(receiverName)));
     }
     private void send(String receiverName, int param, String event, String data, Boolean sync){
-        Intent intent = new Intent(getIntentFilter(receiverName));
+        Intent intent = new Intent(action(receiverName));
         intent.putExtra("param", param);
         intent.putExtra("event", event);
         intent.putExtra("data", data);

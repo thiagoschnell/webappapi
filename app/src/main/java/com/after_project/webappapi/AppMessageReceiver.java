@@ -1,7 +1,6 @@
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
 package com.after_project.webappapi;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

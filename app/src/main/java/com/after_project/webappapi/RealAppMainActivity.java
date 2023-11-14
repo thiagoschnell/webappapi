@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 public class RealAppMainActivity extends AppCompatActivity {
