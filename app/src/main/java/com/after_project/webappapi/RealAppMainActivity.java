@@ -40,18 +40,22 @@ public class RealAppMainActivity extends AppCompatActivity {
         {
             WebView webview = new WebView(this);
             webapp = new WebApp(webview,  new WebViewAssetLoader.Builder()
-                    .setDomain("webappapi-server.azurewebsites.net")
+
+                    .setDomain("realappexample.shop")//site domain here
+
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                     .build());
             try {
-                webapp.load("https://webappapi-server.azurewebsites.net/index.html",new WebAppCallback() {
+
+                webapp.load("https://realappexample.shop/index.html", //server url here
+                        new WebAppCallback() {
                     @Override
                     public void onLoadFinish(WebView view, String url) {
                         webapp.detachWebAppCallback();
                         try {
                             webapp.api.setWebAppApiResponse(webAppApiResponse);
                             webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                    prepare("https://webappapi-server.azurewebsites.net/customer_profile.json",
+                                    prepare("https://realappexample.shop/customer_profile.json", //api url to return Customer profile
                                             new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                             new JSONObject() {{
                                                 put("receiverName",RealAppMainActivity.className);
@@ -128,7 +132,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                 case "get_my_purchases": {
                     try {
                         webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                prepare("https://webappapi-server.azurewebsites.net/purchases.json",
+                                prepare("https://realappexample.shop/purchases.json", //api url to return Purchases
                                         new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                         new JSONObject() {{
                                             put("receiverName",RealAppMyPurchasesActivity.className);
@@ -144,7 +148,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                 case "get_shop_products": {
                     try {
                         webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                prepare("https://webappapi-server.azurewebsites.net/products.json",
+                                prepare("https://realappexample.shop/products.json", //api url to return Products list
                                         new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                         new JSONObject() {{
                                             put("receiverName",RealAppShopActivity.className);
