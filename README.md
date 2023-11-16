@@ -26,6 +26,10 @@ Android Integrations such as **App Message**, **Webview** has also provides demo
 Server Files for this WebApp app sample
 * [PHP files](https://github.com/after-project/webappapi-php/)
 
+Shop Site Demo for usage example purpouses
+* [Real App Example site files](https://github.com/after-project/site-realappexample/)
+* [Real App Example android source code](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/RealAppExample)
+
 ## Documentation for CORS 
 * [Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)
 * [Same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
