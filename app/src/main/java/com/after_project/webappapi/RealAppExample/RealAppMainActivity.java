@@ -72,13 +72,17 @@ public class RealAppMainActivity extends AppCompatActivity {
                         webapp.detachWebAppCallback();
                         Add_Loading_Text("\n load error.");
                     }
-                    @TargetApi(19)
-                    @Override
-                    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                            handler.proceed();
-                        }
-                    }
+                    /**
+                     * uncomment and use onReceivedSslError method only in emergencies or for a temporary time only.
+                     *
+                     * if you are trying to use with API < 21 like API 19 then check and verify your SSL,
+                     * also check your DNS and be aware this not support some redirects 3xx codes in API 19
+                     */
+                    //@Override
+                    //public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                    //    handleSslError(error);
+                    //    handler.proceed();
+                    //}
                 });
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -214,6 +218,22 @@ public class RealAppMainActivity extends AppCompatActivity {
                     .show();
         }
     };
+    void handleSslError(SslError error){
+        switch (error.getPrimaryError()) {
+            case SslError.SSL_UNTRUSTED:
+                System.out.println( "onReceivedSslError: The certificate authority is not trusted.");
+                break;
+            case SslError.SSL_EXPIRED:
+                System.out.println( "onReceivedSslError: The certificate has expired.");
+                break;
+            case SslError.SSL_IDMISMATCH:
+                System.out.println( "onReceivedSslError: The certificate Hostname mismatch.");
+                break;
+            case SslError.SSL_NOTYETVALID:
+                System.out.println( "onReceivedSslError: The certificate is not yet valid.");
+                break;
+        }
+    }
     void Add_Loading_Text(String text){
         runOnUiThread(new Runnable() {
             @Override
