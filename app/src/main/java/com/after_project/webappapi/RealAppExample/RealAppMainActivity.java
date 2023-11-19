@@ -73,10 +73,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                         Add_Loading_Text("\n load error.");
                     }
                     /**
-                     * uncomment and use onReceivedSslError method only in emergencies or for a temporary time only.
-                     *
-                     * if you are trying to use with API < 21 like API 19 then check and verify your SSL,
-                     * also check your DNS and be aware this not support some redirects 3xx codes in API 19
+                     * uncomment if you need use the method onReceivedSslError 
                      */
                     //@Override
                     //public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
