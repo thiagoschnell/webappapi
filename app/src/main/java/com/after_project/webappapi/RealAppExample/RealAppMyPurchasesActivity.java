@@ -48,7 +48,7 @@ public class RealAppMyPurchasesActivity extends AppCompatActivity {
                         }
                         case "connection_error":{
                             {
-                                Snackbar.make(findViewById(android.R.id.content), "Connetion error", Snackbar.LENGTH_LONG)
+                                Snackbar.make(findViewById(android.R.id.content), "Connetion error", Snackbar.LENGTH_INDEFINITE)
                                         .setAction("Retry", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {

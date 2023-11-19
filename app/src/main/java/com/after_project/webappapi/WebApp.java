@@ -46,7 +46,8 @@ public class WebApp {
         this.webView.setWebViewClient(LC);
         this.webView.getSettings().setJavaScriptEnabled(true);
         this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        this.webView.addJavascriptInterface(new WebAppInterface(), "android");
+        this.webView.clearCache(true);
+        this.webView.addJavascriptInterface(new WebAppJavaScriptInterface(), "android");
     }
     static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
     static final String DEFAULT_REQUEST_API_OPTIONS_WITH_SERIALIZE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
@@ -117,8 +118,8 @@ public class WebApp {
     }
     void load(String server_url){
         load(server_url, null);    }
-    private class WebAppInterface {
-        WebAppInterface() {
+    private class WebAppJavaScriptInterface {
+        WebAppJavaScriptInterface() {
         }
         @JavascriptInterface
         public void response_url(String response) {

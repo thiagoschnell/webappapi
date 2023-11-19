@@ -25,6 +25,7 @@ function request_url(url,options,vardata) {
         result.request_url = url;
         result.error = Object();
         if (typeof $ !== 'undefined') {
+        options.timeout = 3000;
             $.ajax(url,options).done(function (data) {
                 try {
                     result.data = typeof data === 'object'? data : JSON.parse(data);

@@ -203,7 +203,7 @@ public class RealAppMainActivity extends AppCompatActivity {
         }
         @Override
         public void onResponseApiScriptError() {
-            Snackbar.make(findViewById(android.R.id.content), "Script error", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(android.R.id.content), "Script error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
