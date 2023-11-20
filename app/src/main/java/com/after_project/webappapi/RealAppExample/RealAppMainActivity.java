@@ -49,34 +49,45 @@ public class RealAppMainActivity extends AppCompatActivity {
 
                 webapp.load("https://realappexample.shop/index.html", //server url here
                         new WebAppCallback() {
-                    @Override
-                    public void onLoadFinish(WebView view, String url) {
-                        webapp.detachWebAppCallback();
-                        try {
-                            webapp.api.setWebAppApiResponse(webAppApiResponse);
-                            webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                    prepare("https://realappexample.shop/customer_profile.json", //api url to return Customer profile
-                                            new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
-                                            new JSONObject() {{
-                                                put("receiverName",RealAppMainActivity.className);
-                                                put("param",0);
-                                                put("event","request_customer_profile");
-                                            }})
-                                    .execute();
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    @Override
-                    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error, int errorCode, String description, String failingUrl) {
-                        webapp.detachWebAppCallback();
-                        Add_Loading_Text("\n load error.");
-                    }
-                    //@Override
-                    //public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                    //    handleSslError(error);
-                    //    handler.proceed();
-                    //}
+                            @Override
+                            public void onLoadFinish(WebView view, String url) {
+                                webapp.detachWebAppCallback();
+                                try {
+                                    webapp.api.setWebAppApiResponse(webAppApiResponse);
+                                    webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
+                                            prepare("https://realappexample.shop/customer_profile.json", //api url to return Customer profile
+                                                    new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
+                                                    new JSONObject() {{
+                                                        put("receiverName",RealAppMainActivity.className);
+                                                        put("param",0);
+                                                        put("event","request_customer_profile");
+                                                    }})
+                                            .execute();
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            @Override
+                            public void onLoadError(WebView view,
+                                    /*RequiresApi(api >= 21)*/WebResourceRequest request, WebResourceErrorCompat error,
+                                    /*RequiresApi(api >=19)*/ int errorCode, String description, String failingUrl)
+                            {
+                                //load server_url error
+                                webapp.detachWebAppCallback();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    Add_Loading_Text("\n load error. description: " + error.getDescription() + " url: " + request.getUrl().toString());
+                                }else {
+                                    Add_Loading_Text("\n load error. description: " + description + " url: " + failingUrl);
+                                }
+                            }
+                            /**
+                             * uncomment if you need use the method onReceivedSslError
+                             */
+                            //@Override
+                            //public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                            //    handleSslError(error);
+                            //    handler.proceed();
+                            //}
                 });
             } catch (Exception e) {
                 throw new RuntimeException(e);

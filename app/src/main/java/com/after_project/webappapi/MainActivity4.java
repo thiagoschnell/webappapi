@@ -112,7 +112,7 @@ public class MainActivity4 extends AppCompatActivity {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             Add_Loading_Text("\n load error. description: " + error.getDescription() + " url: " + request.getUrl().toString());
                         }else {
-                            Add_Loading_Text("\n load error. descriptionl: " + description + " urll: " + failingUrl);
+                            Add_Loading_Text("\n load error. description: " + description + " url: " + failingUrl);
                         }
                     }
                 });
