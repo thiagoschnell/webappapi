@@ -63,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Click LoadDataWithBaseUrl Request
+        {
+            Button buttonOpenActivity4 = (Button) findViewById(R.id.ButtonOpenActivity4);
+            buttonOpenActivity4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MainActivity4.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

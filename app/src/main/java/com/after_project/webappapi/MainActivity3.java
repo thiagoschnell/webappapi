@@ -194,11 +194,11 @@ public class MainActivity3 extends AppCompatActivity {
             mainActivity3AppMessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiConnectionError(String receiverName) {
+        public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
             Add_Loading_Text("connection error");
         }
         @Override
-        public void onResponseApiScriptError() {
+        public void onResponseApiScriptError(JsonObject error) {
             Add_Loading_Text("script error");
         }
     };

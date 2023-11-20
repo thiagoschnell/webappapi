@@ -72,9 +72,6 @@ public class RealAppMainActivity extends AppCompatActivity {
                         webapp.detachWebAppCallback();
                         Add_Loading_Text("\n load error.");
                     }
-                    /**
-                     * uncomment if you need use the method onReceivedSslError 
-                     */
                     //@Override
                     //public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                     //    handleSslError(error);
@@ -199,11 +196,11 @@ public class RealAppMainActivity extends AppCompatActivity {
             appmessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiConnectionError(String receiverName) {
+        public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
            appmessage.sendTo(receiverName,0,"connection_error",null);
         }
         @Override
-        public void onResponseApiScriptError() {
+        public void onResponseApiScriptError(JsonObject error) {
             Snackbar.make(findViewById(android.R.id.content), "Script error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Retry", new View.OnClickListener() {
                         @Override

@@ -10,6 +10,9 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+
 import org.json.JSONObject;
 public class MainActivity2 extends AppCompatActivity {
     static String className = MainActivity2.class.getSimpleName();
@@ -114,11 +117,11 @@ public class MainActivity2 extends AppCompatActivity {
             mainActivity2AppMessage.sendTo(receiverName,param,event,data);
         }
         @Override
-        public void onResponseApiConnectionError(String receiverName) {
+        public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
             Add_Loading_Text("connection error");
         }
         @Override
-        public void onResponseApiScriptError() {
+        public void onResponseApiScriptError(JsonObject error) {
             Add_Loading_Text("script error");
         }
     };

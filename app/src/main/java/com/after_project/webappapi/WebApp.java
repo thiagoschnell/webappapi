@@ -19,17 +19,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 interface WebAppInterface {
     void onLoadFinish(WebView view, String url);
-    Boolean onshouldOverrideUrlLoading(WebView view, String url);
     void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error);
     void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error);
 }
 class WebAppCallback implements WebAppInterface {
     @Override
     public void onLoadFinish(WebView view, String url) {
-    }
-    @Override
-    public Boolean onshouldOverrideUrlLoading(WebView view, String url) {
-        return null;
     }
     @Override
     public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
@@ -69,17 +64,6 @@ public class WebApp {
             mAssetLoader = assetLoader;
         }
         @Override
-        @SuppressWarnings("deprecation")
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(webAppCallback != null){
-                Boolean r = webAppCallback.onshouldOverrideUrlLoading(view,url);
-                if(r !=null){
-                    return r;
-                }
-            }
-            return super.shouldOverrideUrlLoading(view, url);
-        }
-        @Override
         public void onReceivedError(@NonNull WebView view, @NonNull WebResourceRequest request, @NonNull WebResourceErrorCompat error) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 super.onReceivedError(view, request, error);
@@ -116,6 +100,12 @@ public class WebApp {
         this.webAppCallback = wb;
         webView.loadUrl(server_url);
     }
+    void loadDataWithBaseUrl(String server_url, RawResource rawResource, WebAppCallback wb){
+        //String exampleString = "<html><head><script src=\"/assets/jquery-3.6.1.min.js\"></script><script src=\"/assets/c.js\"></script></head><body ></body></html>";
+        this.webAppCallback = wb;
+        webView.loadDataWithBaseURL(server_url,
+                rawResource.toString(), "text/html", "UTF-8",null);
+    }
     void load(String server_url){
         load(server_url, null);    }
     private class WebAppJavaScriptInterface {
@@ -128,9 +118,10 @@ public class WebApp {
                     JsonObject json = JsonParser.parseString(response).getAsJsonObject();
                     JsonObject cb = json.get("cb").getAsJsonObject();
                     if (json.getAsJsonObject("error").has("xhr")) {
-                        api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString());
+                        api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString(),
+                                json.getAsJsonObject("error").get("xhr").getAsJsonObject());
                     } else if (json.getAsJsonObject("error").has("message")) {
-                        api.response().onResponseApiScriptError();
+                        api.response().onResponseApiScriptError(json.getAsJsonObject("error"));
                     } else {
                         JsonObject data = json.get("data").getAsJsonObject();
                         api.response().onResponseApi(

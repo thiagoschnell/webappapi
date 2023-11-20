@@ -37,7 +37,7 @@ function request_url(url,options,vardata) {
             })
             .fail(function( jqXHR, textStatus, errorThrown ){
                 try{
-                result.error.xhr = JSON.stringify(jqXHR);
+                result.error.xhr = jqXHR;
                 android.response_url(JSON.stringify(result));
                 } catch (e) {
                     result.error.message = $.ReferenceError(e);

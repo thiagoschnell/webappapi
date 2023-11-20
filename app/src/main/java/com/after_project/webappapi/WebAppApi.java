@@ -3,6 +3,7 @@
 package com.after_project.webappapi;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import com.google.gson.JsonObject;
 import org.json.JSONObject;
 interface WebAppApiRequestInterface {
     Boolean onInterceptRequestApi(String url);
@@ -12,8 +13,8 @@ interface WebAppApiRequestInterface {
 }
 interface WebAppApiResponseInterface {
     void onResponseApi(String receiverName, int param, String event, String data);
-    void onResponseApiConnectionError(String receiverName);
-    void onResponseApiScriptError();
+    void onResponseApiConnectionError(String receiverName, JsonObject xhrError);
+    void onResponseApiScriptError(JsonObject error);
     void onResponseApiException(Exception e);
 }
 interface WebAppApiTaskCallback{
@@ -30,11 +31,9 @@ class WebAppApiTask extends AsyncTask  {
     WebAppApiTask(WebAppApiRequest webAppApiRequest){
         this.webAppApiRequest = webAppApiRequest;
     }
-
     public void setWebAppApiTaskCallback(WebAppApiTaskCallback webAppApiTaskCallback) {
         this.webAppApiTaskCallback = webAppApiTaskCallback;
     }
-
     void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
         this.webAppApiRequest = webAppApiRequest;
     }
@@ -104,10 +103,10 @@ class WebAppApiResponse implements WebAppApiResponseInterface {
     public void onResponseApi(String receiverName, int param, String event, String data) {
     }
     @Override
-    public void onResponseApiConnectionError(String receiverName) {
+    public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
     }
     @Override
-    public void onResponseApiScriptError() {
+    public void onResponseApiScriptError(JsonObject error) {
     }
     @Override
     public void onResponseApiException(Exception e) {

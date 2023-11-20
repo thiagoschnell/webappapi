@@ -15,6 +15,9 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity4"
+            android:exported="false" />
+        <activity
             android:name=".RealAppShopActivity"
             android:exported="false" />
         <activity
