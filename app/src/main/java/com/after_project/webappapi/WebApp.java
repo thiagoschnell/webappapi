@@ -19,7 +19,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 interface WebAppInterface {
     void onLoadFinish(WebView view, String url);
-    void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error);
+    void onLoadError(WebView view,
+            /*RequiresApi(api >= 21)*/WebResourceRequest request, WebResourceErrorCompat error,
+            /*RequiresApi(api >=19)*/ int errorCode, String description, String failingUrl);
     void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error);
 }
 class WebAppCallback implements WebAppInterface {
@@ -27,7 +29,8 @@ class WebAppCallback implements WebAppInterface {
     public void onLoadFinish(WebView view, String url) {
     }
     @Override
-    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
+    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error, int errorCode, String description, String failingUrl) {
+
     }
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -63,12 +66,23 @@ public class WebApp {
         LocalContentWebViewClient(WebViewAssetLoader assetLoader) {
             mAssetLoader = assetLoader;
         }
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onReceivedError(@NonNull WebView view, @NonNull WebResourceRequest request, @NonNull WebResourceErrorCompat error) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                super.onReceivedError(view, request, error);
-            }
-            if(webAppCallback != null) webAppCallback.onLoadError(view, request, error);
+            System.out.println("onReceivedError LOLLIPOP");
+            super.onReceivedError(view,  error.getErrorCode(), error.getDescription().toString(),
+                    request.getUrl().toString());
+            if(webAppCallback != null) webAppCallback.onLoadError(view, request, error,
+                    error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
+        }
+        @Override
+        @SuppressWarnings("deprecation")
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            System.out.println("onReceivedError KITKAT");
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            if(webAppCallback != null) webAppCallback.onLoadError(view,null,null,
+                    errorCode, description, failingUrl);
+
         }
         @Override
         public void onPageFinished(WebView view, String url) {

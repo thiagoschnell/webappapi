@@ -133,10 +133,17 @@ public class MainActivity3 extends AppCompatActivity {
                         }
                     }
                     @Override
-                    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
+                    public void onLoadError(WebView view,
+                            /*RequiresApi(api >= 21)*/WebResourceRequest request, WebResourceErrorCompat error,
+                            /*RequiresApi(api >=19)*/ int errorCode, String description, String failingUrl)
+                    {
                         //load server_url error
                         mainActivity3WebApp.detachWebAppCallback();
-                        Add_Loading_Text("\n load error.");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            Add_Loading_Text("\n load error. description: " + error.getDescription() + " url: " + request.getUrl().toString());
+                        }else {
+                            Add_Loading_Text("\n load error. descriptionl: " + description + " urll: " + failingUrl);
+                        }
                     }
                 });
             } catch (Exception e) {

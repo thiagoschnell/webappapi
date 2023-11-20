@@ -68,7 +68,7 @@ public class RealAppMainActivity extends AppCompatActivity {
                         }
                     }
                     @Override
-                    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error) {
+                    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error, int errorCode, String description, String failingUrl) {
                         webapp.detachWebAppCallback();
                         Add_Loading_Text("\n load error.");
                     }
