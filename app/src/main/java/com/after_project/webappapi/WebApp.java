@@ -29,8 +29,7 @@ class WebAppCallback implements WebAppInterface {
     public void onLoadFinish(WebView view, String url) {
     }
     @Override
-    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error, int errorCode, String description, String failingUrl) {
-
+    public void onLoadError(WebView view, WebResourceRequest request, WebResourceErrorCompat error, int errorCode, String description, String failingUrl){
     }
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -69,20 +68,21 @@ public class WebApp {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onReceivedError(@NonNull WebView view, @NonNull WebResourceRequest request, @NonNull WebResourceErrorCompat error) {
-            System.out.println("onReceivedError LOLLIPOP");
-            super.onReceivedError(view,  error.getErrorCode(), error.getDescription().toString(),
+            super.onReceivedError(view, error.getErrorCode(), error.getDescription().toString(),
                     request.getUrl().toString());
-            if(webAppCallback != null) webAppCallback.onLoadError(view, request, error,
-                    error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
+            if(webAppCallback != null){
+                webAppCallback.onLoadError(view, request, error,
+                        error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
+            }
         }
         @Override
         @SuppressWarnings("deprecation")
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            System.out.println("onReceivedError KITKAT");
             super.onReceivedError(view, errorCode, description, failingUrl);
-            if(webAppCallback != null) webAppCallback.onLoadError(view,null,null,
-                    errorCode, description, failingUrl);
-
+            if(webAppCallback != null){
+                webAppCallback.onLoadError(view,null,null,
+                        errorCode, description, failingUrl);
+            }
         }
         @Override
         public void onPageFinished(WebView view, String url) {
