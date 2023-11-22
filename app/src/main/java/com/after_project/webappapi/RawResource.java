@@ -1,7 +1,6 @@
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
 package com.after_project.webappapi;
-import androidx.annotation.NonNull;
 import java.io.InputStream;
 public class RawResource {
     private String rawData = null;
@@ -17,7 +16,6 @@ public class RawResource {
         file.close();
         rawData = new String(b);
     }
-    @NonNull
     @Override
     public String toString() {
         return rawData;

@@ -10,9 +10,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.JsonObject;
-
 import org.json.JSONObject;
 public class MainActivity2 extends AppCompatActivity {
     static String className = MainActivity2.class.getSimpleName();

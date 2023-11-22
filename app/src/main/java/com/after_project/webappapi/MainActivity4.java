@@ -1,5 +1,4 @@
 package com.after_project.webappapi;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;

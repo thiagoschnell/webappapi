@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 package com.after_project.webappapi;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import com.google.gson.JsonObject;
 import org.json.JSONObject;
 interface WebAppApiRequestInterface {
@@ -16,22 +15,15 @@ interface WebAppApiResponseInterface {
     void onResponseApiScriptError(JsonObject error);
     void onResponseApiException(Exception e);
 }
-interface WebAppApiTaskCallback{
-    void onPreExecute();
-}
 class WebAppApiTask extends AsyncTask  {
     private String api_url;
     private JSONObject options;
     private JSONObject callback;
-    private WebAppApiTaskCallback webAppApiTaskCallback;
     WebAppApiRequest webAppApiRequest = null;
     WebAppApiTask(){
     }
     WebAppApiTask(WebAppApiRequest webAppApiRequest){
         this.webAppApiRequest = webAppApiRequest;
-    }
-    public void setWebAppApiTaskCallback(WebAppApiTaskCallback webAppApiTaskCallback) {
-        this.webAppApiTaskCallback = webAppApiTaskCallback;
     }
     void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
         this.webAppApiRequest = webAppApiRequest;
