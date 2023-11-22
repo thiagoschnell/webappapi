@@ -6,7 +6,6 @@ import android.os.SystemClock;
 import com.google.gson.JsonObject;
 import org.json.JSONObject;
 interface WebAppApiRequestInterface {
-    Boolean onInterceptRequestApi(String url);
     void onRequestApi(String api_url, JSONObject options, JSONObject callback);
     void onRequestCanceled();
     void onRequestApiException(Exception e);
@@ -43,51 +42,41 @@ class WebAppApiTask extends AsyncTask  {
         this.callback = callback;
         return this;
     }
-    Boolean cancelRequest = false;
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        if(cancelRequest){
-            webAppApiRequest.onRequestCanceled();
-        }else{
+        try{
+            webAppApiRequest.onRequestApi(api_url,options,callback);
+        }catch (Exception e){
             try {
-                webAppApiRequest.onRequestApi(api_url,options,callback);
-            } catch (Exception e) {
-                e.printStackTrace();
                 webAppApiRequest.onRequestApiException(e);
+            }catch (Exception ee){
+                ee.printStackTrace();
+            }finally {
+                onCancelled();
             }
         }
     }
     @Override
     protected Object doInBackground(Object[] objects) {
-        int count = 0;
-        while (cancelRequest==null){
-            SystemClock.sleep(300);
-            if(count>=5){
-                cancelRequest = true;
-            }
-            count++;
-        }
+        {}
         return null;
+    }
+    @Override
+    protected void onCancelled(){
+        super.onCancelled();
+        try{
+            webAppApiRequest.onRequestCanceled();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(webAppApiTaskCallback!= null){
-            webAppApiTaskCallback.onPreExecute();
-        }else{
-            Boolean b = webAppApiRequest.onInterceptRequestApi(api_url);
-            if(cancelRequest!=null){
-                cancelRequest = b;
-            }
-        }
     }
 }
 class WebAppApiRequest  implements WebAppApiRequestInterface{
-    @Override
-    public Boolean onInterceptRequestApi(String url) {
-        return false;
-    }
     @Override
     public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
     }

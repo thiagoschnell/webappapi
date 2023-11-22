@@ -13,7 +13,6 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class MainActivity3 extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class MainActivity3 extends AppCompatActivity {
     private AppMessageReceiver mainActivity3AppMessageReceiver;
     private AppMessage mainActivity3AppMessage;
     private WebApp mainActivity3WebApp;
-    private Boolean extra_parallel = false;
+    private Boolean extras_parallel = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,7 @@ public class MainActivity3 extends AppCompatActivity {
         //getExtras
         {
             if (getIntent().getExtras() != null) {
-                extra_parallel = getIntent().getBooleanExtra("Parallel",false);
+                extras_parallel = getIntent().getBooleanExtra("Parallel",false);
             }
         }
         mainActivity3AppMessage = new AppMessage(this);
@@ -63,48 +62,7 @@ public class MainActivity3 extends AppCompatActivity {
                                 put("event","my_request_event_name");
                             }};
                             mainActivity3WebApp.api.setWebAppApiResponse(webAppApiResponse);
-                            WebAppApiTask webAppApiTask1 = new WebAppApiTask(){{
-                                setWebAppApiTaskCallback(new WebAppApiTaskCallback() {
-                                    @Override
-                                    public void onPreExecute() {
-                                        cancelRequest = null;
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                mainActivity3WebApp.evalJavaScript("result = Object(); result.jquery = typeof $ !== 'undefined'; result.script = typeof request_url !== 'undefined'; result;",
-                                                        new ValueCallback() {
-                                                            @Override
-                                                            public void onReceiveValue(Object value) {
-                                                                {
-                                                                    JsonObject jo = JsonParser.parseString((String) value).getAsJsonObject();
-                                                                    if(jo.get("jquery").getAsBoolean()){
-                                                                        //Android app Assets jquery-3.6.1.min.js loaded success
-                                                                        Add_Loading_Text("Assets jquery-3.6.1.min.js load success");
-                                                                        if(jo.get("script").getAsBoolean()){
-                                                                            //Android app Assets c.js loaded success
-                                                                            Add_Loading_Text("Assets c.js load success");
-                                                                            cancelRequest = false;
-                                                                        }else{
-                                                                            // Assets c.js load error
-                                                                            Add_Loading_Text("Assets c.js load error");
-                                                                            cancelRequest = true;
-                                                                        }
-                                                                    }else{
-                                                                        //Assets jquery-3.6.1.min.js load error
-                                                                        Add_Loading_Text("Assets jquery-3.6.1.min.js load error");
-                                                                        cancelRequest = true;
-                                                                    }
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        });
-                                    }
-                                });
-                            }};
-                            webAppApiTask1.setWebAppApiRequest(webAppApiRequest);
-                            webAppApiTask1.prepare("api.php", joptions,jcallback).execute(AsyncTask.THREAD_POOL_EXECUTOR);
-                           if(!extra_parallel){
+                           if(!extras_parallel){
                                 //On Demand Requests
                                mainActivity3WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).prepare("api.php?id=0", joptions,jcallback).execute();
                                mainActivity3WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).prepare("api.php?id=1", joptions,jcallback).execute();
