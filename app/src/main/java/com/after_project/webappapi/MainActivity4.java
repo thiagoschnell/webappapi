@@ -1,4 +1,6 @@
 package com.after_project.webappapi;
+import static com.after_project.webappapi.WebApp.FLAG_CLEAR;
+import static com.after_project.webappapi.WebApp.FLAG_CLEAR_CACHE;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,10 +34,11 @@ public class MainActivity4 extends AppCompatActivity {
         //WebApp
         {
             WebView webview = new WebView(this);
-            mainActivity4WebApp = new WebApp(webview,  new WebViewAssetLoader.Builder()
+            mainActivity4WebApp = new WebApp(webview,new WebViewAssetLoader.Builder()
                     .setDomain("realappexample.shop")
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build());
+                    .build()
+                    ,FLAG_CLEAR_CACHE | FLAG_CLEAR);
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin

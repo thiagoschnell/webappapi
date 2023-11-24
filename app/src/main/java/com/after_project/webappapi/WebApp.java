@@ -11,12 +11,15 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 interface WebAppInterface {
     void onLoadFinish(WebView view, String url);
     void onLoadError(WebView view,
@@ -43,9 +46,57 @@ public class WebApp {
         this.webView.setWebViewClient(LC);
         this.webView.getSettings().setJavaScriptEnabled(true);
         this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        this.webView.clearCache(true);
         this.webView.addJavascriptInterface(new WebAppJavaScriptInterface(), "android");
     }
+    void clearCacheRamOnly(){
+        this.webView.clearCache(false);
+    }
+    void clearCache(){
+        this.webView.clearCache(true);
+    }
+    void clearHistory(){
+        this.webView.clearHistory();
+    }
+    void clearSslPreferences(){
+        this.webView.clearSslPreferences();
+    }
+    private void setFlags(@Flags int flags) {
+        if ((flags&FLAG_CLEAR_CACHE_RAM_ONLY) != 0){
+            clearCacheRamOnly();
+        }
+        if ((flags&FLAG_CLEAR_CACHE) != 0){
+            clearCache();
+        }
+        if ((flags&FLAG_CLEAR_HISTORY) != 0){
+            clearHistory();
+        }
+        if ((flags&FLAG_CLEAR_SSL_PREFERENCES) != 0){
+            clearSslPreferences();
+        }
+        if ((flags&FLAG_CLEAR) != 0){
+        }
+    }
+    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader, @Flags int flags){
+        this(webView1,webViewAssetLoader);
+        setFlags(flags);
+    }
+    public static final int FLAG_CLEAR_CACHE_RAM_ONLY = 1; // clear RAM cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
+    public static final int FLAG_CLEAR_CACHE = 1<<1; // Clears the resource cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
+    public static final int FLAG_CLEAR_HISTORY = 1<<2; // Clear its internal back/forward list.
+    public static final int FLAG_CLEAR_SSL_PREFERENCES = 1<<3; // Clears the SSL preferences table stored in response to proceeding with SSL certificate errors.
+    public static final int FLAG_CLEAR = 1<<4;
+    @IntDef(
+            flag=true,
+            value={
+                    FLAG_CLEAR_CACHE_RAM_ONLY,
+                    FLAG_CLEAR_CACHE,
+                    FLAG_CLEAR_HISTORY,
+                    FLAG_CLEAR_SSL_PREFERENCES,
+                    FLAG_CLEAR
+            }
+    )
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Flags{}
     static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
     static final String DEFAULT_REQUEST_API_OPTIONS_WITH_SERIALIZE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
     static final String DEFAULT_REQUEST_JSON_OPTIONS = "{'type':'GET','dataType':'json'}";
