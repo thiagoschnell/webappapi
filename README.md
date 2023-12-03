@@ -48,7 +48,7 @@ Shop Site Demo for usage example purpouses
 
 **JobScheduler Example** <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /><img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
 
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/933ac852-ddc7-486e-bc58-1f38d9948670" />
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/9eeddbd6-bb88-4b25-861c-9deadf8e799b" />
 
 **LoadDataWithBaseUrl Request**
 
