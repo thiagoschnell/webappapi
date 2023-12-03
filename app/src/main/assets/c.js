@@ -44,6 +44,7 @@ function request_url(url,options,vardata) {
                     android.response_url(JSON.stringify(result));
                 }
             })
+        return result;
         }
         else {
             throw new Error('$ is not function');

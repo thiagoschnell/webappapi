@@ -34,6 +34,9 @@ class WebAppApiTask extends AsyncTask  {
         this.callback = callback;
         return this;
     }
+    void executeParallel(){
+        this.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    };
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);

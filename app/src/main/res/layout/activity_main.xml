@@ -35,6 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LoadDataWithBaseUrl Request"></Button>
+    <Button
+        android:id="@+id/ButtonOpenJobScheduler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JobScheduler Example"></Button>
   </LinearLayout>
 
   <LinearLayout

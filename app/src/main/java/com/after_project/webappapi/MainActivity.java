@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        //Button Reall App
+        //Button Reall MyApp
         {
             Button buttonOpenRealApp = (Button) findViewById(R.id.ButtonOpenRealApp);
             buttonOpenRealApp.setOnClickListener(new View.OnClickListener() {
@@ -63,13 +63,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        //Click LoadDataWithBaseUrl Request
+        //Button LoadDataWithBaseUrl Request
         {
             Button buttonOpenActivity4 = (Button) findViewById(R.id.ButtonOpenActivity4);
             buttonOpenActivity4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, MainActivity4.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        //Button JobScheduler
+        {
+            Button buttonOpenActivity4 = (Button) findViewById(R.id.ButtonOpenJobScheduler);
+            buttonOpenActivity4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, JobSchedulerMainActivity.class);
                     startActivity(intent);
                 }
             });

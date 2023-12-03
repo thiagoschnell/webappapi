@@ -98,8 +98,9 @@ public class WebApp {
     @Retention(RetentionPolicy.SOURCE)
     public @interface Flags{}
     static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
-    static final String DEFAULT_REQUEST_API_OPTIONS_WITH_SERIALIZE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
     static final String DEFAULT_REQUEST_JSON_OPTIONS = "{'type':'GET','dataType':'json'}";
+    static final String REQUEST_API_OPTIONS_SERIALIZE_EXAMPLE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
+    static final String REQUEST_JSON_OPTIONS_SYNC = "{'type':'GET','dataType':'json', 'async': false}";
     private WebView webView;
     private WebAppCallback webAppCallback;
     void evalJavaScript(String js, ValueCallback valueCallback){
