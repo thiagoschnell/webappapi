@@ -45,8 +45,8 @@ public class MainActivity2 extends AppCompatActivity {
                         mainActivity2WebApp.detachWebAppCallback();
                         try {
                             mainActivity2WebApp.api.setWebAppApiResponse(webAppApiResponse);
-                            mainActivity2WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                    prepare("api.php",
+                            mainActivity2WebApp.api.newTask(new WebAppApiTask(webAppApiRequest))
+                                    .prepare("api.php",
                                             new JSONObject(WebApp.DEFAULT_REQUEST_API_OPTIONS),
                                             new JSONObject() {{
                                                 put("receiverName",MainActivity2.className); //can also change the receiverName to MainActivity.className

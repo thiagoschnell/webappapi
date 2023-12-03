@@ -35,7 +35,6 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
                             MyApp.getInstance().getWebApp().evalJavaScript(js, new ValueCallback() {
                                 @Override
                                 public void onReceiveValue(Object value) {
-
                                     if(!value.equals("null")){
                                         try{
                                             JsonObject json = JsonParser.parseString((String)value).getAsJsonObject();
@@ -69,6 +68,13 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(JobSchedulerMainActivity.this, JobSchedulerCheckProductsStock.class);
                 intent.putExtra("jsonProducts", jsonProducts.toString());
+                startActivity(intent);
+            }
+        });
+        ((Button)findViewById(R.id.JobSchedulerLayoutButtonScheduleRepeat)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(JobSchedulerMainActivity.this, JobSchedulerCheckPurchaseStatus.class);
                 startActivity(intent);
             }
         });

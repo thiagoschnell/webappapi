@@ -52,8 +52,8 @@ public class RealAppMainActivity extends AppCompatActivity {
                                 webapp.detachWebAppCallback();
                                 try {
                                     webapp.api.setWebAppApiResponse(webAppApiResponse);
-                                    webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                            prepare("https://realappexample.shop/customer_profile.json", //api url to return Customer profile to show in My Profile activity
+                                    webapp.api.newTask(new WebAppApiTask(webAppApiRequest))
+                                            .prepare("https://realappexample.shop/customer_profile.json", //api url to return Customer profile to show in My Profile activity
                                                     new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                                     new JSONObject() {{
                                                         put("receiverName",RealAppMainActivity.className);
@@ -138,8 +138,8 @@ public class RealAppMainActivity extends AppCompatActivity {
                 }
                 case "get_my_purchases": {
                     try {
-                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                prepare("https://realappexample.shop/purchases.json", //api url to return Purchases to show in My Purchases acitivty
+                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest))
+                                .prepare("https://realappexample.shop/purchases.json", //api url to return Purchases to show in My Purchases acitivty
                                         new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                         new JSONObject() {{
                                             put("receiverName",RealAppMyPurchasesActivity.className);
@@ -154,8 +154,8 @@ public class RealAppMainActivity extends AppCompatActivity {
                 }
                 case "get_shop_products": {
                     try {
-                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest)).
-                                prepare("https://realappexample.shop/products.json", //api url to return Products to show in Shop Now activity
+                        webapp.api.newTask(new WebAppApiTask(webAppApiRequest))
+                                .prepare("https://realappexample.shop/products.json", //api url to return Products to show in Shop Now activity
                                         new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                         new JSONObject() {{
                                             put("receiverName",RealAppShopActivity.className);
