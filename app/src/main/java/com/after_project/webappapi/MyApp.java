@@ -1,14 +1,14 @@
 package com.after_project.webappapi;
-import android.app.Application;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import androidx.annotation.IntDef;
+import androidx.multidex.MultiDexApplication;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-public class MyApp extends Application {
+public class MyApp extends MultiDexApplication {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
