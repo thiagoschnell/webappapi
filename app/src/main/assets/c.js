@@ -19,38 +19,46 @@ $(function(){
     //Error support 4.4
 })
 function request_url(url,options,vardata) {
+var defaultOptions = {
+    'async': true,
+    'timeout': 3000
+  };
+var requestOptions = $.extend(
+    defaultOptions,
+    options
+  );
     try {
         result = Object();
         result.cb = vardata;
         result.request_url = url;
         result.error = Object();
         if (typeof $ !== 'undefined') {
-        options.timeout = 3000;
+
             $.ajax(url,options).done(function (data) {
                 try {
                     result.data = typeof data === 'object'? data : JSON.parse(data);
-                    android.response_url(JSON.stringify(result));
+                    requestOptions.async&&android.response_url(JSON.stringify(result));
                 } catch (e) {
                     result.error.message = $.ReferenceError(e);
-                    android.response_url(JSON.stringify(result));
+                    requestOptions.async&&android.response_url(JSON.stringify(result));
                 }
             })
             .fail(function( jqXHR, textStatus, errorThrown ){
                 try{
                 result.error.xhr = jqXHR;
-                android.response_url(JSON.stringify(result));
+                requestOptions.async&&android.response_url(JSON.stringify(result));
                 } catch (e) {
                     result.error.message = $.ReferenceError(e);
-                    android.response_url(JSON.stringify(result));
+                    requestOptions.async&&android.response_url(JSON.stringify(result));
                 }
             })
-        return result;
         }
         else {
             throw new Error('$ is not function');
         }
     } catch (e) {
         result.error.message = $.ReferenceError(e);
-        android.response_url(JSON.stringify(result));
+        requestOptions.async&&android.response_url(JSON.stringify(result));
     }
+    if(requestOptions.async==false)return result;
 }

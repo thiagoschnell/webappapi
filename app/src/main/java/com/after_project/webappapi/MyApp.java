@@ -100,9 +100,7 @@ public class MyApp extends MultiDexApplication {
     private WebAppApiResponse webAppApiResponse = new WebAppApiResponse(){
         @Override
         public void onResponseApi(String receiverName, int param, String event, String data) {
-            if(param > -1){
-                getAppMessage().sendTo(receiverName,param,event,data);
-            }
+            getAppMessage().sendTo(receiverName,param,event,data);
         }
         @Override
         public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
@@ -110,7 +108,7 @@ public class MyApp extends MultiDexApplication {
         }
         @Override
         public void onResponseApiScriptError(JsonObject error) {
-           throw new Error();
+            throw new Error(error.toString());
         }
     };
 }

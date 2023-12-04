@@ -28,7 +28,8 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
             appmessage.registerReceiver(className,appMessageReceiver);
         }
         try{
-            MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(new WebAppApiRequest(){
+            MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(
+                    new WebAppApiRequest(){
                         @Override
                         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
                             String js = "request_url('"+api_url+"',"+options+","+callback+")";
@@ -42,6 +43,10 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
                                                 jsonProducts = json.get("data").getAsJsonObject();
                                                 findViewById(R.id.JobSchedulerLoadingLayout).setVisibility(View.GONE);
                                                 findViewById(R.id.JobSchedulerLayout).setVisibility(View.VISIBLE);
+                                            }else if (json.getAsJsonObject("error").has("xhr")) {
+                                                MyApp.getInstance().getAppMessage().sendTo(className,0,"connection_error","");
+                                            }else {
+                                                throw new Error(json.getAsJsonObject("error").toString());
                                             }
                                         }catch (Exception e){
                                             e.printStackTrace();
@@ -54,11 +59,7 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
                     }))
                     .prepare("products.json",
                             new JSONObject(REQUEST_JSON_OPTIONS_SYNC),
-                            new JSONObject() {{
-                                put("receiverName",JobSchedulerMainActivity.className);
-                                put("param",-1);
-                                put("event","");
-                            }})
+                            null)
                     .execute();
         }catch (Exception e){
             throw new RuntimeException(e);

@@ -43,6 +43,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
                 handleJobScheduler();
             } else if (state instanceof Operation.State.FAILURE) {
                 // Operarion failure
+                Add_Loading_Text("Worker failed");
             }
         }));
     }

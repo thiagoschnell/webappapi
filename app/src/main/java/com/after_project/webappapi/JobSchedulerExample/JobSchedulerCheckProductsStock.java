@@ -70,7 +70,8 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
                    String product_name = jsonProductObject.get("product_name").getAsString();
                    String amount = jsonProductObject.get("amount").getAsString();
                    {
-                       MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(new WebAppApiRequest(){
+                       MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(
+                               new WebAppApiRequest(){
                                    @Override
                                    public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
                                        String js = "request_url('"+api_url+"',"+options+","+callback+")";
@@ -86,6 +87,10 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
                                                                    Integer.parseInt(product_id),
                                                                    "ui-update_product_stock",
                                                                    jsonProduct.get("amount").getAsString());
+                                                       }else if (json.getAsJsonObject("error").has("xhr")) {
+                                                           MyApp.getInstance().getAppMessage().sendTo(className,0,"connection_error","");
+                                                       }else {
+                                                           throw new Error(json.getAsJsonObject("error").toString());
                                                        }
                                                    }catch (Exception e){
                                                        e.printStackTrace();
@@ -98,11 +103,7 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
                                }))
                                .prepare("product"+product_id+".json",
                                        new JSONObject(REQUEST_JSON_OPTIONS_SYNC),
-                                       new JSONObject() {{
-                                           put("receiverName",JobSchedulerCheckProductsStock.className);
-                                           put("param",-1);
-                                           put("event","");
-                                       }})
+                                       null)
                                .execute();
                    }
                }
