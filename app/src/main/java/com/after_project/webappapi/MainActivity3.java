@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 public class MainActivity3 extends AppCompatActivity {
@@ -61,7 +62,6 @@ public class MainActivity3 extends AppCompatActivity {
                                 put("param",0);
                                 put("event","my_request_event_name");
                             }};
-                            mainActivity3WebApp.api.setWebAppApiResponse(webAppApiResponse);
                            if(!extras_parallel){
                                 //On Demand Requests
                                mainActivity3WebApp.api.newTask(new WebAppApiTask(webAppApiRequest)).prepare("api.php?id=0", joptions,jcallback).execute();
@@ -147,24 +147,31 @@ public class MainActivity3 extends AppCompatActivity {
             mainActivity3WebApp.evalJavaScript(js, new ValueCallback() {
                 @Override
                 public void onReceiveValue(Object value) {
-                    //To do
-                    // on request completed
+                    //override the WebAppApiResponse
+                    {
+                        if(!value.equals("null")){
+                            try{
+                                JsonObject json = JsonParser.parseString((String)value).getAsJsonObject();
+                                if(json.has("data")){
+                                    JsonObject cb = json.get("cb").getAsJsonObject();
+                                    JsonObject data = json.get("data").getAsJsonObject();
+                                    mainActivity3AppMessage.sendTo(
+                                            cb.get("receiverName").getAsString(),
+                                            cb.get("param").getAsInt(),
+                                            cb.get("event").getAsString(),
+                                            data.toString());
+                                }else if (json.getAsJsonObject("error").has("xhr")) {
+                                    Add_Loading_Text("connection error");
+                                }else {
+                                    Add_Loading_Text("script error");
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
             });
-        }
-    };
-    private WebAppApiResponse webAppApiResponse = new WebAppApiResponse(){
-        @Override
-        public void onResponseApi(String receiverName, int param, String event, String data) {
-            mainActivity3AppMessage.sendTo(receiverName,param,event,data);
-        }
-        @Override
-        public void onResponseApiConnectionError(String receiverName, JsonObject xhrError) {
-            Add_Loading_Text("connection error");
-        }
-        @Override
-        public void onResponseApiScriptError(JsonObject error) {
-            Add_Loading_Text("script error");
         }
     };
     void Add_Loading_Text(String text){
