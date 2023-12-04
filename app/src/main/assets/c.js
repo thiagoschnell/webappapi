@@ -33,8 +33,8 @@ var requestOptions = $.extend(
         result.request_url = url;
         result.error = Object();
         if (typeof $ !== 'undefined') {
-
-            $.ajax(url,options).done(function (data) {
+          $.ajax(url,requestOptions)
+            .done(function (data) {
                 try {
                     result.data = typeof data === 'object'? data : JSON.parse(data);
                     requestOptions.async&&android.response_url(JSON.stringify(result));
