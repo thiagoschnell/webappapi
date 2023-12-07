@@ -76,7 +76,6 @@ public class MainActivity5 extends AppCompatActivity {
         MyApp.getInstance().getWebApp().setLiveData(null);
     }
     private class WebAppApiCustomTask2 extends WebAppApiTask{
-        private JsonObject json = null;
         WebAppApiCustomTask2(int id){
             super(id);
             setWebAppApiRequest(new WebAppApiRequest(){
@@ -86,17 +85,7 @@ public class MainActivity5 extends AppCompatActivity {
                     MyApp.getInstance().getWebApp().evalJavaScript(js, new ValueCallback() {
                         @Override
                         public void onReceiveValue(Object value) {
-                            try {
-                                if (json.getAsJsonObject("error").has("xhr")) {
-                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") connection error");
-                                } else if (json.getAsJsonObject("error").has("message")) {
-                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") script error");
-                                } else {
-                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") request success");
-                                }
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
+
                         }
                     });
                 }
@@ -107,11 +96,17 @@ public class MainActivity5 extends AppCompatActivity {
                 public void onSuccess(String s) {
                     if(!s.equals("null")){
                         try{
-                            json = JsonParser.parseString((String)s).getAsJsonObject();
+                            JsonObject json = JsonParser.parseString((String)s).getAsJsonObject();
                             JsonObject cb = json.get("cb").getAsJsonObject();
                             if(cb.get("id").getAsInt() == id){
                                 liveData.removeObserver(observer);
-                                setJSONCallback(new JSONObject(cb.toString()));
+                                if (json.getAsJsonObject("error").has("xhr")) {
+                                    Add_Loading_Text("Task id(" +id+") connection error");
+                                } else if (json.getAsJsonObject("error").has("message")) {
+                                    Add_Loading_Text("Task id(" +id+") script error");
+                                } else {
+                                    Add_Loading_Text("Task id(" +id+") request success");
+                                }
                             }
                         }catch (Exception e){
                             e.printStackTrace();

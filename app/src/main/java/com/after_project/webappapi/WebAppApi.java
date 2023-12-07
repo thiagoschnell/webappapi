@@ -29,10 +29,10 @@ class WebAppApiTask extends AsyncTask  {
     androidx.lifecycle.Observer observer = null;
     WebAppApiTask(){
     }
-    protected void setJSONCallback(JSONObject callback){
+    private void setJSONCallback(JSONObject callback){
         this.callback = callback;
     }
-    protected JSONObject getJSONCallback(){
+    private JSONObject getJSONCallback(){
         return callback;
     }
     WebAppApiTask(int id){
