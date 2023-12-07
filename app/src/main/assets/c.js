@@ -19,61 +19,61 @@ $(function(){
    }
    $.fn = {
        requestUrl: function(url,options,vardata){
-            $.fn.getRequestUrl(url,options,vardata,undefined);
-       },
-       getRequestUrl: function(url,options,vardata,cb){
-                             var defaultOptions = {
-                                 'async': true,
-                                 'timeout': 3000
-                               };
-                              var requestOptions = $.extend(
-                                 defaultOptions,
-                                 options
-                               );
-                               try {
-                                 var result = new Object();
-                                 result.cb = vardata;
-                                 result.request_url = url;
-                                 result.error = Object();
-                                 result.options= requestOptions;
-                                 if (typeof $ !== 'undefined') {
-                                   $.ajax(url,requestOptions)
-                                     .done(function (data) {
-                                         try {
-                                             result.data = typeof data === 'object'? data : JSON.parse(data);
-                                             android.response_url(JSON.stringify(result));
-                                         } catch (e) {
-                                             result.error.message = $.ReferenceError(e);
-                                             android.response_url(JSON.stringify(result));
-                                         }
-                                     })
-                                     .fail(function( jqXHR, textStatus, errorThrown ){
-                                         try{
-                                         result.error.xhr = jqXHR;
-                                         android.response_url(JSON.stringify(result));
-                                         } catch (e) {
-                                             result.error.message = $.ReferenceError(e);
-                                             android.response_url(JSON.stringify(result));
-                                         }
-                                     })
-                                 }
-                                 else {
-                                     throw new Error('$ is not function');
-                                 }
-                             } catch (e) {
-                                 result.error.message = $.ReferenceError(e);
-                                 android.response_url(JSON.stringify(result));
-                             }
-                             if (typeof cb !== 'undefined') {
-                                 cb(result);
-                             }
-                         }
+            getRequestUrl(url,options,vardata,undefined);
+       }
+   }
+   function getRequestUrl(url,options,vardata,cb){
+       var defaultOptions = {
+           'async': true,
+           'timeout': 3000
+         };
+        var requestOptions = $.extend(
+           defaultOptions,
+           options
+         );
+         try {
+           var result = new Object();
+           result.cb = vardata;
+           result.request_url = url;
+           result.error = Object();
+           result.options= requestOptions;
+           if (typeof $ !== 'undefined') {
+             $.ajax(url,requestOptions)
+               .done(function (data) {
+                   try {
+                       result.data = typeof data === 'object'? data : JSON.parse(data);
+                       android.response_url(JSON.stringify(result));
+                   } catch (e) {
+                       result.error.message = $.ReferenceError(e);
+                       android.response_url(JSON.stringify(result));
+                   }
+               })
+               .fail(function( jqXHR, textStatus, errorThrown ){
+                   try{
+                   result.error.xhr = jqXHR;
+                   android.response_url(JSON.stringify(result));
+                   } catch (e) {
+                       result.error.message = $.ReferenceError(e);
+                       android.response_url(JSON.stringify(result));
+                   }
+               })
+           }
+           else {
+               throw new Error('$ is not function');
+           }
+       } catch (e) {
+           result.error.message = $.ReferenceError(e);
+           android.response_url(JSON.stringify(result));
+       }
+       if (typeof cb !== 'undefined') {
+           cb(result);
+       }
    }
    $.deprecated = {
        request_url: function(url,options,vardata){
           if(!options.async){
                   var f;
-                  $.fn.getRequestUrl(url,options,vardata,function(data){
+                  getRequestUrl(url,options,vardata,function(data){
                       f = data;
                   })
                   return f;
