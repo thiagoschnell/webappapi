@@ -34,6 +34,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
             appMessageReceiver = new AppMessageReceiver(appMessageReceiverCallback);
             appmessage.registerReceiver(className,appMessageReceiver);
         }
+        MyApp.getInstance().getWebApp().setLiveData(null);
         mWorkManager = WorkManager.getInstance();
         Operation operation = jobScheduler();
         operation.getState().observe(ProcessLifecycleOwner.get(), (state -> {
@@ -69,7 +70,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
                                 MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(new WebAppApiRequest(){
                                             @Override
                                             public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-                                                String js = "request_url('"+api_url+"',"+options+","+callback+")";
+                                                String js = "$.fn.requestUrl('"+api_url+"',"+options+","+callback+")";
                                                 MyApp.getInstance().getWebApp().runJavaScript(js);
                                             }
                                         }))

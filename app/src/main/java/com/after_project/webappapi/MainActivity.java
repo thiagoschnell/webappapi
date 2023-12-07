@@ -85,6 +85,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Synchronous Request
+        {
+            Button buttonNewSynchronousRequest = (Button) findViewById(R.id.ButtonNewSynchronousRequest);
+            buttonNewSynchronousRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MainActivity5.class);
+                    intent.putExtra("Parallel", false);
+                    startActivity(intent);
+                }
+            });
+        }
+        //Button ASynchronous Request
+        {
+            Button buttonNewASynchronousRequest = (Button) findViewById(R.id.ButtonNewASynchronousRequest);
+            buttonNewASynchronousRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, MainActivity5.class);
+                    intent.putExtra("Parallel", true);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

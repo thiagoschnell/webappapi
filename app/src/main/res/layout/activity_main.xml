@@ -40,6 +40,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JobScheduler Example"></Button>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <Button
+          android:id="@+id/ButtonNewSynchronousRequest"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="New Synchronous\nRequest"></Button>
+
+      <Button
+          android:id="@+id/ButtonNewASynchronousRequest"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="New ASynchronous\nRequest"></Button>
+    </LinearLayout>
   </LinearLayout>
 
   <LinearLayout
@@ -56,6 +72,5 @@
   </LinearLayout>
 
 </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 package com.after_project.webappapi;
 import android.os.AsyncTask;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import com.google.gson.JsonObject;
+import org.json.JSONException;
 import org.json.JSONObject;
 interface WebAppApiRequestInterface {
     void onRequestApi(String api_url, JSONObject options, JSONObject callback);
@@ -15,12 +19,31 @@ interface WebAppApiResponseInterface {
     void onResponseApiScriptError(JsonObject error);
     void onResponseApiException(Exception e);
 }
-class WebAppApiTask extends AsyncTask  {
+class WebAppApiTask<T> extends AsyncTask  {
     private String api_url;
     private JSONObject options;
     private JSONObject callback;
+    private MutableLiveData<WebAppApiDataWrapper<T>> _liveData = null;
+    private int id = -1;
     WebAppApiRequest webAppApiRequest = null;
+    androidx.lifecycle.Observer observer = null;
     WebAppApiTask(){
+    }
+    protected void setJSONCallback(JSONObject callback){
+        this.callback = callback;
+    }
+    protected JSONObject getJSONCallback(){
+        return callback;
+    }
+    WebAppApiTask(int id){
+        this.id = id;
+    }
+    protected void set_liveData(MutableLiveData<WebAppApiDataWrapper<T>> _liveData){
+        this._liveData = _liveData;
+    }
+    protected void setObserver(androidx.lifecycle.LifecycleOwner owner,androidx.lifecycle.Observer observer){
+        this.observer = observer;
+        this._liveData.observe(owner,observer);
     }
     WebAppApiTask(WebAppApiRequest webAppApiRequest){
         this.webAppApiRequest = webAppApiRequest;
@@ -28,10 +51,17 @@ class WebAppApiTask extends AsyncTask  {
     void setWebAppApiRequest(WebAppApiRequest webAppApiRequest) {
         this.webAppApiRequest = webAppApiRequest;
     }
-    synchronized WebAppApiTask prepare(String api_url, JSONObject options, JSONObject callback) {
-        this.api_url = api_url;
-        this.options = options;
-        this.callback = callback;
+    synchronized WebAppApiTask prepare(final String api_url,final JSONObject options,final JSONObject callback) {
+        try {
+            this.api_url = new String(api_url);
+            this.options = new JSONObject(options.toString());
+            if(callback!=null){
+                this.callback = new JSONObject(callback.toString());
+                this.callback.put("id",id);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         return this;
     }
     void executeParallel(){
@@ -110,5 +140,70 @@ public class WebAppApi  {
     }
     synchronized WebAppApiResponse response (){
         return this.webAppApiResponse;
+    }
+}
+/**
+ * WebApp Api Response2
+ */
+class WebAppApiDataWrapper <T> {
+    String data = null;
+    int code = 0;
+    public void setCode(int code) {
+        this.code = code;
+    }
+    public void setData(String data) {
+        this.data = data;
+    }
+    public Exception getApiException() {
+        return null;
+    }
+    public int getCode() {
+        return code;
+    }
+    public String getErrorMessage() {
+        return null;
+    }
+    public String getData() {
+        return data;
+    }
+}
+class WebAppApiResponse2 implements WebAppApiResponse2LiveData.WebAppApiResponse2LiveDataInfo {
+    @Override
+    public void onSuccess(String s) {
+    }
+    @Override
+    public void onFail(Exception exception) {
+    }
+    @Override
+    public void handleCodes(int code) {
+    }
+    @Override
+    public void onErrorMessage(String message) {
+    }
+}
+class WebAppApiResponse2LiveData<T> implements Observer<WebAppApiDataWrapper<T>> {
+    private WebAppApiResponse2LiveDataInfo<T> liveDataInfo;
+    String id = null;
+    public WebAppApiResponse2LiveData(String id,WebAppApiResponse2LiveDataInfo<T> webAppApiResponse2LiveDataInfo) {
+        this.id = id;
+        this.liveDataInfo = webAppApiResponse2LiveDataInfo;
+    }
+    @Override
+    public void onChanged(@Nullable WebAppApiDataWrapper<T> tDataWrapper) {
+        if (tDataWrapper != null)
+            if (tDataWrapper.getApiException() != null)
+                liveDataInfo.onFail(tDataWrapper.getApiException());
+            else if (tDataWrapper.getCode() != 0)
+                liveDataInfo.handleCodes(tDataWrapper.getCode());
+            else if(tDataWrapper.getData()!=null)
+                liveDataInfo.onSuccess(tDataWrapper.data);
+            else {
+            }
+    }
+    public interface WebAppApiResponse2LiveDataInfo<T> {
+        void onSuccess(String s);
+        void onFail(Exception exception);
+        void handleCodes(int code);
+        void onErrorMessage(String message);
     }
 }

@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
@@ -38,7 +39,8 @@ class WebAppCallback implements WebAppInterface {
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
     }
 }
-public class WebApp {
+public class WebApp <T> {
+    private MutableLiveData<WebAppApiDataWrapper<T>> liveData = null;
     WebAppApi api = new WebAppApi();
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
         this.webView = webView1;
@@ -75,6 +77,9 @@ public class WebApp {
         }
         if ((flags&FLAG_CLEAR) != 0){
         }
+    }
+    protected void setLiveData(MutableLiveData<WebAppApiDataWrapper<T>> liveData){
+        this.liveData = liveData;
     }
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader, @Flags int flags){
         this(webView1,webViewAssetLoader);
@@ -179,23 +184,32 @@ public class WebApp {
         }
         @JavascriptInterface
         public void response_url(String response) {
+            if(liveData!=null){
+                WebAppApiDataWrapper<T> dataWrapper = new WebAppApiDataWrapper<T>();
+                dataWrapper.setData(response);
+                liveData.postValue(dataWrapper);
+            }else
             if(api.response()!=null) {
                 try {
                     JsonObject json = JsonParser.parseString(response).getAsJsonObject();
-                    JsonObject cb = json.get("cb").getAsJsonObject();
-                    if (json.getAsJsonObject("error").has("xhr")) {
-                        api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString(),
-                                json.getAsJsonObject("error").get("xhr").getAsJsonObject());
-                    } else if (json.getAsJsonObject("error").has("message")) {
-                        api.response().onResponseApiScriptError(json.getAsJsonObject("error"));
-                    } else {
-                        JsonObject data = json.get("data").getAsJsonObject();
-                        api.response().onResponseApi(
-                                cb.get("receiverName").getAsString(),
-                                cb.get("param").getAsInt(),
-                                cb.get("event").getAsString(),
-                                data.toString()
-                        );
+                    if(json.has("cb")) {
+                        if(!json.get("cb").isJsonNull()) {
+                            JsonObject cb = json.get("cb").getAsJsonObject();
+                            if (json.getAsJsonObject("error").has("xhr")) {
+                                api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString(),
+                                        json.getAsJsonObject("error").get("xhr").getAsJsonObject());
+                            } else if (json.getAsJsonObject("error").has("message")) {
+                                api.response().onResponseApiScriptError(json.getAsJsonObject("error"));
+                            } else {
+                                JsonObject data = json.get("data").getAsJsonObject();
+                                api.response().onResponseApi(
+                                        cb.get("receiverName").getAsString(),
+                                        cb.get("param").getAsInt(),
+                                        cb.get("event").getAsString(),
+                                        data.toString()
+                                );
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -44,7 +44,7 @@ public class MainActivity3 extends AppCompatActivity {
             mainActivity3WebApp = new WebApp(webview,  new WebViewAssetLoader.Builder()
                     .setDomain("webappapi-server.azurewebsites.net")
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build());
+                    .build(), WebApp.FLAG_CLEAR_CACHE);
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
@@ -143,7 +143,7 @@ public class MainActivity3 extends AppCompatActivity {
         }
         @Override
         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-            String js = "request_url('"+api_url+"',"+options+","+callback+")";
+            String js = "$.deprecated.request_url('"+api_url+"',"+options+","+callback+")";
             mainActivity3WebApp.evalJavaScript(js, new ValueCallback() {
                 @Override
                 public void onReceiveValue(Object value) {

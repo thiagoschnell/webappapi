@@ -38,13 +38,10 @@ public class RealAppMainActivity extends AppCompatActivity {
         {
             WebView webview = new WebView(this);
             webapp = new WebApp(webview,  new WebViewAssetLoader.Builder()
-
                     .setDomain("realappexample.shop")//site domain here
-
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build());
+                    .build(), WebApp.FLAG_CLEAR_CACHE);
             try {
-
                 webapp.load("https://realappexample.shop/index.html", //server url here
                         new WebAppCallback() {
                             @Override
@@ -195,7 +192,7 @@ public class RealAppMainActivity extends AppCompatActivity {
         }
         @Override
         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-            String js = "request_url('"+api_url+"',"+options+","+callback+")";
+            String js = "$.fn.requestUrl('"+api_url+"',"+options+","+callback+")";
             webapp.runJavaScript(js);
         }
     };

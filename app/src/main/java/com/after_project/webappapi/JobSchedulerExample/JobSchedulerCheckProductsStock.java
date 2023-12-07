@@ -74,7 +74,7 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
                                new WebAppApiRequest(){
                                    @Override
                                    public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-                                       String js = "request_url('"+api_url+"',"+options+","+callback+")";
+                                       String js = "$.deprecated.request_url('"+api_url+"',"+options+","+callback+")";
                                        MyApp.getInstance().getWebApp().evalJavaScript(js, new ValueCallback() {
                                            @Override
                                            public void onReceiveValue(Object value) {
@@ -95,7 +95,6 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
                                                    }catch (Exception e){
                                                        e.printStackTrace();
                                                    }
-                                               }else{
                                                }
                                            }
                                        });

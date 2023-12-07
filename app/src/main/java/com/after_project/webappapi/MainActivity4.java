@@ -86,13 +86,20 @@ public class MainActivity4 extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainActivity4AppMessage.unregisterReceiver(mainActivity4AppMessageReceiver);
+    }
+
     class WebAppApiCustomTask extends WebAppApiTask{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             try
             {
-                mainActivity4WebApp.evalJavaScript("result = Object(); result.jquery = typeof $ !== 'undefined'; result.script = typeof request_url !== 'undefined'; result;",
+                mainActivity4WebApp.evalJavaScript("result = Object(); result.jquery = typeof $ !== 'undefined'; result.script = typeof $.fn.requestUrl !== 'undefined'; result;",
                         new ValueCallback() {
                             @Override
                             public void onReceiveValue(Object value) {
@@ -160,7 +167,7 @@ public class MainActivity4 extends AppCompatActivity {
         }
         @Override
         public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-            String js = "request_url('"+api_url+"',"+options+","+callback+")";
+            String js = "$.fn.requestUrl('"+api_url+"',"+options+","+callback+")";
             mainActivity4WebApp.runJavaScript(js);
         }
         @Override

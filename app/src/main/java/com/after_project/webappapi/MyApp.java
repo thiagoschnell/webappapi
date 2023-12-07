@@ -2,13 +2,14 @@ package com.after_project.webappapi;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import androidx.annotation.IntDef;
+import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-public class MyApp extends MultiDexApplication {
+public class MyApp <T> extends MultiDexApplication {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
@@ -66,8 +67,6 @@ public class MyApp extends MultiDexApplication {
                                 webApp.detachWebAppCallback();
                                 webApp.api.setWebAppApiResponse(webAppApiResponse);
                                 WebAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
-                                {
-                                }
                             }
                             @Override
                             public void onLoadError(WebView view,
