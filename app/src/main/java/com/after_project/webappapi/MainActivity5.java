@@ -32,7 +32,7 @@ public class MainActivity5 extends AppCompatActivity {
                 public void onReceiveMessage(int param, String event, String data) {
                     switch (event) {
                         case "request_customer_profile": {
-                                Add_Loading_Text("Request id(" + param +") received successfully");
+                                Add_Loading_Text("AppMessage id(" + param +") received success");
                             break;
                         }
                     }
@@ -82,12 +82,7 @@ public class MainActivity5 extends AppCompatActivity {
                 @Override
                 public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
                     String js = "$.fn.requestUrl('"+api_url+"',"+options+","+callback+")";
-                    MyApp.getInstance().getWebApp().evalJavaScript(js, new ValueCallback() {
-                        @Override
-                        public void onReceiveValue(Object value) {
-
-                        }
-                    });
+                    MyApp.getInstance().getWebApp().runJavaScript(js);
                 }
             });
             set_liveData(liveData);
@@ -101,11 +96,15 @@ public class MainActivity5 extends AppCompatActivity {
                             if(cb.get("id").getAsInt() == id){
                                 liveData.removeObserver(observer);
                                 if (json.getAsJsonObject("error").has("xhr")) {
-                                    Add_Loading_Text("Task id(" +id+") connection error");
+                                    Add_Loading_Text("Task task id(" +id+") connection error");
                                 } else if (json.getAsJsonObject("error").has("message")) {
                                     Add_Loading_Text("Task id(" +id+") script error");
                                 } else {
-                                    Add_Loading_Text("Task id(" +id+") request success");
+                                    Add_Loading_Text("Task id(" +id+") received success");
+                                    MyApp.getInstance().getAppMessage().sendSync(className,
+                                            id,
+                                            cb.get("event").getAsString(),
+                                            json.get("data").toString());
                                 }
                             }
                         }catch (Exception e){
