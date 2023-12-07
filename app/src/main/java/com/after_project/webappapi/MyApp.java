@@ -9,7 +9,7 @@ import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-public class MyApp <T> extends MultiDexApplication {
+public class MyApp extends MultiDexApplication {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;

@@ -8,8 +8,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
-public class MainActivity5 <T> extends AppCompatActivity {
-    private MutableLiveData<WebAppApiDataWrapper<T>> liveData = null;
+public class MainActivity5 extends AppCompatActivity {
+    private MutableLiveData<WebAppApiDataWrapper> liveData = null;
     static String className = MainActivity5.class.getSimpleName();
     private AppMessageReceiver appMessageReceiver;
     private AppMessage appmessage;
@@ -76,6 +76,7 @@ public class MainActivity5 <T> extends AppCompatActivity {
         MyApp.getInstance().getWebApp().setLiveData(null);
     }
     private class WebAppApiCustomTask2 extends WebAppApiTask{
+        private JsonObject json = null;
         WebAppApiCustomTask2(int id){
             super(id);
             setWebAppApiRequest(new WebAppApiRequest(){
@@ -86,8 +87,14 @@ public class MainActivity5 <T> extends AppCompatActivity {
                         @Override
                         public void onReceiveValue(Object value) {
                             try {
-                                Add_Loading_Text("Request id(" +getJSONCallback().getInt("id")+") received successfully");
-                            } catch (JSONException e) {
+                                if (json.getAsJsonObject("error").has("xhr")) {
+                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") connection error");
+                                } else if (json.getAsJsonObject("error").has("message")) {
+                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") script error");
+                                } else {
+                                    Add_Loading_Text("Task id(" +getJSONCallback().getInt("id")+") request success");
+                                }
+                            } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                         }
@@ -100,7 +107,7 @@ public class MainActivity5 <T> extends AppCompatActivity {
                 public void onSuccess(String s) {
                     if(!s.equals("null")){
                         try{
-                            JsonObject json = JsonParser.parseString((String)s).getAsJsonObject();
+                            json = JsonParser.parseString((String)s).getAsJsonObject();
                             JsonObject cb = json.get("cb").getAsJsonObject();
                             if(cb.get("id").getAsInt() == id){
                                 liveData.removeObserver(observer);

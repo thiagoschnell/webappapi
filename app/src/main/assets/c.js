@@ -51,7 +51,6 @@ $(function(){
                                          try{
                                          result.error.xhr = jqXHR;
                                          android.response_url(JSON.stringify(result));
-                                         console.log("fail id=" + vardata.id)
                                          } catch (e) {
                                              result.error.message = $.ReferenceError(e);
                                              android.response_url(JSON.stringify(result));

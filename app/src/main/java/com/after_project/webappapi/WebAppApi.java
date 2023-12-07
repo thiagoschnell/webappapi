@@ -19,11 +19,11 @@ interface WebAppApiResponseInterface {
     void onResponseApiScriptError(JsonObject error);
     void onResponseApiException(Exception e);
 }
-class WebAppApiTask<T> extends AsyncTask  {
+class WebAppApiTask extends AsyncTask  {
     private String api_url;
     private JSONObject options;
     private JSONObject callback;
-    private MutableLiveData<WebAppApiDataWrapper<T>> _liveData = null;
+    private MutableLiveData<WebAppApiDataWrapper> _liveData = null;
     private int id = -1;
     WebAppApiRequest webAppApiRequest = null;
     androidx.lifecycle.Observer observer = null;
@@ -38,7 +38,7 @@ class WebAppApiTask<T> extends AsyncTask  {
     WebAppApiTask(int id){
         this.id = id;
     }
-    protected void set_liveData(MutableLiveData<WebAppApiDataWrapper<T>> _liveData){
+    protected void set_liveData(MutableLiveData<WebAppApiDataWrapper> _liveData){
         this._liveData = _liveData;
     }
     protected void setObserver(androidx.lifecycle.LifecycleOwner owner,androidx.lifecycle.Observer observer){
@@ -145,7 +145,7 @@ public class WebAppApi  {
 /**
  * WebApp Api Response2
  */
-class WebAppApiDataWrapper <T> {
+class WebAppApiDataWrapper  {
     String data = null;
     int code = 0;
     public void setCode(int code) {
@@ -181,15 +181,15 @@ class WebAppApiResponse2 implements WebAppApiResponse2LiveData.WebAppApiResponse
     public void onErrorMessage(String message) {
     }
 }
-class WebAppApiResponse2LiveData<T> implements Observer<WebAppApiDataWrapper<T>> {
-    private WebAppApiResponse2LiveDataInfo<T> liveDataInfo;
+class WebAppApiResponse2LiveData implements Observer<WebAppApiDataWrapper> {
+    private WebAppApiResponse2LiveDataInfo liveDataInfo;
     String id = null;
-    public WebAppApiResponse2LiveData(String id,WebAppApiResponse2LiveDataInfo<T> webAppApiResponse2LiveDataInfo) {
+    public WebAppApiResponse2LiveData(String id,WebAppApiResponse2LiveDataInfo webAppApiResponse2LiveDataInfo) {
         this.id = id;
         this.liveDataInfo = webAppApiResponse2LiveDataInfo;
     }
     @Override
-    public void onChanged(@Nullable WebAppApiDataWrapper<T> tDataWrapper) {
+    public void onChanged(@Nullable WebAppApiDataWrapper tDataWrapper) {
         if (tDataWrapper != null)
             if (tDataWrapper.getApiException() != null)
                 liveDataInfo.onFail(tDataWrapper.getApiException());
@@ -200,7 +200,7 @@ class WebAppApiResponse2LiveData<T> implements Observer<WebAppApiDataWrapper<T>>
             else {
             }
     }
-    public interface WebAppApiResponse2LiveDataInfo<T> {
+    public interface WebAppApiResponse2LiveDataInfo {
         void onSuccess(String s);
         void onFail(Exception exception);
         void handleCodes(int code);

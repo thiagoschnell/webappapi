@@ -39,8 +39,8 @@ class WebAppCallback implements WebAppInterface {
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
     }
 }
-public class WebApp <T> {
-    private MutableLiveData<WebAppApiDataWrapper<T>> liveData = null;
+public class WebApp {
+    private MutableLiveData<WebAppApiDataWrapper> liveData = null;
     WebAppApi api = new WebAppApi();
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
         this.webView = webView1;
@@ -78,7 +78,7 @@ public class WebApp <T> {
         if ((flags&FLAG_CLEAR) != 0){
         }
     }
-    protected void setLiveData(MutableLiveData<WebAppApiDataWrapper<T>> liveData){
+    protected void setLiveData(MutableLiveData<WebAppApiDataWrapper> liveData){
         this.liveData = liveData;
     }
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader, @Flags int flags){
@@ -185,7 +185,7 @@ public class WebApp <T> {
         @JavascriptInterface
         public void response_url(String response) {
             if(liveData!=null){
-                WebAppApiDataWrapper<T> dataWrapper = new WebAppApiDataWrapper<T>();
+                WebAppApiDataWrapper dataWrapper = new WebAppApiDataWrapper();
                 dataWrapper.setData(response);
                 liveData.postValue(dataWrapper);
             }else
