@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import org.json.JSONObject;
 public class MainActivity2 extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        Snackbar.make(findViewById(android.R.id.content), R.string.notice_server_php, Snackbar.LENGTH_INDEFINITE).show();
         mainActivity2AppMessage = new AppMessage(this);
         //AppMessageReceiver for MainActivity2
         {

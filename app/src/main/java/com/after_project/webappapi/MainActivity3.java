@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.json.JSONException;
@@ -26,6 +27,7 @@ public class MainActivity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        Snackbar.make(findViewById(android.R.id.content), R.string.notice_server_php, Snackbar.LENGTH_INDEFINITE).show();
         //getExtras
         {
             if (getIntent().getExtras() != null) {

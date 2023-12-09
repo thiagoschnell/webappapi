@@ -36,7 +36,6 @@ public class JobSchedulerMainActivity extends AppCompatActivity {
                             MyApp.getInstance().getWebApp().evalJavaScript(js, new ValueCallback() {
                                 @Override
                                 public void onReceiveValue(Object value) {
-                                    System.out.println("value= " + value);
                                     if(!value.equals("null")){
                                         try{
                                             JsonObject json = JsonParser.parseString((String)value).getAsJsonObject();
