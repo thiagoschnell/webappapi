@@ -16,7 +16,7 @@ public class MyApp extends MultiDexApplication {
     public @WebAppStatus int getWebAppStatus() {
         return WebAppStatus;
     }
-    public WebApp getWebApp() {
+    protected WebApp getWebApp() {
         return webApp;
     }
     private AppMessageReceiver getAppMessageReceiver() {
@@ -25,7 +25,7 @@ public class MyApp extends MultiDexApplication {
         }
         return appMessageReceiver;
     }
-    synchronized AppMessage getAppMessage() {
+    protected synchronized AppMessage getAppMessage() {
         if(appMessage==null){
             appMessage = new AppMessage(this);
         }
@@ -83,7 +83,7 @@ public class MyApp extends MultiDexApplication {
             }
         }
     }
-    public static synchronized MyApp getInstance() {
+    protected static synchronized MyApp getInstance() {
         return mInstance;
     }
     private AppMessageReceiver.ReceiverCallback myApp_AppMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
