@@ -1,6 +1,6 @@
+package com.after_project.webappapi;
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
-package com.after_project.webappapi;
 import java.io.InputStream;
 public class RawResource {
     private String rawData = null;

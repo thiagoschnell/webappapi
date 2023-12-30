@@ -56,6 +56,11 @@
           android:layout_height="wrap_content"
           android:text="New ASynchronous\nRequest"></Button>
     </LinearLayout>
+    <Button
+        android:id="@+id/ButtonOpenDownloadExample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download Example"></Button>
   </LinearLayout>
 
   <LinearLayout

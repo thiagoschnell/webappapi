@@ -16,6 +16,15 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="31">
         <activity
+            android:name=".DownloadExampleImageDownloadAndSave"
+            android:exported="false" />
+        <activity
+            android:name=".DownloadExampleImageDownload"
+            android:exported="false" />
+        <activity
+            android:name=".DownloadExampleMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity5"
             android:exported="false" />
         <activity

@@ -2,7 +2,6 @@ package com.after_project.webappapi;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import androidx.annotation.IntDef;
-import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
@@ -13,7 +12,7 @@ public class MyApp extends MultiDexApplication {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
-    public @WebAppStatus int getWebAppStatus() {
+    protected @WebAppStatus int getWebAppStatus() {
         return WebAppStatus;
     }
     protected WebApp getWebApp() {
@@ -33,11 +32,11 @@ public class MyApp extends MultiDexApplication {
     }
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({WEBAPP_STATUS_NONE, WEBAPP_STATUS_LOAD_FINISHED, WEBAPP_STATUS_LOAD_ERROR})
-    public @interface WebAppStatus {}
+    protected @interface WebAppStatus {}
     private @WebAppStatus int WebAppStatus;
-    public static final int WEBAPP_STATUS_NONE = 0;
-    public static final int WEBAPP_STATUS_LOAD_FINISHED = 1;
-    public static final int WEBAPP_STATUS_LOAD_ERROR = 2;
+    protected static final int WEBAPP_STATUS_NONE = 0;
+    protected static final int WEBAPP_STATUS_LOAD_FINISHED = 1;
+    protected static final int WEBAPP_STATUS_LOAD_ERROR = 2;
     private AppMessage appMessage = null;
     private AppMessageReceiver appMessageReceiver = null;
     @Override

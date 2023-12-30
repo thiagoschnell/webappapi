@@ -109,6 +109,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Download Example
+        {
+            Button buttonOpenDownloadExample = (Button) findViewById(R.id.ButtonOpenDownloadExample);
+            buttonOpenDownloadExample.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, DownloadExampleMainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
