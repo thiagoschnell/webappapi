@@ -29,5 +29,15 @@ public class DownloadExampleMainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Download PDF
+        {
+            ((Button)findViewById(R.id.DownloadExampleLayoutButtonPdfDownload)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DownloadExampleMainActivity.this, DownloadExamplePdfDownload.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

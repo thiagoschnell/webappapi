@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- > [BEGIN - PERMISSIONS FOR DOWNLOAD PDF EXAMPLE] <!-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- > [END - PERMISSIONS FOR DOWNLOAD PDF EXAMPLE] <!-->
 
     <application
         android:name=".MyApp"
@@ -14,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WebAppApi"
-        tools:targetApi="31">
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="34">
+        <activity
+            android:name=".DownloadExamplePdfDownload"
+            android:exported="false" />
         <activity
             android:name=".DownloadExampleImageDownloadAndSave"
             android:exported="false" />
