@@ -28,12 +28,12 @@ public class StorageManager {
     protected void saveFile(File file, String data) throws Exception{
         saveFile(file,data.getBytes());
     }
-    protected void saveFile(File file, byte[] data) throws Exception{
+    protected void saveFile(File file, byte[] bytes) throws Exception{
         FileOutputStream fos = new FileOutputStream(file,false);
-        fos.write(data);
+        fos.write(bytes);
         fos.close();
     }
-    protected String readFile(File file) throws Exception{
+    private String readFile(File file) throws Exception{
         StringBuilder text = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
