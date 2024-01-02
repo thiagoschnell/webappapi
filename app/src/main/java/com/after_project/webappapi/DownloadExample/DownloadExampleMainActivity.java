@@ -19,7 +19,7 @@ public class DownloadExampleMainActivity extends AppCompatActivity {
                 }
             });
         }
-        //Download Image and Save
+        //Download Image and Save internal
         {
             ((Button)findViewById(R.id.DownloadExampleLayoutButtonImageDownloadAndSave)).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -35,6 +35,16 @@ public class DownloadExampleMainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(DownloadExampleMainActivity.this, DownloadExamplePdfDownload.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        //Download PDF and Save external
+        {
+            ((Button)findViewById(R.id.DownloadExampleLayoutButtonPdfDownloadAndSaveExternal)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DownloadExampleMainActivity.this, DownloadExamplePdfDownloadAndSave.class);
                     startActivity(intent);
                 }
             });

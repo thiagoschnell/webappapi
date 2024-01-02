@@ -84,12 +84,12 @@ public class DownloadExamplePdfDownload extends AppCompatActivity {
     @RequiresApi(21)
     private Bitmap pdfToBitmap(File file) throws IOException {
         ParcelFileDescriptor fd = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
-        PdfRenderer renderer = null;
-        renderer = new PdfRenderer(fd);
-        Bitmap bitmap = Bitmap.createBitmap(222, 222, Bitmap.Config.ARGB_4444);
-        PdfRenderer.Page page = null;
-        page = renderer.openPage(1);
+        PdfRenderer renderer = new PdfRenderer(fd);
+        PdfRenderer.Page page = renderer.openPage(0);
+        Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(), Bitmap.Config.ARGB_4444);
         page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+        page.close();
+        renderer.close();
        return bitmap;
     };
     void Add_Loading_Text(String text){

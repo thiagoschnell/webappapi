@@ -15,7 +15,7 @@ public class AppMessage {
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(receiver);
     }
     private String action(String action){
-        return String.format("%s.APP_MESSAGE_%s",BuildConfig.APPLICATION_ID,action.toUpperCase());
+        return String.format("%s.APP_MESSAGE_%s",com.after_project.webappapi.BuildConfig.APPLICATION_ID,action.toUpperCase());
     }
     void registerReceiver( String receiverName, BroadcastReceiver receiver){
         LocalBroadcastManager.getInstance(mContext)

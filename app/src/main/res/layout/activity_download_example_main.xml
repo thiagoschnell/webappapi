@@ -41,7 +41,7 @@
                 android:id="@+id/DownloadExampleLayoutButtonImageDownloadAndSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Download Image and Save"></Button>
+                android:text="Download Image and Save\n(save internal)"></Button>
         </LinearLayout>
 
         <LinearLayout
@@ -54,6 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Download PDF"></Button>
+            <Button
+                android:id="@+id/DownloadExampleLayoutButtonPdfDownloadAndSaveExternal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Download PDF and Save\n(save external)"></Button>
 
         </LinearLayout>
 

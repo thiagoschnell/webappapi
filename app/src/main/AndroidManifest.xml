@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- [START] FILE SAVE EXTERNAL REQUIRED PERMISSIONS -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- [END] FILE SAVE EXTERNAL REQUIRED PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
+        <activity
+            android:name=".DownloadExamplePdfDownloadAndSave"
+            android:exported="false" />
+        <!-- [START] FILE PROVIDER - EXTERNAL APPS CAN READ YOUR FILE -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/my_file_paths_to_be_read_by_others_apps" />
+        </provider>
+        <!-- [END] FILE PROVIDER - EXTERNAL APPS CAN READ YOUR FILE -->
         <activity
             android:name=".DownloadExamplePdfDownload"
             android:exported="false" />
