@@ -95,12 +95,13 @@ $(function(){
        }
    }
 })
-function request_download(download_url){
+function download(download_url,download_headers){
     var result = new Object();
     jQuery.ajax({
         url:download_url,
         cache:false, //Note: Setting cache to false will only work correctly with HEAD and GET requests.
         dataType: 'text',
+        headers:download_headers,
         async:false,
         timeout: 3000,
         xhr:function(){
@@ -116,4 +117,7 @@ function request_download(download_url){
         }
     });
     return result;
+}
+function request_download(download_url){
+   return download(download_url,{})
 }

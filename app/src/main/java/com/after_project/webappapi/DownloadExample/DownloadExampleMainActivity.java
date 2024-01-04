@@ -49,5 +49,15 @@ public class DownloadExampleMainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Stream Download
+        {
+            ((Button)findViewById(R.id.DownloadExampleLayoutButtonStreamDownload)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DownloadExampleMainActivity.this, DownloadExampleStreamDownload.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

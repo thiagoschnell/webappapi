@@ -38,12 +38,12 @@ public class DownloadExamplePdfDownload extends AppCompatActivity {
                                             byte[] downloaded_bytes = Base64.decode(data.getAsString(), Base64.DEFAULT);
                                             Add_Loading_Text("Saving pdf...");
                                             {
-                                                StorageManager storageManager = new StorageManager();
+                                                FileManager fileManager = new FileManager();
                                                 File fileObject = getFileObject();
                                                 Add_Loading_Text("get internal file...");
-                                                File pdf_file = storageManager.getFile(fileObject, "my_downloads/SampleFile.pdf");
+                                                File pdf_file = fileManager.getFile(fileObject, "my_downloads/SampleFile.pdf");
                                                 Add_Loading_Text("save pdf to the file...");
-                                                storageManager.saveFile(pdf_file, downloaded_bytes);
+                                                fileManager.saveFile(pdf_file, downloaded_bytes);
                                                 {
                                                     /*
                                                     Below example is just for example purposes to display the pdf image

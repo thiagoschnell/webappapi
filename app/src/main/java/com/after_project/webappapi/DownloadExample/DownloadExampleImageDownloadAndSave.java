@@ -34,13 +34,13 @@ public class DownloadExampleImageDownloadAndSave extends AppCompatActivity {
                                         byte[] downloaded_bytes = Base64.decode(data.getAsString(), Base64.DEFAULT);
                                         Add_Loading_Text("Saving image...");
                                         {
-                                            StorageManager storageManager = new StorageManager();
+                                            FileManager fileManager = new FileManager();
                                             File fileObject = getFileObject();
                                             Add_Loading_Text("get file...");
-                                            File image_file = storageManager.getFile(fileObject, "my_downloads/i-logo.png");
+                                            File image_file = fileManager.getFile(fileObject, "my_downloads/i-logo.png");
                                             Add_Loading_Text("save image to file...");
-                                            storageManager.saveFile(image_file, downloaded_bytes);
-                                            byte[] image_bytes = storageManager.getFileBytes(image_file);
+                                            fileManager.saveFile(image_file, downloaded_bytes);
+                                            byte[] image_bytes = fileManager.getFileBytes(image_file);
                                             Add_Loading_Text("set image to imageview...");
                                             imageview.setImageBitmap(BitmapFactory.decodeByteArray(image_bytes, 0, image_bytes.length));
                                             Add_Loading_Text("Done.");

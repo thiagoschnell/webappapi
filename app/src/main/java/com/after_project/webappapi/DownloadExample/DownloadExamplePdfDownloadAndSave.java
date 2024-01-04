@@ -36,8 +36,8 @@ public class DownloadExamplePdfDownloadAndSave extends AppCompatActivity {
                                             byte[] downloaded_bytes = Base64.decode(data.getAsString(), Base64.DEFAULT);
                                             Add_Loading_Text("Saving pdf...");
                                             {
-                                                StorageManager storageManager = new StorageManager();
-                                                openPdf(storageManager,downloaded_bytes);
+                                                FileManager fileManager = new FileManager();
+                                                openPdf(fileManager,downloaded_bytes);
                                             }
                                         } else {
                                             Add_Loading_Text("pdf download error");
@@ -62,7 +62,7 @@ public class DownloadExamplePdfDownloadAndSave extends AppCompatActivity {
         }
     }
     @RequiresApi(19)
-    private void openPdf(StorageManager storageManager, byte[] bytes) throws Exception{
+    private void openPdf(FileManager fileManager, byte[] bytes) throws Exception{
         //https://developer.android.com/reference/android/content/Context#getExternalFilesDir(java.lang.String)
         // Create a path where we will place our picture in our own private
         // pictures directory.  Note that we don't really need to place a
@@ -92,7 +92,7 @@ public class DownloadExamplePdfDownloadAndSave extends AppCompatActivity {
             return;
         }
         Add_Loading_Text("save pdf to the file...");
-        storageManager.saveFile(file, bytes);
+        fileManager.saveFile(file, bytes);
         {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri uri = FileProvider.getUriForFile(this, com.after_project.webappapi.BuildConfig.APPLICATION_ID + ".provider", file);
