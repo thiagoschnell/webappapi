@@ -88,7 +88,7 @@ public class DownloadExamplePdfDownloadAndSave extends AppCompatActivity {
         }catch (Exception e){
             // error no file access permission
             e.printStackTrace();
-            Add_Loading_Text("file access denied...");
+            Add_Loading_Text("file access denied...please check first storage permissions, isExternalStorageAvailable, isExternalStorageReadOnly, handle storage mounted etc");
             return;
         }
         Add_Loading_Text("save pdf to the file...");
