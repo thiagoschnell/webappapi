@@ -49,10 +49,11 @@ public class DownloadExampleStreamDownload extends AppCompatActivity {
                                         JsonObject json = JsonParser.parseString((String) value).getAsJsonObject();
                                         JsonElement data = json.get("data");
                                         if (data != null) {
-                                            Add_Loading_Text("stream download progress " + (finalChunk_count+1)*(100/rangeBytesChunks.size()) + "%");
+                                            int chunk_total = finalChunk_count+1;
+                                            Add_Loading_Text("stream download progress " + (chunk_total * 100/rangeBytesChunks.size()) + "%");
                                             try {
                                                 fos.write(Base64.decode(data.getAsString(), Base64.DEFAULT));
-                                                if(finalChunk_count+1 == rangeBytesChunks.size()){
+                                                if(finalChunk_count == rangeBytesChunks.size()-1){
                                                     Add_Loading_Text("viewing..");
                                                     fos.close();
                                                     byte[] b = fileManager.getFileBytes(image_file);
