@@ -92,19 +92,14 @@ public class DownloadExampleStreamDownload extends AppCompatActivity {
      * @return
      */
     private ArrayList<String> getRangeBytes(int chuck, int file_size){
-        int pos2 = 0;
+        int pos2 = chuck;
+        int pos1 = 0;
         ArrayList<String> array = new ArrayList<String>();
-        while(true){
-            pos2 += chuck+(pos2==0?0:1);
-            int pos1 = pos2 - (chuck);
-            if(pos2 > file_size){
-                array.add("bytes=" + pos1 + "-");
-                break;
-            }else{
-                array.add("bytes=" + pos1 + "-" + pos2);
-            }
+        while((pos2 - (chuck)) < file_size){
+            array.add("bytes=" + pos1 + "-" + (pos2 >= file_size-1?"":pos2));
+            pos2 += chuck+1;
+            pos1 = pos2 - (chuck);
         }
-        System.out.println("array=" + array.toString());
         return array;
     }
     void Add_Loading_Text(String text) {
