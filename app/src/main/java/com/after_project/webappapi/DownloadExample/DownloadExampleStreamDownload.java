@@ -95,7 +95,7 @@ public class DownloadExampleStreamDownload extends AppCompatActivity {
         int pos2 = chuck;
         int pos1 = 0;
         ArrayList<String> array = new ArrayList<String>();
-        while((pos2 - (chuck)) < file_size){
+        while(pos1 < file_size){
             array.add("bytes=" + pos1 + "-" + (pos2 >= file_size-1?"":pos2));
             pos2 += chuck+1;
             pos1 = pos2 - (chuck);
