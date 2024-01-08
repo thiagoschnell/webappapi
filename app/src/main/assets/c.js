@@ -121,3 +121,67 @@ function download(download_url,download_headers){
 function request_download(download_url){
    return download(download_url,{})
 }
+function url(url,options,vardata){
+    var vardata = vardata;
+    var result =  new Object();
+    result.cb = vardata;
+    result.request_url = url;
+    result.error = Object();
+    result.toString = function(){
+      return JSON.stringify(result);
+    }
+ try{
+    var ajax = $.ajax(url,$.extend({
+       'async': false,
+       'timeout': 3000
+     },options));
+    var exception = function(e){
+        result.error.message = $.ReferenceError(e);
+    }
+    var androidCallback =false;
+    this.addAndroidCallback = function(){
+            androidCallback = true;
+            return this;
+    }
+    this.get = function(){
+    try{
+        this.response = function(){
+            this.data = result;
+            this.string = result.toString();
+            return this;
+        }
+        handle(ajax)
+    }catch(e){
+        exception(e)
+    }
+        return this;
+    }
+    var handle = function(){
+       try{
+         ajax.done(function(data){
+                    try {
+                        result.data = typeof data === 'object'? data : JSON.parse(data);
+                    } catch (e) {
+                        exception(e)
+                    }
+                })
+                .fail(function(jqXHR,textStatus,errorThrown){
+                   try{
+                       result.error.xhr = jqXHR;
+                       } catch (e) {
+                           exception(e)
+                       }
+                })
+                .always(function(){
+                    if(androidCallback){
+                    }
+                })
+       }catch (e){
+        exception(e)
+       }
+    }
+ } catch (e) {
+    exception(e)
+ }
+ return this;
+}

@@ -61,6 +61,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download Example"></Button>
+    <Button
+        android:id="@+id/ButtonOpenZipWebsiteToWebViewExample"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zip Website To WebView Example"></Button>
   </LinearLayout>
 
   <LinearLayout

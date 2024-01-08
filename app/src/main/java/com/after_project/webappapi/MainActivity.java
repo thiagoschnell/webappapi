@@ -120,6 +120,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Zip Website To WebView Example
+        {
+            Button buttonOpenZipWebsiteToWebViewExample = (Button) findViewById(R.id.ButtonOpenZipWebsiteToWebViewExample);
+            buttonOpenZipWebsiteToWebViewExample.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, ZipWebsiteToWebViewExampleMainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

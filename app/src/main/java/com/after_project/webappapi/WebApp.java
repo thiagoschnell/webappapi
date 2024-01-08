@@ -132,6 +132,7 @@ public class WebApp {
                         error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
             }
         }
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         @SuppressWarnings("deprecation")
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {

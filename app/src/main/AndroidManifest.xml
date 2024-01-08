@@ -20,6 +20,12 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
         <activity
+            android:name=".ZipWebsiteToWebViewExampleWebviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ZipWebsiteToWebViewExampleMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".DownloadExampleStreamDownload"
             android:exported="false" />
         <activity

@@ -2,6 +2,7 @@ package com.after_project.webappapi;
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,7 +11,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-public class FileManager {
+import java.io.OutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+public class FileManager implements AutoCloseable {
     protected String getFileData(File file) throws Exception {
         return readFile(file);
     }
@@ -25,6 +29,11 @@ public class FileManager {
         file.getParentFile().mkdirs();
         return file;
     }
+    protected File getDir(File fileObject, String dir){
+        File file =  new File(fileObject, dir);
+        file.mkdirs();
+        return file;
+    }
     protected void saveFile(File file, String data) throws Exception{
         saveFile(file,data.getBytes());
     }
@@ -32,6 +41,9 @@ public class FileManager {
         FileOutputStream fos = new FileOutputStream(file,false);
         fos.write(bytes);
         fos.close();
+    }
+    protected void saveFile(File file, InputStream is) throws Exception{
+        saveFile(file,readBytes(is));
     }
     private String readFile(File file) throws Exception{
         StringBuilder text = new StringBuilder();
@@ -72,6 +84,43 @@ public class FileManager {
         fIn.close();
         return datax.toString();
     }
+    protected void unzip(byte[] data, File path) throws Exception{
+        InputStream is = new ByteArrayInputStream(data);
+        unzip(is,path);
+    }
+    protected void unzip(InputStream is, File path) throws Exception{
+        ZipInputStream zis = null;
+        FileOutputStream fos = null;
+        try {
+            zis = new ZipInputStream(is);
+            ZipEntry ze;
+            while ((ze = zis.getNextEntry()) != null) {
+                File entryFile;
+                if (ze.isDirectory()) {
+                    getDir(path,ze.getName());
+                } else {
+                    entryFile = getFile(path,ze.getName());
+                    fos = new FileOutputStream(entryFile);
+                    copyStream(zis, fos);
+                    fos.close();
+                    fos = null;
+                }
+                zis.closeEntry();
+            }
+        } finally {
+            if (zis != null) {
+                zis.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+        }
+    }
+    private void writeBytes(byte[] data, OutputStream output) throws IOException {
+        if (data != null) {
+            output.write(data);
+        }
+    }
     private byte[] readBytes(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -81,5 +130,26 @@ public class FileManager {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
+    }
+    private int copyStream(InputStream input, OutputStream output) throws IOException {
+        long count = copyBigStream(input, output);
+        return count > 2147483647L ? -1 : (int)count;
+    }
+    private long copyStream(InputStream input, OutputStream output, int bufferSize) throws IOException {
+        return copyBigStream(input, output, new byte[bufferSize]);
+    }
+    private long copyBigStream(InputStream input, OutputStream output) throws IOException {
+        return copyStream(input, output, 4096);
+    }
+    private long copyBigStream(InputStream input, OutputStream output, byte[] buffer) throws IOException {
+        long count;
+        int n;
+        for(count = 0L; -1 != (n = input.read(buffer)); count += (long)n) {
+            output.write(buffer, 0, n);
+        }
+        return count;
+    }
+    @Override
+    public void close() throws Exception {
     }
 }
