@@ -50,10 +50,10 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
                         {
                             unZipWebsiteFromResource(R.raw.website);
                             // Download and install the patch.zip and wait its finish
-                            // then if all done with success the RequestURLAndWait.onComplete() method will be call to startWebviewActivity().
+                            // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
-                                new RequestURLAndWait("https://realappexample.shop/patch.zip",
-                                        new RequestURLAndWait.RequestURLAndWaitCallback() {
+                                new RequestDownloadAndWait("https://realappexample.shop/patch.zip",
+                                        new RequestAndWait.RequestURLAndWaitCallback() {
                                             @Override
                                             public void onComplete() {
                                                 startWebviewActivity();
@@ -62,7 +62,7 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
                                             public void onRequestURLError(Exception e) {
                                             }
                                             @Override
-                                            public @RequestURLAndWait.ResultStatus int onReceiveResponse(String value) {
+                                            public @RequestAndWait.ResultStatus int onReceiveResponse(String value) {
                                                 try {
                                                     JsonObject json = JsonParser.parseString((String) value).getAsJsonObject();
                                                     JsonElement data = json.get("data");
@@ -75,14 +75,14 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
                                                         }
                                                         Toast.makeText(ZipWebsiteToWebViewExampleMainActivity.this, "download url error", Toast.LENGTH_LONG).show();
                                                     }
-                                                    return RequestURLAndWait.RESULT_STATUS_SUCCESS;
+                                                    return RequestAndWait.RESULT_STATUS_SUCCESS;
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
-                                                    return RequestURLAndWait.RESULT_STATUS_ERROR;
+                                                    return RequestAndWait.RESULT_STATUS_ERROR;
                                                 }
                                             }
                                             @Override
-                                            public void onRequestURL(RequestURLAndWait.RequestThread requestThread) {
+                                            public void onRequestURL(RequestAndWait.RequestThread requestThread) {
                                                 runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {

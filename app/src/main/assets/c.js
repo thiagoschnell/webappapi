@@ -174,6 +174,7 @@ function url(url,options,vardata){
                 })
                 .always(function(){
                     if(androidCallback){
+                        android.response_url(JSON.stringify(result));
                     }
                 })
        }catch (e){

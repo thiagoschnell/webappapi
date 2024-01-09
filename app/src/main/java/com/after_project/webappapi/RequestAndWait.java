@@ -7,18 +7,28 @@ import androidx.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.Semaphore;
-public class RequestURLAndWait {
+class RequestDownloadAndWait extends RequestAndWait{
+    RequestDownloadAndWait(String url, RequestURLAndWaitCallback requestURLAndWaitCallback){
+        super("request_download('"+url+"')", requestURLAndWaitCallback);
+    }
+}
+class RequestURLAndWait extends RequestAndWait{
+    RequestURLAndWait(String url, Boolean addAndroidCallback, RequestURLAndWaitCallback requestURLAndWaitCallback){
+        super("url('"+url+"')"+(addAndroidCallback?".addAndroidCallback()":"")+".get().response().data", requestURLAndWaitCallback);
+    }
+}
+public class RequestAndWait {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({RESULT_STATUS_SUCCESS, RESULT_STATUS_ERROR})
     public @interface ResultStatus {}
     public static final int RESULT_STATUS_ERROR = 0;
     public static final int RESULT_STATUS_SUCCESS = 1;
-    private String url;
+    private String js;
     private Boolean background_error =false;
     private RequestURLAndWaitCallback requestURLAndWaitCallback;
     final Semaphore semaphore = new Semaphore(0);
-    RequestURLAndWait(String url, RequestURLAndWaitCallback requestURLAndWaitCallback) throws Exception {
-        this.url = url;
+    RequestAndWait(String js, RequestURLAndWaitCallback requestURLAndWaitCallback) {
+        this.js = js;
         this.requestURLAndWaitCallback = requestURLAndWaitCallback;
         AsyncTask<Void, Void, String > task = new AsyncTask<Void, Void, String>() {
             @Override
@@ -56,7 +66,7 @@ public class RequestURLAndWait {
                             try {
                                 if(requestURLAndWaitCallback!=null){
                                     MyApp.getInstance().getWebApp().evalJavaScript(
-                                            "request_download('"+url+"')",
+                                            js,
                                             new ValueCallback() {
                                                 @Override
                                                 public void onReceiveValue(Object value) {
