@@ -147,7 +147,7 @@ public class WebApp {
             }
         }
         if(!Continue){
-            Toast.makeText(MyApp.getInstance(),"The request URL don't match with any domains allowed in Myapp.java",Toast.LENGTH_LONG).show();
+            Toast.makeText(MyApp.getInstance(),"The request URL don't match with any domains allowed.",Toast.LENGTH_LONG).show();
         }
         return Continue;
     }

@@ -46,11 +46,10 @@
                 android:text="Patch website files\n (download and install)"></Button>
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/ZipWebsiteToWebViewExampleLayoutButtonDownloadUpdateAndInstall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update website files\n (download and install)"></Button>
+                android:text="Install new version from update files\n (download and install)"></Button>
 
         </LinearLayout>
 
