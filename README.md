@@ -45,7 +45,11 @@ Shop Site Demo for usage example purpouses
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
-**Zip Website To Webview Example** <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+<h3>**Zip Website To Webview Example**</h3><img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> 
+
+Create a app and deliver the mobile version of your website, <br> 
+implement webappapi to make requests, <br> 
+load and update web page to your Android app made easy its just need a zip file!
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/6376d3e5-9fe6-4a49-b90d-7a39f320e4cd" />
 
