@@ -1,6 +1,4 @@
 package com.after_project.webappapi;
-import static com.after_project.webappapi.WebApp.FLAG_CLEAR;
-import static com.after_project.webappapi.WebApp.FLAG_CLEAR_CACHE;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -33,12 +31,17 @@ public class MainActivity4 extends AppCompatActivity {
         }
         //WebApp
         {
+            String[] alloweDomains = {
+                    //"webappapi-server.azurewebsites.net",
+                    "realappexample.shop",
+            };
             WebView webview = new WebView(this);
-            mainActivity4WebApp = new WebApp(webview,new WebViewAssetLoader.Builder()
-                    .setDomain("realappexample.shop")
-                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build()
-                    ,FLAG_CLEAR_CACHE | FLAG_CLEAR);
+            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
+            for(String allowedDomain : alloweDomains){
+                builder.setDomain(allowedDomain);
+            }
+            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
+            mainActivity4WebApp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
@@ -86,13 +89,11 @@ public class MainActivity4 extends AppCompatActivity {
             }
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mainActivity4AppMessage.unregisterReceiver(mainActivity4AppMessageReceiver);
     }
-
     class WebAppApiCustomTask extends WebAppApiTask{
         @Override
         protected void onPreExecute() {

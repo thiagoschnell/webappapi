@@ -31,11 +31,17 @@ public class MainActivity2 extends AppCompatActivity {
         }
         //WebApp
         {
+            String[] alloweDomains = {
+                    "webappapi-server.azurewebsites.net",
+                    //"realappexample.shop",
+            };
             WebView webview = new WebView(this);
-            mainActivity2WebApp = new WebApp(webview,  new WebViewAssetLoader.Builder()
-                    .setDomain("webappapi-server.azurewebsites.net")
-                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build(), WebApp.FLAG_CLEAR_CACHE);
+            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
+            for(String allowedDomain : alloweDomains){
+                builder.setDomain(allowedDomain);
+            }
+            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
+            mainActivity2WebApp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin

@@ -92,6 +92,7 @@ public class RequestAndWait {
                                 }
                             }
                         }else{
+                            throw new Exception("WebApp is not loaded.");
                         }
                     } catch (Exception e) {
                         semaphore.release();

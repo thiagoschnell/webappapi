@@ -49,12 +49,30 @@ public class MyApp extends MultiDexApplication {
         }
         //WebApp
         {
+            /**Example of use allowedDomains and CORS
+             * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+             * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
+             * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
+             * now go to your server hosting that are using the domain "webappapi-server.azurewebsites.net"
+             * and make this CORS settings:
+             *
+             * Request Credentials
+             *      Enable Access-Control-Allow-Credentials
+             * Allowed Origins
+             *      ->https://realappexample.shop // in this case add the server_url "https://realappexample.shop" and that will go allow
+             *                                    //requests from "https://realappexample.shop" to your server domain "webappapi-server.azurewebsites.net".
+             */
+            String[] alloweDomains = {
+                   // "webappapi-server.azurewebsites.net",
+                    "realappexample.shop",
+            };
             WebView webview = new WebView(this);
-            webApp = new WebApp(webview,new WebViewAssetLoader.Builder()
-                    .setDomain("realappexample.shop")
-                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build(),
-                    WebApp.FLAG_CLEAR_CACHE);
+            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
+            for(String allowedDomain : alloweDomains){
+                builder.setDomain(allowedDomain);
+            }
+            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
+            webApp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
             try {
                 //load server_url for get ready the origin
                 webApp.loadDataWithBaseUrl("https://realappexample.shop/",

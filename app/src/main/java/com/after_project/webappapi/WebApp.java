@@ -11,6 +11,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 interface WebAppInterface {
     void onLoadFinish(WebView view, String url);
     void onLoadError(WebView view,
@@ -40,28 +42,14 @@ class WebAppCallback implements WebAppInterface {
     }
 }
 public class WebApp {
-    private MutableLiveData<WebAppApiDataWrapper> liveData = null;
-    WebAppApi api = new WebAppApi();
-    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
-        this.webView = webView1;
-        LocalContentWebViewClient LC = new LocalContentWebViewClient(webViewAssetLoader);
-        this.webView.setWebViewClient(LC);
-        this.webView.getSettings().setJavaScriptEnabled(true);
-        this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        this.webView.addJavascriptInterface(new WebAppJavaScriptInterface(), "android");
-    }
-    void clearCacheRamOnly(){
-        this.webView.clearCache(false);
-    }
-    void clearCache(){
-        this.webView.clearCache(true);
-    }
-    void clearHistory(){
-        this.webView.clearHistory();
-    }
-    void clearSslPreferences(){
-        this.webView.clearSslPreferences();
-    }
+    protected static final int FLAG_CLEAR_CACHE_RAM_ONLY = 1; // clear RAM cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
+    protected static final int FLAG_CLEAR_CACHE = 1<<1; // Clears the resource cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
+    protected static final int FLAG_CLEAR_HISTORY = 1<<2; // Clear its internal back/forward list.
+    protected static final int FLAG_CLEAR_SSL_PREFERENCES = 1<<3; // Clears the SSL preferences table stored in response to proceeding with SSL certificate errors.
+    protected static final int FLAG_CLEAR = 1<<4;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(flag=true,value={FLAG_CLEAR_CACHE_RAM_ONLY,FLAG_CLEAR_CACHE,FLAG_CLEAR_HISTORY,FLAG_CLEAR_SSL_PREFERENCES,FLAG_CLEAR})
+    private @interface Flags{}
     private void setFlags(@Flags int flags) {
         if ((flags&FLAG_CLEAR_CACHE_RAM_ONLY) != 0){
             clearCacheRamOnly();
@@ -78,43 +66,92 @@ public class WebApp {
         if ((flags&FLAG_CLEAR) != 0){
         }
     }
+    private void clearCacheRamOnly(){
+        this.webView.clearCache(false);
+    }
+    private void clearCache(){
+        this.webView.clearCache(true);
+    }
+    private void clearHistory(){
+        this.webView.clearHistory();
+    }
+    private void clearSslPreferences(){
+        this.webView.clearSslPreferences();
+    }
+    protected static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
+    protected static final String DEFAULT_REQUEST_JSON_OPTIONS = "{'type':'GET','dataType':'json'}";
+    protected static final String REQUEST_API_OPTIONS_SERIALIZE_EXAMPLE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
+    protected static final String REQUEST_JSON_OPTIONS_SYNC = "{'type':'GET','dataType':'json', 'async': false}";
+    private WebView webView;
+    private WebAppCallback webAppCallback;
+    protected WebAppApi api = new WebAppApi();
+    private MutableLiveData<WebAppApiDataWrapper> liveData = null;
+    private String[] allowedDomains = null;
+    private void setAllowedDomains(String[] allowedDomains) {
+        this.allowedDomains = allowedDomains;
+    }
     protected void setLiveData(MutableLiveData<WebAppApiDataWrapper> liveData){
         this.liveData = liveData;
     }
-    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader, @Flags int flags){
+    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
+        this.webView = webView1;
+        LocalContentWebViewClient LC = new LocalContentWebViewClient(webViewAssetLoader);
+        this.webView.setWebViewClient(LC);
+        this.webView.getSettings().setJavaScriptEnabled(true);
+        this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        this.webView.addJavascriptInterface(new WebAppJavaScriptInterface(), "android");
+    }
+    /**Example of use allowedDomains and CORS
+     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+     * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
+     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
+     * now go to your server hosting that are using the domain "webappapi-server.azurewebsites.net"
+     * and make this CORS settings:
+     *
+     * Request Credentials
+     *      Enable Access-Control-Allow-Credentials
+     * Allowed Origins
+     *      ->https://realappexample.shop // in this case add the server_url "https://realappexample.shop" and that will go allow
+     *                                    //requests from "https://realappexample.shop" to your server domain "webappapi-server.azurewebsites.net".
+     */
+    WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader,String[] allowedDomains, @Flags int flags){
         this(webView1,webViewAssetLoader);
         setFlags(flags);
+        setAllowedDomains(allowedDomains);
     }
-    public static final int FLAG_CLEAR_CACHE_RAM_ONLY = 1; // clear RAM cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
-    public static final int FLAG_CLEAR_CACHE = 1<<1; // Clears the resource cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
-    public static final int FLAG_CLEAR_HISTORY = 1<<2; // Clear its internal back/forward list.
-    public static final int FLAG_CLEAR_SSL_PREFERENCES = 1<<3; // Clears the SSL preferences table stored in response to proceeding with SSL certificate errors.
-    public static final int FLAG_CLEAR = 1<<4;
-    @IntDef(
-            flag=true,
-            value={
-                    FLAG_CLEAR_CACHE_RAM_ONLY,
-                    FLAG_CLEAR_CACHE,
-                    FLAG_CLEAR_HISTORY,
-                    FLAG_CLEAR_SSL_PREFERENCES,
-                    FLAG_CLEAR
+    protected void evalJavaScript(String js, ValueCallback valueCallback){
+        if(isAllowedDomainToExecuteHttpRequest(js)) {
+            webView.evaluateJavascript(js, valueCallback);
+        }
+    }
+    protected void runJavaScript(String js){
+        if(isAllowedDomainToExecuteHttpRequest(js)) {
+            webView.loadUrl("javascript: " + js);
+        }
+    }
+    private Boolean isAllowedDomainToExecuteHttpRequest(String js){
+        Boolean Continue = true;
+        if(js.contains("http") || js.contains("https")){
+            if(allowedDomains!=null)  {
+                int foundDomainsCount = 0;
+                for(String serverDomain : allowedDomains){
+                    if(js.contains(serverDomain)){
+                        foundDomainsCount++;
+                        break;
+                    }
+                }
+                if(foundDomainsCount != 0){
+                }else{
+                    Continue = false;
+                    }
             }
-    )
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Flags{}
-    static final String DEFAULT_REQUEST_API_OPTIONS = "{'type':'POST', 'headers':{}}";
-    static final String DEFAULT_REQUEST_JSON_OPTIONS = "{'type':'GET','dataType':'json'}";
-    static final String REQUEST_API_OPTIONS_SERIALIZE_EXAMPLE = "{'type':'POST', 'data': { 'get_param': 'value' }, 'headers':{}}";
-    static final String REQUEST_JSON_OPTIONS_SYNC = "{'type':'GET','dataType':'json', 'async': false}";
-    private WebView webView;
-    private WebAppCallback webAppCallback;
-    void evalJavaScript(String js, ValueCallback valueCallback){
-        webView.evaluateJavascript(js,valueCallback);
+        }
+        if(!Continue){
+            Toast.makeText(MyApp.getInstance(),"The request URL don't match with any domains allowed in Myapp.java",Toast.LENGTH_LONG).show();
+        }
+        return Continue;
     }
-    void runJavaScript(String url){
-        webView.loadUrl("javascript: " + url);
-    }
-    void detachWebAppCallback(){
+    protected void detachWebAppCallback(){
         webAppCallback = null;
     }
     private class LocalContentWebViewClient extends androidx.webkit.WebViewClientCompat {
@@ -164,21 +201,46 @@ public class WebApp {
             }
         }
     }
-    void abort(){
+    protected void abort(){
         webView.stopLoading();
         detachWebAppCallback();
     }
-    void load(String server_url, WebAppCallback wb){
+    /**Example of use allowedDomains and CORS
+     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+     * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
+     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
+     * now go to your server hosting that are using the domain "webappapi-server.azurewebsites.net"
+     * and make this CORS settings:
+     *
+     * Request Credentials
+     *      Enable Access-Control-Allow-Credentials
+     * Allowed Origins
+     *      ->https://realappexample.shop // in this case add the server_url "https://realappexample.shop" and that will go allow
+     *                                    //requests from "https://realappexample.shop" to your server domain "webappapi-server.azurewebsites.net".
+     */
+    protected void load(String server_url, WebAppCallback wb){
         this.webAppCallback = wb;
         webView.loadUrl(server_url);
     }
-    void loadDataWithBaseUrl(String server_url, RawResource rawResource, WebAppCallback wb){
-        //String exampleString = "<html><head><script src=\"/assets/jquery-3.6.1.min.js\"></script><script src=\"/assets/c.js\"></script></head><body ></body></html>";
+    /**Example of use allowedDomains and CORS
+     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+     * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
+     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
+     * now go to your server hosting that are using the domain "webappapi-server.azurewebsites.net"
+     * and make this CORS settings:
+     *
+     * Request Credentials
+     *      Enable Access-Control-Allow-Credentials
+     * Allowed Origins
+     *      ->https://realappexample.shop // in this case add the server_url "https://realappexample.shop" and that will go allow
+     *                                    //requests from "https://realappexample.shop" to your server domain "webappapi-server.azurewebsites.net".
+     */
+    protected void loadDataWithBaseUrl(String server_url, RawResource rawResource, WebAppCallback wb){
         this.webAppCallback = wb;
         webView.loadDataWithBaseURL(server_url,
                 rawResource.toString(), "text/html", "UTF-8",null);
     }
-    void load(String server_url){
+    protected void load(String server_url){
         load(server_url, null);    }
     private class WebAppJavaScriptInterface {
         WebAppJavaScriptInterface() {

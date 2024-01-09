@@ -36,11 +36,17 @@ public class RealAppMainActivity extends AppCompatActivity {
         }
         //WebApp
         {
+            String[] alloweDomains = {
+                    // "webappapi-server.azurewebsites.net",
+                    "realappexample.shop",
+            };
             WebView webview = new WebView(this);
-            webapp = new WebApp(webview,  new WebViewAssetLoader.Builder()
-                    .setDomain("realappexample.shop")//site domain here
-                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                    .build(), WebApp.FLAG_CLEAR_CACHE);
+            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
+            for(String allowedDomain : alloweDomains){
+                builder.setDomain(allowedDomain);
+            }
+            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
+            webapp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
             try {
                 webapp.load("https://realappexample.shop/index.html", //server url here
                         new WebAppCallback() {
