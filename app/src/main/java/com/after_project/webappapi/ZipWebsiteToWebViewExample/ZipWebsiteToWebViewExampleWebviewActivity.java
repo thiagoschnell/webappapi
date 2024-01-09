@@ -1,4 +1,5 @@
 package com.after_project.webappapi;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -17,6 +18,10 @@ public class ZipWebsiteToWebViewExampleWebviewActivity extends AppCompatActivity
         if (getIntent().getExtras() != null) {
             webview = (WebView)findViewById(R.id.webview);
             WebSettings settings = webview.getSettings();
+            //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                webview.clearCache(true);
+                webview.clearHistory();
+            //}
             settings.setAllowFileAccess(true);
             settings.setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new WebviewJavaScriptInterface(), "android");
