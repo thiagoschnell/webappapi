@@ -49,7 +49,8 @@ Shop Site Demo for usage example purpouses
 
 Create a app and deliver the mobile version of your website, <br> 
 implement webappapi to make requests, <br> 
-load and update web page to your Android app made easy its just need a zip file! [Demo example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExample)
+load from zip your website, create a new version for the website from update.zip by url to download and install it, instant patch your website with zip link and download and install it  <br>
+Website to your Android app made easy its just need a zip file! [Demo example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExample)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/7c29d543-c431-47c9-856b-6464f6a096c2" />
 
