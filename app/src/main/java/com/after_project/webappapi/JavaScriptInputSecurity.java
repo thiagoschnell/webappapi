@@ -6,7 +6,7 @@ public class JavaScriptInputSecurity {
     private ArrayList ignoreJavascriptStrings = new ArrayList(){{
         add(".");
         add("console.log");
-        add("fn.requesturl");
+        add("fn.requesturl");//no case Sensitive is needed.
     }};
     void addIgnoreJavascriptString(String string){
         if(!ignoreJavascriptStrings.contains(string)) {

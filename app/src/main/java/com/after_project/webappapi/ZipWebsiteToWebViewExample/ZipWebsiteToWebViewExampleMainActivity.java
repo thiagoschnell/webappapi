@@ -33,7 +33,7 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
             MyApp.getInstance().getWebApp().ignoreDomain("products.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
             MyApp.getInstance().getWebApp().ignoreDomain("purchases.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
             MyApp.getInstance().getWebApp().ignoreDomain("profile.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
-            //others detections as domains that dont may contain in the list ignoreJavascriptStrings in JavaScriptInputSecurity.java from WebApp.java will go cancel the request url.
+            //Indentify strings as domain that you don't have at ignoreJavascriptStrings ArrayList in JavaScriptInputSecurity.java,it will resulting the WebApp to cancel .evalJavascript() or .runJavaScript().
             //To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
         }
         //Unzip Website from Resource

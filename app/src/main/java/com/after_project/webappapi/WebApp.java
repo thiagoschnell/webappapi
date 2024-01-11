@@ -104,12 +104,12 @@ public class WebApp {
     }
     /**
      *
-     * @param s the identified string as domain for add to ignoreJavascriptStrings List and execute the Javascript.
-     *          example of usage:
-     *          Extra security layer to js executions.
-     *          Start filtering evalJavascript() or runJavaScript() to identify domains that may not const in the allowedDomains list in webapp.
-     *          To request js with functions like fn.RequestUrl() or console.log() those functions will go be identified as domain and you need to go on JavaScriptInputSecurity.java ignoreJavascriptStrings variable to add.
-     *          URL requests with baseurl like "api.php" or "products.json" also identify as domain.
+     * @param s Add a string identified as domain to the ignoreJavascriptStrings ArrayList.
+     *          Its a Extra security layer for webapp execute JavaScript string.
+     *          WebApp can now start filtering .evalJavascript() or .runJavaScript() to identify domains that may not const in the allowedDomains list in webapp.
+     *          To execute JavaScript functions like fn.RequestUrl() or console.log() those functions will go be identified as domain and you need to go on JavaScriptInputSecurity.java ignoreJavascriptStrings variable to add.
+     *          And to execute URL requests as baseurl like "$.fn.requestUrl('api.php?id=0')" or
+     *          "$.deprecated.request_url('products.json#example')" also identify as domain too.
      *
      */
     protected void ignoreDomain(String s) {
