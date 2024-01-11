@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Arrays;
 interface WebAppInterface {
     void onLoadFinish(WebView view, String url);
     void onLoadError(WebView view,
@@ -87,11 +86,36 @@ public class WebApp {
     protected WebAppApi api = new WebAppApi();
     private MutableLiveData<WebAppApiDataWrapper> liveData = null;
     private String[] allowedDomains = null;
+    private JavaScriptInputSecurity javaScriptInputSecurity = null;
     private void setAllowedDomains(String[] allowedDomains) {
         this.allowedDomains = allowedDomains;
     }
     protected void setLiveData(MutableLiveData<WebAppApiDataWrapper> liveData){
         this.liveData = liveData;
+    }
+    protected synchronized WebApp enableJavaScriptInputSecurity(){
+        if(javaScriptInputSecurity==null){
+            javaScriptInputSecurity = new JavaScriptInputSecurity();
+        }
+        return this;
+    }
+    protected void stopJavaScriptInputSecurity(){
+        javaScriptInputSecurity = null;
+    }
+    /**
+     *
+     * @param s the identified string as domain for add to ignoreJavascriptStrings List and execute the Javascript.
+     *          example of usage:
+     *          Extra security layer to js executions.
+     *          Start filtering evalJavascript() or runJavaScript() to identify domains that may not const in the allowedDomains list in webapp.
+     *          To request js with functions like fn.RequestUrl() or console.log() those functions will go be identified as domain and you need to go on JavaScriptInputSecurity.java ignoreJavascriptStrings variable to add.
+     *          URL requests with baseurl like "api.php" or "products.json" also identify as domain.
+     *
+     */
+    protected void ignoreDomain(String s) {
+        if(javaScriptInputSecurity!=null) {
+            javaScriptInputSecurity.addIgnoreJavascriptString(s);
+        }
     }
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader){
         this.webView = webView1;
@@ -119,18 +143,9 @@ public class WebApp {
         setFlags(flags);
         setAllowedDomains(allowedDomains);
     }
-    protected void evalJavaScript(String js, ValueCallback valueCallback){
-        if(isAllowedDomainToExecuteHttpRequest(js)) {
-            webView.evaluateJavascript(js, valueCallback);
-        }
-    }
-    protected void runJavaScript(String js){
-        if(isAllowedDomainToExecuteHttpRequest(js)) {
-            webView.loadUrl("javascript: " + js);
-        }
-    }
     private Boolean isAllowedDomainToExecuteHttpRequest(String js){
         Boolean Continue = true;
+        js = js.toLowerCase();
         if(js.contains("http") || js.contains("https")){
             if(allowedDomains!=null)  {
                 int foundDomainsCount = 0;
@@ -143,13 +158,46 @@ public class WebApp {
                 if(foundDomainsCount != 0){
                 }else{
                     Continue = false;
-                    }
+                }
             }
         }
-        if(!Continue){
-            Toast.makeText(MyApp.getInstance(),"The request URL don't match with any domains allowed.",Toast.LENGTH_LONG).show();
-        }
         return Continue;
+    }
+    protected void evalJavaScript(String js, ValueCallback valueCallback){
+        if(allowedDomains!=null) {
+            String error_message = null;
+            if (!isAllowedDomainToExecuteHttpRequest(js)){
+                error_message = "The request URL don't match with any domains allowed";
+            }
+            if(javaScriptInputSecurity!=null){
+                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js,allowedDomains)){
+                    error_message = "Javascript contains domains that are not in domains allowed list.";
+                }
+            }
+            if(error_message==null) {
+                webView.evaluateJavascript(js, valueCallback);
+            }else{
+                Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    protected void runJavaScript(String js){
+        if(allowedDomains!=null) {
+            String error_message = null;
+            if (!isAllowedDomainToExecuteHttpRequest(js)){
+                error_message = "The request URL don't match with any domains allowed";
+            }
+            if(javaScriptInputSecurity!=null){
+                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js,allowedDomains)){
+                    error_message = "Javascript contains domains that are not in domains allowed list.";
+                }
+            }
+            if(error_message==null) {
+                webView.loadUrl("javascript: " + js);
+            }else{
+                Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
+            }
+        }
     }
     protected void detachWebAppCallback(){
         webAppCallback = null;

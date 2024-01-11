@@ -28,6 +28,13 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
             fileManager = new FileManager();
             fileObject = getFileObject();
             websiteFilePath = fileManager.getDir(fileObject, websiteDirName);
+            MyApp.getInstance().getWebApp().enableJavaScriptInputSecurity().ignoreDomain("patch.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
+            MyApp.getInstance().getWebApp().ignoreDomain("update.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
+            MyApp.getInstance().getWebApp().ignoreDomain("products.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+            MyApp.getInstance().getWebApp().ignoreDomain("purchases.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+            MyApp.getInstance().getWebApp().ignoreDomain("profile.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+            //others detections as domains that dont may contain in the list ignoreJavascriptStrings in JavaScriptInputSecurity.java from WebApp.java will go cancel the request url.
+            //To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
         }
         //Unzip Website from Resource
         ((Button)findViewById(R.id.ZipWebsiteToWebViewExampleLayoutButtonUnZipFromResource))
@@ -184,5 +191,10 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
          * Apps require no extra permissions to read or write to the returned path, since this path lives in their private storage.
          */
         return directory;
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApp.getInstance().getWebApp().stopJavaScriptInputSecurity();
     }
 }
