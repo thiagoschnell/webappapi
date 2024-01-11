@@ -108,8 +108,8 @@ public class WebApp {
      *          Its a Extra security layer for webapp execute JavaScript string.
      *          WebApp can now start filtering .evalJavascript() or .runJavaScript() to identify domains that may not const in the allowedDomains list in webapp.
      *          To execute JavaScript functions like fn.RequestUrl() or console.log() those functions will go be identified as domain and you need to go on JavaScriptInputSecurity.java ignoreJavascriptStrings variable to add.
-     *          And to execute URL requests as baseurl like "$.fn.requestUrl('api.php?id=0')" or
-     *          "$.deprecated.request_url('products.json#example')" also identify as domain too.
+     *          And to execute URL requests as baseurl like "...requestUrl('api.php?id=0')" or
+     *          "...request_url('products.json#example')" also identify as domain too.
      *
      */
     protected void ignoreDomain(String s) {
