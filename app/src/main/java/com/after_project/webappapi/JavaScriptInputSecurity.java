@@ -17,12 +17,11 @@ public class JavaScriptInputSecurity {
         Boolean Continue = true;
         ArrayList javascripStringDomains = findDomains(js.toLowerCase());
         ArrayList filteredDomainList = filterDomainsList(javascripStringDomains,ignoreJavascriptStrings);
-        String javascriptDomains = String.join("|", filteredDomainList);
         if(allowedDomains!=null)  {
             int foundStringsCount = 0;
             for (Object javascriptDomain: filteredDomainList) {
                 for (String serverDomain : allowedDomains) {
-                    if (getDomain((String)javascriptDomain).equals(serverDomain)) {
+                    if (javascriptDomain.equals(serverDomain)) {
                         foundStringsCount++;
                     } else {
                     }

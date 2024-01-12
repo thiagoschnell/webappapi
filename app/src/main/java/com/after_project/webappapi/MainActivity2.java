@@ -36,12 +36,12 @@ public class MainActivity2 extends AppCompatActivity {
 
                     // [END] Additional domains
                     // [START] Website domain
-                    "webappapi-server.azurewebsites.net"
+                            "webappapi-server.azurewebsites.net"
                     // [END] Website domain
             };
             WebView webview = new WebView(this);
             mainActivity2WebApp = new WebApp(webview,new WebViewAssetLoader.Builder()
-                    .setDomain(allowedDomains[0])
+                    .setDomain(allowedDomains[allowedDomains.length-1])
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                     .build(),
                     allowedDomains,

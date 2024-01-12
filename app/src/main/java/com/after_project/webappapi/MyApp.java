@@ -59,7 +59,7 @@ public class MyApp extends MultiDexApplication {
             };
             WebView webview = new WebView(this);
             webApp = new WebApp(webview,new WebViewAssetLoader.Builder()
-                    .setDomain(allowedDomains[0])
+                    .setDomain(allowedDomains[allowedDomains.length-1])
                     .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                     .build(),
                     allowedDomains,
