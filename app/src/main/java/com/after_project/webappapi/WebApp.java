@@ -132,8 +132,6 @@ public class WebApp {
      * now go to your server hosting that are using the domain "realappexample.shop"
      * and make this CORS settings:
      *
-     * Request Credentials
-     *      Enable Access-Control-Allow-Credentials
      * Allowed Origins
      *      ->webappapi-server.azurewebsites.net
      *
