@@ -128,7 +128,7 @@ public class WebApp {
     /**Example of use allowedDomains and CORS
      * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
      * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
-     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
+     * then add the "webappapi-server.azurewebsites.net" in the allowedDomains at below variable,
      * now go to your server hosting that are using the domain "realappexample.shop"
      * and make this CORS settings:
      *
@@ -136,6 +136,12 @@ public class WebApp {
      *      Enable Access-Control-Allow-Credentials
      * Allowed Origins
      *      ->webappapi-server.azurewebsites.net
+     *
+     *
+     * You may also must add headers in the file you are requesting
+     * For example in PHP file, to allow a site at "realappexample.shop" to access the resource using CORS, the header should be:
+     *
+     *< ?php  //header("Access-Control-Allow-Origin: webappapi-server.azurewebsites.net"); ?>
      *
      */
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader,String[] allowedDomains, @Flags int flags){
@@ -253,36 +259,10 @@ public class WebApp {
         webView.stopLoading();
         detachWebAppCallback();
     }
-    /**Example of use allowedDomains and CORS
-     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
-     * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
-     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
-     * now go to your server hosting that are using the domain "realappexample.shop"
-     * and make this CORS settings:
-     *
-     * Request Credentials
-     *      Enable Access-Control-Allow-Credentials
-     * Allowed Origins
-     *      ->webappapi-server.azurewebsites.net
-     *
-     */
     protected void load(String server_url, WebAppCallback wb){
         this.webAppCallback = wb;
         webView.loadUrl(server_url);
     }
-    /**Example of use allowedDomains and CORS
-     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
-     * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
-     * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
-     * now go to your server hosting that are using the domain "realappexample.shop"
-     * and make this CORS settings:
-     *
-     * Request Credentials
-     *      Enable Access-Control-Allow-Credentials
-     * Allowed Origins
-     *      ->webappapi-server.azurewebsites.net
-     *
-     */
     protected void loadDataWithBaseUrl(String server_url, RawResource rawResource, WebAppCallback wb){
         this.webAppCallback = wb;
         webView.loadDataWithBaseURL(server_url,

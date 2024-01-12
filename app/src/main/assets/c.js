@@ -133,7 +133,9 @@ function url(url,options,vardata){
  try{
     var ajax = $.ajax(url,$.extend({
        'async': false,
-       'timeout': 3000
+       'timeout': 3000,
+       'cache':false, //Note: Setting cache to false will only work correctly with HEAD and GET requests.
+       'dataType':'json'
      },options));
     var exception = function(e){
         result.error.message = $.ReferenceError(e);

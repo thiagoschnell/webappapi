@@ -49,30 +49,21 @@ public class MyApp extends MultiDexApplication {
         }
         //WebApp
         {
-            /**Example of use allowedDomains and CORS
-             * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
-             * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
-             * then add the "webappapi-server.azurewebsites.net" in the alloweDomains at below variable,
-             * now go to your server hosting that are using the domain "realappexample.shop"
-             * and make this CORS settings:
-             *
-             * Request Credentials
-             *      Enable Access-Control-Allow-Credentials
-             * Allowed Origins
-             *      ->webappapi-server.azurewebsites.net
-             *
-             */
-            String[] alloweDomains = {
-                   // "webappapi-server.azurewebsites.net",
-                    "realappexample.shop",
+            String[] allowedDomains = {
+                // [START] Additional domains //"webappapi-server.azurewebsites.net",
+
+                // [END] Additional domains
+                // [START] Website domain
+                        "realappexample.shop"
+                // [END] Website domain
             };
             WebView webview = new WebView(this);
-            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
-            for(String allowedDomain : alloweDomains){
-                builder.setDomain(allowedDomain);
-            }
-            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
-            webApp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
+            webApp = new WebApp(webview,new WebViewAssetLoader.Builder()
+                    .setDomain(allowedDomains[0])
+                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
+                    .build(),
+                    allowedDomains,
+                    WebApp.FLAG_CLEAR_CACHE);
             try {
                 //load server_url for get ready the origin
                 webApp.loadDataWithBaseUrl("https://realappexample.shop/",

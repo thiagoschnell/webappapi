@@ -42,17 +42,21 @@ public class MainActivity3 extends AppCompatActivity {
         }
         //WebApp
         {
-            String[] alloweDomains = {
-                    "webappapi-server.azurewebsites.net",
-                    //"realappexample.shop",
+            String[] allowedDomains = {
+                    // [START] Additional domains //"realappexample.shop",
+
+                    // [END] Additional domains
+                    // [START] Website domain
+                            "webappapi-server.azurewebsites.net"
+                    // [END] Website domain
             };
             WebView webview = new WebView(this);
-            WebViewAssetLoader.Builder builder = new WebViewAssetLoader.Builder();
-            for(String allowedDomain : alloweDomains){
-                builder.setDomain(allowedDomain);
-            }
-            builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
-            mainActivity3WebApp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
+            mainActivity3WebApp = new WebApp(webview,new WebViewAssetLoader.Builder()
+                    .setDomain(allowedDomains[0])
+                    .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
+                    .build(),
+                    allowedDomains,
+                    WebApp.FLAG_CLEAR_CACHE);
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
