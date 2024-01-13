@@ -132,14 +132,14 @@ public class WebApp {
      * now go to your server hosting that are using the domain "realappexample.shop"
      * and make this CORS settings:
      *
-     * Allowed Origins
+     * Access-Control-Allow-Origin
      *      ->webappapi-server.azurewebsites.net
      *
      *
      * You may also must add headers in the file you are requesting
      * For example in PHP file, to allow a site at "realappexample.shop" to access the resource using CORS, the header should be:
      *
-     *< ?php  //header("Access-Control-Allow-Origin: webappapi-server.azurewebsites.net"); ?>
+     * < ?php  header("Access-Control-Allow-Origin: webappapi-server.azurewebsites.net"); ?>
      *
      */
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader,String[] allowedDomains, @Flags int flags){
