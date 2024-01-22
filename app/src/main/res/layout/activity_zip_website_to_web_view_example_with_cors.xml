@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ZipWebsiteToWebViewExampleMainActivity">
+    tools:context=".ZipWebsiteToWebViewExampleWithCORS">
 
     <LinearLayout
-        android:id="@+id/ZipWebViewExampleLayout"
+        android:id="@+id/ZipWebsiteToWebViewExampleWithCORSLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
@@ -17,11 +17,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zip Website Example"
+            android:text="Zip Website Example \nwith CORS"
             android:gravity="center"
             android:textSize="32dp"></TextView>
         <TextView
-            android:id="@+id/ZipWebsiteToWebViewExampleLayoutTextviewHello"
+            android:id="@+id/ZipWebsiteToWebViewExampleWithCORSLayoutTextviewHello"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
@@ -34,19 +34,19 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/ZipWebsiteToWebViewExampleLayoutButtonUnZipFromResource"
+                android:id="@+id/ZipWebsiteToWebViewExampleWithCORSLayoutButtonUnZipFromResource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Unzip Website from Resource"></Button>
 
             <Button
-                android:id="@+id/ZipWebsiteToWebViewExampleLayoutButtonDownloadPatchAndInstall"
+                android:id="@+id/ZipWebsiteToWebViewExampleWithCORSLayoutButtonDownloadPatchAndInstall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Patch website files\n (download and install)"></Button>
 
             <Button
-                android:id="@+id/ZipWebsiteToWebViewExampleLayoutButtonDownloadUpdateAndInstall"
+                android:id="@+id/ZipWebsiteToWebViewExampleWithCORSLayoutButtonDownloadUpdateAndInstall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Install new version from update files\n (download and install)"></Button>

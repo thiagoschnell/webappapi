@@ -20,6 +20,9 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
         <activity
+            android:name=".ZipWebsiteToWebViewExampleWithCORS"
+            android:exported="false" />
+        <activity
             android:name=".ZipWebsiteToWebViewExampleWebviewActivity"
             android:exported="false" />
         <activity

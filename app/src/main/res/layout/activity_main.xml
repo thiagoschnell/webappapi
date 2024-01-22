@@ -61,11 +61,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download Example"></Button>
-    <Button
-        android:id="@+id/ButtonOpenZipWebsiteToWebViewExample"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zip Website To WebView Example"></Button>
+        android:orientation="horizontal">
+      <Button
+          android:id="@+id/ButtonOpenZipWebsiteToWebViewExample"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Zip Website Example"></Button>
+      <Button
+          android:id="@+id/ButtonOpenZipWebsiteToWebViewExampleWithCORS"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Zip Website with CORS"></Button>
+    </LinearLayout>
   </LinearLayout>
 
   <LinearLayout

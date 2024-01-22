@@ -3,17 +3,21 @@ package com.after_project.webappapi;
 // Licensed under the MIT License.
 import java.util.ArrayList;
 public class JavaScriptInputSecurity {
+    private String[] allowedDomains = null;
     private ArrayList ignoreJavascriptStrings = new ArrayList(){{
         add(".");
         add("console.log");
         add("fn.requesturl");//no case Sensitive is needed.
     }};
+    JavaScriptInputSecurity(String[] allowedDomains){
+        this.allowedDomains = allowedDomains;
+    }
     void addIgnoreJavascriptString(String string){
         if(!ignoreJavascriptStrings.contains(string)) {
             ignoreJavascriptStrings.add(string);
         }
     }
-    Boolean isAllowedDomainsInJavaScriptString(String js,String[] allowedDomains){
+    Boolean isAllowedDomainsInJavaScriptString(String js){
         Boolean Continue = true;
         ArrayList javascripStringDomains = findDomains(js.toLowerCase());
         ArrayList filteredDomainList = filterDomainsList(javascripStringDomains,ignoreJavascriptStrings);

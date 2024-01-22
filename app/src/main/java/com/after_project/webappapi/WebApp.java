@@ -86,21 +86,17 @@ public class WebApp {
     protected WebAppApi api = new WebAppApi();
     private MutableLiveData<WebAppApiDataWrapper> liveData = null;
     private String[] allowedDomains = null;
+    private Boolean javaScriptInputSecurityEnabled = false;
     private JavaScriptInputSecurity javaScriptInputSecurity = null;
-    private void setAllowedDomains(String[] allowedDomains) {
-        this.allowedDomains = allowedDomains;
-    }
     protected void setLiveData(MutableLiveData<WebAppApiDataWrapper> liveData){
         this.liveData = liveData;
     }
     protected synchronized WebApp enableJavaScriptInputSecurity(){
-        if(javaScriptInputSecurity==null){
-            javaScriptInputSecurity = new JavaScriptInputSecurity();
-        }
+        javaScriptInputSecurityEnabled = true;
         return this;
     }
     protected void stopJavaScriptInputSecurity(){
-        javaScriptInputSecurity = null;
+        javaScriptInputSecurityEnabled = false;
     }
     /**
      *
@@ -145,62 +141,37 @@ public class WebApp {
     WebApp(WebView webView1, WebViewAssetLoader webViewAssetLoader,String[] allowedDomains, @Flags int flags){
         this(webView1,webViewAssetLoader);
         setFlags(flags);
-        setAllowedDomains(allowedDomains);
-    }
-    private Boolean isAllowedDomainToExecuteHttpRequest(String js){
-        Boolean Continue = true;
-        js = js.toLowerCase();
-        if(js.contains("http") || js.contains("https")){
-            if(allowedDomains!=null)  {
-                int foundDomainsCount = 0;
-                for(String serverDomain : allowedDomains){
-                    if(js.contains(serverDomain)){
-                        foundDomainsCount++;
-                        break;
-                    }
-                }
-                if(foundDomainsCount != 0){
-                }else{
-                    Continue = false;
-                }
-            }
-        }
-        return Continue;
+        this.allowedDomains = allowedDomains;
+        javaScriptInputSecurity = new JavaScriptInputSecurity(allowedDomains);
     }
     protected void evalJavaScript(String js, ValueCallback valueCallback){
-        if(allowedDomains!=null) {
-            String error_message = null;
-            if (!isAllowedDomainToExecuteHttpRequest(js)){
-                error_message = "The request URL don't match with any domains allowed";
-            }
+        String error_message = null;
+        if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
-                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js,allowedDomains)){
+                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
                 }
             }
-            if(error_message==null) {
-                webView.evaluateJavascript(js, valueCallback);
-            }else{
-                Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
-            }
+        }
+        if(error_message==null) {
+            webView.evaluateJavascript(js, valueCallback);
+        }else{
+            Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
         }
     }
     protected void runJavaScript(String js){
-        if(allowedDomains!=null) {
-            String error_message = null;
-            if (!isAllowedDomainToExecuteHttpRequest(js)){
-                error_message = "The request URL don't match with any domains allowed";
-            }
+        String error_message = null;
+        if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
-                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js,allowedDomains)){
+                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
                 }
             }
-            if(error_message==null) {
-                webView.loadUrl("javascript: " + js);
-            }else{
-                Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
-            }
+        }
+        if(error_message==null) {
+            webView.loadUrl("javascript: " + js);
+        }else{
+            Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
         }
     }
     protected void detachWebAppCallback(){

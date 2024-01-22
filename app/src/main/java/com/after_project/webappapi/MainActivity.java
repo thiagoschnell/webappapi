@@ -131,6 +131,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Zip Website To WebView Example With CORS
+        {
+            Button buttonOpenZipWebsiteToWebViewExampleWithCORS = (Button) findViewById(R.id.ButtonOpenZipWebsiteToWebViewExampleWithCORS);
+            buttonOpenZipWebsiteToWebViewExampleWithCORS.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, ZipWebsiteToWebViewExampleWithCORS.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override

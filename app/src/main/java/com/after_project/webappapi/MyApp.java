@@ -50,9 +50,9 @@ public class MyApp extends MultiDexApplication {
         //WebApp
         {
             String[] allowedDomains = {
-                // [START] Additional domains //"webappapi-server.azurewebsites.net",
-
-                // [END] Additional domains
+                // [START] CORS domains //"webappapi-server.azurewebsites.net",
+                        "server.realappexample.shop",
+                // [END] CORS domains
                 // [START] Website domain
                         "realappexample.shop"
                 // [END] Website domain

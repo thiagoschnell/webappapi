@@ -22,6 +22,7 @@ public class ZipWebsiteToWebViewExampleWebviewActivity extends AppCompatActivity
                 webview.clearCache(true);
                 webview.clearHistory();
             //}
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             settings.setAllowFileAccess(true);
             settings.setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new WebviewJavaScriptInterface(), "android");

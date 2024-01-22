@@ -32,9 +32,9 @@ public class MainActivity4 extends AppCompatActivity {
         //WebApp
         {
             String[] allowedDomains = {
-                    // [START] Additional domains //"webappapi-server.azurewebsites.net",
+                    // [START] CORS domains //"webappapi-server.azurewebsites.net",
 
-                    // [END] Additional domains
+                    // [END] CORS domains
                     // [START] Website domain
                             "realappexample.shop"
                     // [END] Website domain
