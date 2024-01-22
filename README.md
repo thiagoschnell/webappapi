@@ -45,8 +45,21 @@ Shop Site Demo for usage example purpouses
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
-<h3>**Zip Website To Webview Example**</h3><img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> 
+**Zip Website using CORS Example**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> 
 
+No more worries about security risks playing with javascript. <br>
+JavaScriptInputSecurity.java is powerful tunnel for input Javascript rejecting domains that have not allowed. <br>
+This is example of Zip Website  using CORS Example shows how setup allowed CORS domains for incoming request links in the websitewithcors.zip files.
+
+[Example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExampleWithCORS.java) <br> 
+
+ [Apache MultiViews documentation](https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews) 
+ 
+ <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/296e9f05-02a8-4067-9e9e-eea506a894c7" />
+
+
+**Zip Website Example**
+ 
 Create a app and deliver the mobile version of your website, <br> 
 implement webappapi to make requests, <br> 
 load from zip your website, create a new version for the website from update.zip by url to download and install it, instant patch the website files from a external link patch.zip  <br>
