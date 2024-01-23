@@ -48,7 +48,7 @@ Shop Site Demo for usage example purpouses
 **Zip Website using CORS Example**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> 
 
 No more worries about security risks playing with javascript. <br>
-JavaScriptInputSecurity.java is powerful tunnel for input Javascript rejecting domains or any IP that have not allowed. <br>
+JavaScriptInputSecurity.java is powerful tunnel for input Javascript rejecting domains or any IPv4 that have not allowed. <br>
 This is example of Zip Website  using CORS Example shows how setup allowed CORS domains for incoming request links in the websitewithcors.zip files.
 
 [Example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExampleWithCORS.java) <br> 

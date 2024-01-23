@@ -33,12 +33,12 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
             //To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
             MyApp.getInstance().getWebApp().enableJavaScriptInputSecurity();
 
-            //if not previous added the domain to alloewdDomains list then just call .ignoreDomain(),
-            // prefer add the allowed domain by constructor or use bellow example
+            //if not previous added the domain to allowedDomains list then just call .ignoreDomain(),
+            // prefer to add the allowed domain by constructor or use bellow example
             //MyApp.getInstance().getWebApp().ignoreDomain("server.realappexample.shop");
 
             // ATTENTION : This examples use apache MultiViews link: https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews
-            // NOTE : by enabling server MultiViews not required use ignoreDomains(patch.zip,update.zip,products.json,profile.json,purchases.json)
+            // NOTE : by enabling server MultiViews not required use .ignoreDomain("patch.zip"); .ignoreDomain("update.zip"); .ignoreDomain("products.json"); .ignoreDomain("purchases.json"); .ignoreDomain("profile.json");  as previous example in ZipWebsiteToWebViewExampleMainActivity.java
             // because MultiViews auto detect the file extension by name
             //if there have two or more files with same name need add type of the file in the request header "Accept".
         }
