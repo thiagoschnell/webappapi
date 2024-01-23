@@ -59,5 +59,15 @@ public class DownloadExampleMainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Download Checksum
+        {
+            ((Button)findViewById(R.id.DownloadExampleLayoutButtonDownloadChecksum)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DownloadExampleMainActivity.this, DownloadExampleImageDownloadAndChecksum.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }

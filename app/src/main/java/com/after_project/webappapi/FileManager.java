@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 public class FileManager implements AutoCloseable {
@@ -33,6 +35,22 @@ public class FileManager implements AutoCloseable {
         File file =  new File(fileObject, dir);
         file.mkdirs();
         return file;
+    }
+    protected InputStream getInputStream(byte[] bytes){
+        return new ByteArrayInputStream(bytes);
+    }
+    protected String getChecksum(String algorithm, byte[] bytes) throws Exception {
+        MessageDigest md = MessageDigest.getInstance(algorithm);
+        InputStream i = new ByteArrayInputStream(bytes);
+        md.update(readBytes(i));
+        byte[] mdsum = md.digest();
+        BigInteger bigInt = new BigInteger(1, mdsum);
+        String output = bigInt.toString(16);
+        output = String.format("%32s", output).replace(' ', '0');
+        return output;
+    }
+    protected InputStream getInputStream(File file) throws Exception {
+        return new FileInputStream(file);
     }
     protected void saveFile(File file, String data) throws Exception{
         saveFile(file,data.getBytes());

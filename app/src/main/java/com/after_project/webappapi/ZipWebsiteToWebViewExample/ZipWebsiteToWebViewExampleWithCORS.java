@@ -29,8 +29,11 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
             fileObject = getFileObject();
             websiteFilePath = fileManager.getDir(fileObject, websiteDirName);
 
-            //Indentify strings as domain that you don't have at ignoreJavascriptStrings ArrayList in JavaScriptInputSecurity.java, it will resulting the WebApp to cancel .evalJavascript() or .runJavaScript().
-            //To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
+            /**             *
+             * JavaScriptInputSecurity.java is powerful tunnel for input Javascript rejecting domains or any IPv4 that have not allowed.
+             * Indentify strings as domain that you don't have at ignoreJavascriptStrings ArrayList in JavaScriptInputSecurity.java, it will resulting the WebApp to cancel .evalJavascript() or .runJavaScript().
+             * To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
+             */
             MyApp.getInstance().getWebApp().enableJavaScriptInputSecurity();
 
             //if not previous added the domain to allowedDomains list then just call .ignoreDomain(),
@@ -40,7 +43,7 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
             // ATTENTION : This examples use apache MultiViews link: https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews
             // NOTE : by enabling server MultiViews not required use .ignoreDomain("patch.zip"); .ignoreDomain("update.zip"); .ignoreDomain("products.json"); .ignoreDomain("purchases.json"); .ignoreDomain("profile.json");  as previous example in ZipWebsiteToWebViewExampleMainActivity.java
             // because MultiViews auto detect the file extension by name
-            //if there have two or more files with same name need add type of the file in the request header "Accept".
+            // if there have two or more files with same name need add type of the file in the request header "Accept".
         }
         //Unzip Website from Resource
         ((Button)findViewById(R.id.ZipWebsiteToWebViewExampleWithCORSLayoutButtonUnZipFromResource))
