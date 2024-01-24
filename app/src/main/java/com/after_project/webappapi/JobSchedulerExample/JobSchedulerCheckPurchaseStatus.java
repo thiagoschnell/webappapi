@@ -66,28 +66,33 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
                 .observe(ProcessLifecycleOwner.get(), (state -> {
                     if(state!=null) {
                         if (state.getState().equals(WorkInfo.State.ENQUEUED)) {
-                            try{
-                                MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(new WebAppApiRequest(){
-                                            @Override
-                                            public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
-                                                String js = "$.fn.requestUrl('"+api_url+"',"+options+","+callback+")";
-                                                MyApp.getInstance().getWebApp().runJavaScript(js);
-                                            }
-                                        }))
-                                        .prepare("https://realappexample.shop/purchases.json",
-                                        new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
-                                        new JSONObject() {{
-                                            put("receiverName",JobSchedulerCheckPurchaseStatus.className);
-                                            put("param",0);
-                                            put("event","request_purchase_status");
-                                        }})
-                                        .execute();
-                            }catch (Exception e){
-                                throw new RuntimeException(e);
+                            if(state.getRunAttemptCount()==1) {
+                                try {
+                                    MyApp.getInstance().getWebApp().api.newTask(new WebAppApiTask(new WebAppApiRequest() {
+                                                @Override
+                                                public void onRequestApi(String api_url, JSONObject options, JSONObject callback) {
+                                                    String js = "$.fn.requestUrl('" + api_url + "'," + options + "," + callback + ")";
+                                                    MyApp.getInstance().getWebApp().runJavaScript(js);
+                                                }
+                                            }))
+                                            .prepare("https://realappexample.shop/purchases.json",
+                                                    new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
+                                                    new JSONObject() {{
+                                                        put("receiverName", JobSchedulerCheckPurchaseStatus.className);
+                                                        put("param", 0);
+                                                        put("event", "request_purchase_status");
+                                                    }})
+                                            .execute();
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                             //[start cancel]
-                                //mWorkManager.cancelWorkById(work.getId());
+                            //    mWorkManager.cancelWorkById(work.getId());
                             //[end cancel]
+                            if(state.getRunAttemptCount()==2){
+                                mWorkManager.enqueueUniqueWork(className, ExistingWorkPolicy.REPLACE, work);
+                            }
                         } else if (state.getState().equals(WorkInfo.State.CANCELLED)) {
                             Add_Loading_Text("Worker cancelled");
                         }
