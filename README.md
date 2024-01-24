@@ -45,7 +45,14 @@ Shop Site Demo for usage example purpouses
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
-**Download Checksum**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> 
+**UPDATE - Job Scheduler CheckPurchaseStatus**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+
+By default BackoffPolicy.LINEAR run as 10,20,30 seconds and multiply it by x times will happen, ex: 10s *  how many times the work has been retried (for BackoffPolicy.LINEAR), and for BackoffPolicy.Exponential will be even longe.<br>
+Now this example has updated to run dynamically 10,20,30 seconds.
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/479c7f78-65ab-4096-aa72-92261e73c4d1" />
+
+**Download Checksum**
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/0ba40731-422d-45b0-81e7-88971b4ac5db" />
 
