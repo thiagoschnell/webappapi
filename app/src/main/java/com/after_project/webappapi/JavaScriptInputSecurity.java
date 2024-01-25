@@ -41,7 +41,7 @@ public class JavaScriptInputSecurity {
         return prohibitSquareBracketsIpv6;
     }
     private Boolean isIpv6(String s){
-        String[] arr = s.split("(,{0})+");
+        String[] arr = s.split("(:{0})+");
         if(arr.length >=2 && s.indexOf("{") == -1){
             return true;
         }
