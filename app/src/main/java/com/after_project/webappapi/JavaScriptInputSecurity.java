@@ -4,6 +4,8 @@ package com.after_project.webappapi;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class JavaScriptInputSecurity {
     private Boolean prohibitSquareBracketsIpv6 = false;
     private String[] allowedDomains = null;
@@ -41,9 +43,12 @@ public class JavaScriptInputSecurity {
         return prohibitSquareBracketsIpv6;
     }
     private Boolean isIpv6(String s){
-        String[] arr = s.split("(:)+|(::{0})+");
-        if(arr.length >=2 && s.indexOf("{") == -1){
-            return true;
+        Pattern checkRegex = Pattern.compile("^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$");
+        Matcher regexMatcher = checkRegex.matcher(s);
+        while(regexMatcher.find()){
+            if(regexMatcher.group().length()!=0){
+                return true;
+            }
         }
         return false;
     }
