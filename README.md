@@ -45,18 +45,7 @@ Shop Site Demo for usage example purpouses
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
-**UPDATE - Job Scheduler CheckPurchaseStatus**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
-
-By default BackoffPolicy.LINEAR run as 10,20,30 seconds and multiply it by x times will happen, ex: 10s *  how many times the work has been retried (for BackoffPolicy.LINEAR), and for BackoffPolicy.Exponential will be even longe.<br>
-Now this example has updated to run dynamically 10,20,30 seconds.
-
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/479c7f78-65ab-4096-aa72-92261e73c4d1" />
-
-**Download Checksum**
-
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/0ba40731-422d-45b0-81e7-88971b4ac5db" />
-
-**Zip Website using CORS Example**
+<h3>**Zip Website using CORS Example**</h3>
 
 This is example of Zip Website  using CORS Example shows how setup allowed CORS domains for incoming request links in the websitewithcors.zip files. [Example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExampleWithCORS.java), [Apache MultiViews documentation](https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews) 
  
@@ -71,6 +60,17 @@ load from zip your website, create a new version for the website from update.zip
 Website to your Android app made easy its just need a zip file! [Demo example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExample)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/7c29d543-c431-47c9-856b-6464f6a096c2" />
+
+**UPDATE - Job Scheduler CheckPurchaseStatus**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+
+By default BackoffPolicy.LINEAR run as 10,20,30 seconds and multiply it by x times will happen, ex: 10s *  how many times the work has been retried (for BackoffPolicy.LINEAR), and for BackoffPolicy.Exponential will be even longe.<br>
+Now this example has updated to run dynamically 10,20,30 seconds.
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/479c7f78-65ab-4096-aa72-92261e73c4d1" />
+
+**Download Checksum**
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/0ba40731-422d-45b0-81e7-88971b4ac5db" />
 
 **Stream Download Example**
 
