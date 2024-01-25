@@ -17,18 +17,6 @@ $(function(){
    $.ReferenceError = function(e){
        return "ReferenceError: " + e.message + $.StackError(e);
    }
-   $.Base64Encode = function(str){
-       var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-       var out = "", i = 0, len = str.length, c1, c2, c3;
-       while (i < len) {
-           c1 = str.charCodeAt(i++) & 0xff;
-           if (i == len) {out += CHARS.charAt(c1 >> 2);out += CHARS.charAt((c1 & 0x3) << 4);out += "==";break;}
-           c2 = str.charCodeAt(i++);
-           if (i == len) {out += CHARS.charAt(c1 >> 2);out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));out += CHARS.charAt((c2 & 0xF) << 2);out += "=";break;}
-           c3 = str.charCodeAt(i++);out += CHARS.charAt(c1 >> 2);out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));out += CHARS.charAt(c3 & 0x3F);
-       }
-       return out;
-   }
    $.fn = {
        requestUrl: function(url,options,vardata){
             getRequestUrl(url,options,vardata,undefined);
@@ -96,6 +84,7 @@ $(function(){
    }
 })
 function download(download_url,download_headers){
+    function base64Encode(str){var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";var out = "", i = 0, len = str.length, c1, c2, c3;while (i < len) {c1 = str.charCodeAt(i++) & 0xff;if (i == len) {out += CHARS.charAt(c1 >> 2);out += CHARS.charAt((c1 & 0x3) << 4);out += "==";break;}c2 = str.charCodeAt(i++);if (i == len) {out += CHARS.charAt(c1 >> 2);out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));out += CHARS.charAt((c2 & 0xF) << 2);out += "=";break;}c3 = str.charCodeAt(i++);out += CHARS.charAt(c1 >> 2);out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));out += CHARS.charAt(c3 & 0x3F);}return out;}
     var result = new Object();
     jQuery.ajax({
         url:download_url,
@@ -110,7 +99,7 @@ function download(download_url,download_headers){
             return xhr;
         },
         success: function(data){
-            result.data= $.Base64Encode(data);
+            result.data= base64Encode(data);
         },
         error:function( jqXHR, textStatus, errorThrown){
             result.error = JSON.stringify(errorThrown);

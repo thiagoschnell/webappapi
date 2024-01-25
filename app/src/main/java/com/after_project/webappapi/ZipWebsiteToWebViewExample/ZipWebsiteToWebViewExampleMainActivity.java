@@ -29,14 +29,17 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
             fileObject = getFileObject();
             websiteFilePath = fileManager.getDir(fileObject, websiteDirName);
 
-            //Indentify strings as domain that you don't have at ignoreJavascriptStrings ArrayList in JavaScriptInputSecurity.java, it will resulting the WebApp to cancel .evalJavascript() or .runJavaScript().
-            //To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
-            MyApp.getInstance().getWebApp().enableJavaScriptInputSecurity();
-            MyApp.getInstance().getWebApp().ignoreDomain("patch.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
-            MyApp.getInstance().getWebApp().ignoreDomain("update.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
-            MyApp.getInstance().getWebApp().ignoreDomain("products.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
-            MyApp.getInstance().getWebApp().ignoreDomain("purchases.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
-            MyApp.getInstance().getWebApp().ignoreDomain("profile.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+
+            //[START JavaScriptInputSecurity]
+
+                MyApp.getInstance().getWebApp().enableJavaScriptInputSecurity(true);
+                MyApp.getInstance().getWebApp().ignoreDomain("patch.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
+                MyApp.getInstance().getWebApp().ignoreDomain("update.zip"); //request file to download will identified as domain in JavaScriptInputSecurity.java
+                MyApp.getInstance().getWebApp().ignoreDomain("products.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+                MyApp.getInstance().getWebApp().ignoreDomain("purchases.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+                MyApp.getInstance().getWebApp().ignoreDomain("profile.json"); //incoming request from website will identified as domain in JavaScriptInputSecurity.java
+
+            //[END JavaScriptInputSecurity]
 
         }
         //Unzip Website from Resource

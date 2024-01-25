@@ -91,8 +91,14 @@ public class WebApp {
     protected void setLiveData(MutableLiveData<WebAppApiDataWrapper> liveData){
         this.liveData = liveData;
     }
-    protected synchronized WebApp enableJavaScriptInputSecurity(){
+    /**
+     * JavaScriptInputSecurity.java is powerful tunnel for input Javascript , Its has created to cancel the start of execution javascript string if contains domains that have not allowed.
+     * Also JavaScriptInputSecurity works to detect domains,IPv4,functions, and support for prohibit IPv6 in the JavaScript String.
+     * To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
+     */
+    protected synchronized WebApp enableJavaScriptInputSecurity(Boolean prohibitIpv6){
         javaScriptInputSecurityEnabled = true;
+        javaScriptInputSecurity.prohibitIpv6(prohibitIpv6);
         return this;
     }
     protected void stopJavaScriptInputSecurity(){
@@ -148,6 +154,9 @@ public class WebApp {
         String error_message = null;
         if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
+                if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
+                    error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                }else
                 if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
                 }
@@ -163,6 +172,9 @@ public class WebApp {
         String error_message = null;
         if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
+                if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
+                    error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                }else
                 if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
                 }
