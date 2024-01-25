@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
 public class JavaScriptInputSecurity {
-    private Boolean prohibitIpv6 = false;
+    private Boolean prohibitSquareBracketsIpv6 = false;
     private String[] allowedDomains = null;
     private ArrayList ignoreJavascriptStrings = new ArrayList(){{
         add(".");
@@ -36,6 +36,9 @@ public class JavaScriptInputSecurity {
             squareBracketsCount++;
         }
         return false;
+    }
+    protected Boolean isProhibitSquareBracketsIpv6(){
+        return prohibitSquareBracketsIpv6;
     }
     private Boolean isIpv6(String s){
         String[] arr = s.split("(,{0})+");
@@ -139,7 +142,7 @@ public class JavaScriptInputSecurity {
         }
         return stringList;
     }
-    protected void prohibitIpv6(Boolean prohibitIpv6) {
-        this.prohibitIpv6 = prohibitIpv6;
+    protected void prohibitSquareBracketsIpv6(Boolean prohibitSquareBracketsIpv6) {
+        this.prohibitSquareBracketsIpv6 = prohibitSquareBracketsIpv6;
     }
 }

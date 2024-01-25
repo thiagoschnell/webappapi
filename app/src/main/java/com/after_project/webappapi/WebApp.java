@@ -96,9 +96,9 @@ public class WebApp {
      * Also JavaScriptInputSecurity works to detect domains,IPv4,functions, and support for prohibit IPv6 in the JavaScript String.
      * To start filtering JavaScriptInputSecurity use .enableJavaScriptInputSecurity();
      */
-    protected synchronized WebApp enableJavaScriptInputSecurity(Boolean prohibitIpv6){
+    protected synchronized WebApp enableJavaScriptInputSecurity(Boolean prohibitSquareBracketsIpv6){
         javaScriptInputSecurityEnabled = true;
-        javaScriptInputSecurity.prohibitIpv6(prohibitIpv6);
+        javaScriptInputSecurity.prohibitSquareBracketsIpv6(prohibitSquareBracketsIpv6);
         return this;
     }
     protected void stopJavaScriptInputSecurity(){
@@ -154,8 +154,10 @@ public class WebApp {
         String error_message = null;
         if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
-                if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
-                    error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                if(javaScriptInputSecurity.isProhibitSquareBracketsIpv6()){
+                    if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
+                        error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                    }
                 }else
                 if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
@@ -172,8 +174,10 @@ public class WebApp {
         String error_message = null;
         if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
-                if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
-                    error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                if(javaScriptInputSecurity.isProhibitSquareBracketsIpv6()){
+                    if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
+                        error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                    }
                 }else
                 if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
                     error_message = "Javascript contains domains that are not in domains allowed list.";
