@@ -150,45 +150,54 @@ public class WebApp {
         this.allowedDomains = allowedDomains;
         javaScriptInputSecurity = new JavaScriptInputSecurity(allowedDomains);
     }
-    protected void evalJavaScript(String js, ValueCallback valueCallback){
-        String error_message = null;
-        if(javaScriptInputSecurityEnabled){
-            if(javaScriptInputSecurity!=null){
-                if(javaScriptInputSecurity.isProhibitSquareBracketsIpv6()){
-                    if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
-                        error_message = "Javascript contains prohibited Square Brackets Ipv6.";
-                    }
-                }else
-                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
-                    error_message = "Javascript contains domains that are not in domains allowed list.";
-                }
-            }
+    private interface JavaScriptInputSecurityCallback{
+        void onSucceed();
+        void onError(String errorMessage);
+    }
+    private class JavaScriptInputSecurityImpl implements JavaScriptInputSecurityCallback{
+        @Override
+        public void onSucceed() {
         }
-        if(error_message==null) {
-            webView.evaluateJavascript(js, valueCallback);
-        }else{
-            Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
+        @Override
+        public void onError(String errorMessage) {
+            Toast.makeText(MyApp.getInstance(),errorMessage,Toast.LENGTH_LONG).show();
         }
     }
-    protected void runJavaScript(String js){
-        String error_message = null;
+    private void javaScriptInputSecurity(String js,JavaScriptInputSecurityCallback javaScriptInputSecurityCallback){
+        String errorMessage = null;
         if(javaScriptInputSecurityEnabled){
             if(javaScriptInputSecurity!=null){
                 if(javaScriptInputSecurity.isProhibitSquareBracketsIpv6()){
                     if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
-                        error_message = "Javascript contains prohibited Square Brackets Ipv6.";
+                        errorMessage = "Javascript contains prohibited Square Brackets Ipv6.";
                     }
                 }else
                 if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
-                    error_message = "Javascript contains domains that are not in domains allowed list.";
+                    errorMessage = "Javascript contains domains that are not in domains allowed list.";
                 }
             }
         }
-        if(error_message==null) {
-            webView.loadUrl("javascript: " + js);
+        if(errorMessage==null) {
+            javaScriptInputSecurityCallback.onSucceed();
         }else{
-            Toast.makeText(MyApp.getInstance(),error_message,Toast.LENGTH_LONG).show();
+            javaScriptInputSecurityCallback.onError(errorMessage);
         }
+    }
+    protected void evalJavaScript(String js, ValueCallback valueCallback){
+        javaScriptInputSecurity(js,new JavaScriptInputSecurityImpl(){
+            @Override
+            public void onSucceed() {
+                webView.evaluateJavascript(js, valueCallback);
+            }
+        });
+    }
+    protected void runJavaScript(String js){
+        javaScriptInputSecurity(js,new JavaScriptInputSecurityImpl(){
+            @Override
+            public void onSucceed() {
+                webView.loadUrl("javascript: " + js);
+            }
+        });
     }
     protected void detachWebAppCallback(){
         webAppCallback = null;
