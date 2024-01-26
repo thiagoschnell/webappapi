@@ -45,8 +45,10 @@ public class FileManager implements AutoCloseable {
                 }
             }
             if (!file.delete()) {
-                throw new FileNotFoundException("Unable to file: " + file);
+                throw new IOException("Could not delete the file " + file.getAbsolutePath());
             }
+        }else{
+            throw new FileNotFoundException("Could not find this file " + file.getAbsolutePath());
         }
     }
     protected InputStream getInputStream(byte[] bytes){
