@@ -165,17 +165,20 @@ public class WebApp {
     }
     private void javaScriptInputSecurity(String js,JavaScriptInputSecurityCallback javaScriptInputSecurityCallback){
         String errorMessage = null;
-        if(javaScriptInputSecurityEnabled){
-            if(javaScriptInputSecurity!=null){
-                if(javaScriptInputSecurity.isProhibitSquareBracketsIpv6()){
-                    if(javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)){
+        while (javaScriptInputSecurityEnabled){
+            if (javaScriptInputSecurity != null) {
+                if (javaScriptInputSecurity.isProhibitSquareBracketsIpv6()) {
+                    if (javaScriptInputSecurity.containsSquareBracketsIpv6InJavaScript(js)) {
                         errorMessage = "Javascript contains prohibited Square Brackets Ipv6.";
+                        break;
                     }
-                }else
-                if(!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)){
+                }
+                if (!javaScriptInputSecurity.isAllowedDomainsInJavaScriptString(js)) {
                     errorMessage = "Javascript contains domains that are not in domains allowed list.";
+                    break;
                 }
             }
+            break;
         }
         if(errorMessage==null) {
             javaScriptInputSecurityCallback.onSucceed();
