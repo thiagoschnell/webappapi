@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,6 +36,18 @@ public class FileManager implements AutoCloseable {
         File file =  new File(fileObject, dir);
         file.mkdirs();
         return file;
+    }
+    protected void deleteFile(File file) throws Exception {
+        if (file.exists()){
+            if (file.isDirectory()) {
+                for (File ct : file.listFiles()){
+                    deleteFile(ct);
+                }
+            }
+            if (!file.delete()) {
+                throw new FileNotFoundException("Unable to file: " + file);
+            }
+        }
     }
     protected InputStream getInputStream(byte[] bytes){
         return new ByteArrayInputStream(bytes);

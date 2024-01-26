@@ -12,8 +12,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
     private FileManager fileManager = null;
@@ -125,7 +123,7 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
                     public void onClick(View v) {
                         try
                         {
-                            deleteFolder(websiteFilePath);
+                            fileManager.deleteFile(websiteFilePath);
                             // Download and install the update.zip and wait its finish
                             // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
@@ -174,16 +172,6 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
                         }
                     }
                 });
-    }
-    public void deleteFolder(File folder) throws IOException {
-        if (folder.isDirectory()) {
-            for (File ct : folder.listFiles()){
-                deleteFolder(ct);
-            }
-        }
-        if (!folder.delete()) {
-            throw new FileNotFoundException("Unable to delete: " + folder);
-        }
     }
     private void unZipWebsiteFromResource(int resource_id) throws Exception{
         InputStream is = getResources().openRawResource(resource_id);
