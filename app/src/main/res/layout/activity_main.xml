@@ -56,11 +56,21 @@
           android:layout_height="wrap_content"
           android:text="New ASynchronous\nRequest"></Button>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/ButtonOpenDownloadExample"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download Example"></Button>
+      <Button
+          android:id="@+id/ButtonOpenInternetConnection"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Internet Connection"></Button>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

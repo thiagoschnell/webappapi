@@ -20,6 +20,9 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
         <activity
+            android:name=".InternetConnectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".DownloadExampleImageDownloadAndChecksum"
             android:exported="false" />
         <activity

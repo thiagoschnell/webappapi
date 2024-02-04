@@ -142,6 +142,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Internet Connection
+        {
+            Button buttonOpenInternetConnection = (Button) findViewById(R.id.ButtonOpenInternetConnection);
+            buttonOpenInternetConnection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, InternetConnectionActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
