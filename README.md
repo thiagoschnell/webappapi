@@ -64,8 +64,7 @@ This is example of Zip Website  using CORS Example shows how setup allowed CORS 
 
 Check the internet status in realtime before requesting any url
 
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/63515f4b-ce0b-4eff-bf96-8cc27f6d1d4d" />
-
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/8271d9fc-846f-4509-827e-78810f3e4d9e" />
 
 **UPDATE - Job Scheduler CheckPurchaseStatus**
 
