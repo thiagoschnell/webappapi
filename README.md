@@ -14,8 +14,8 @@ _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can r
 
 Now Webapp Api can run with your favorite android version with full compatible with latest versions:<br>
 - Android Studio Iguana [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
-- Android Studio Hedgehog [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
-- Android Studio Jellyfish [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
+- Android Studio Jellyfish [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
+- Android Studio Hedgehog [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
 
 Android Studio download archives [here](https://developer.android.com/studio/archive)
 
