@@ -9,8 +9,38 @@ Through the integrated AppMessage allow request Api by activity A and Return the
 
 _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
+<h1>Download Android Studio and Configure</h1>
 
-**To run the samples** **[Download Android studio Canary](https://developer.android.com/studio/preview)**
+
+Now Webapp Api can run with your favorite android version with full compatible with latest versions:<br>
+- Android Studio Iguana [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
+- Android Studio Hedgehog [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
+- Android Studio Jellyfish [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
+
+Android Studio download archives [here](https://developer.android.com/studio/archive)
+
+**Choose your download version**
+* [Android Studio Preview download page](https://developer.android.com/studio/preview)
+* [Android Studio Stable download page](https://developer.android.com/studio)
+
+<h3>SDK Location</h3>
+Please follow the below steps:
+
+    Go to your WebApp Api Project then go to the android directory and Create a file with the following name:
+
+    local.properties
+
+    Open it and paste your Android SDK path like below:    
+    
+    
+
+For windows users:
+
+sdk.dir=C:\\Users\\UserName\\AppData\\Local\\Android\\sdk
+
+    in my case it is sdk.dir=C:\\android\\sdk
+
+
 
 ## License
 
