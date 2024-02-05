@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.androidApplication)
 }
 
 android {
@@ -31,13 +31,14 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'androidx.webkit:webkit:1.10.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.11.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.work:work-runtime:2.9.0'
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.activity:activity:1.8.2'
-    implementation 'androidx.lifecycle:lifecycle-process:2.7.0'
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation libs.gson
+    implementation libs.webkit
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.work.runtime
+    implementation libs.androidx.multidex
+    implementation libs.androidx.lifecycle.process
 }
