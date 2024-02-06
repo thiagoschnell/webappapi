@@ -26,20 +26,20 @@ Android Studio download archives [here](https://developer.android.com/studio/arc
 <h3>SDK Location</h3>
 Please follow the below steps:
 
-    Go to your WebApp Api Project then go to the android directory and Create a file with the following name:
+    Go to your WebApp Api Project then go to the android directory and open the following file:
 
     local.properties
 
-    Open it and paste your Android SDK path like below:    
+    click on the left edge ico as in the image below to open the settings dialog to change the directory in the sdk.dir line
     
-    
+![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/58b3bff0-5f51-4ae3-81be-6792863ec737)
 
-For windows users:
+<h3>Gradle sync - Android Gradle Plugin (AGP)</h3>
+   If a message appears in Android Studio like the image below
+   
+<img alt="alt_text" width="300px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/94f56e26-32be-41bb-b24d-0c8b2948f9aa" /> <br>
 
-sdk.dir=C:\\Users\\UserName\\AppData\\Local\\Android\\sdk
-
-    in my case it is sdk.dir=C:\\android\\sdk
-
+Then click "Sync project" to finish the configuration.
 
 
 ## License
