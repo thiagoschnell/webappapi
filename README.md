@@ -14,7 +14,7 @@ _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can r
 
 Now Webapp Api can run with your favorite android version with full compatible with latest versions:<br>
 - Android Studio Iguana(Release candidate) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
-- Android Studio Jellyfish(Preview - canary) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
+- Android Studio Jellyfish(Preview - canary) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.8/android-studio-2023.3.1.8-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.8/android-studio-2023.3.1.8-windows.exe)<br>
 - Android Studio Hedgehog(Stable - current release) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
 
 Android Studio download archives [here](https://developer.android.com/studio/archive)<br>
@@ -27,7 +27,7 @@ Install Android Studio [here](https://developer.android.com/studio/install)
 <h3>SDK Location</h3>
 Please follow the below steps:
 
-    Go to your WebApp Api Project then go to the android directory and open the following file:
+    Go to Android Studio and open WebApp Api Project then go to the android directory and open the following file:
 
     local.properties
 
