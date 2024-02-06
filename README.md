@@ -13,11 +13,12 @@ _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can r
 
 
 Now Webapp Api can run with your favorite android version with full compatible with latest versions:<br>
-- Android Studio Iguana [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
-- Android Studio Jellyfish [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
-- Android Studio Hedgehog [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
+- Android Studio Iguana(Release candidate) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
+- Android Studio Jellyfish(Preview - canary) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.7/android-studio-2023.3.1.7-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.7/android-studio-2023.3.1.7-windows.exe)<br>
+- Android Studio Hedgehog(Stable - current release) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
 
-Android Studio download archives [here](https://developer.android.com/studio/archive)
+Android Studio download archives [here](https://developer.android.com/studio/archive)<br>
+Install Android Studio [here](https://developer.android.com/studio/install)
 
 **Choose your download version**
 * [Android Studio Preview download page](https://developer.android.com/studio/preview)
@@ -30,7 +31,7 @@ Please follow the below steps:
 
     local.properties
 
-    click on the left edge ico as in the image below to open the settings dialog to change the directory in the sdk.dir line
+    click on the left edge ico as in the image below to open the settings dialog to change the directory at the sdk.dir line
     
 ![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/58b3bff0-5f51-4ae3-81be-6792863ec737)
 
