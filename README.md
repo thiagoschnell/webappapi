@@ -31,7 +31,7 @@ Please follow the below steps:
 
     local.properties
 
-    click on the left edge ico as in the image below to open the settings dialog to change the directory at the sdk.dir line
+    click on the line ico as in the image below to open the settings dialog to change the directory 
     
 ![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/58b3bff0-5f51-4ae3-81be-6792863ec737)
 
