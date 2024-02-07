@@ -33,7 +33,7 @@ Please follow the below steps:
 
     click on the line ico as in the image below to open the settings dialog to change the directory 
     
-![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/58b3bff0-5f51-4ae3-81be-6792863ec737)
+![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/ccd1830b-dfed-425a-b31b-61dd8e4ff8b0)
 
 <h3>Gradle sync - Android Gradle Plugin (AGP)</h3>
    If a message appears in Android Studio like the image below
