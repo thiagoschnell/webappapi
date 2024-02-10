@@ -12,7 +12,7 @@ multidex = "2.0.1"
 lifecycleProcess = "2.8.0-alpha01"
 
 [libraries]
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }

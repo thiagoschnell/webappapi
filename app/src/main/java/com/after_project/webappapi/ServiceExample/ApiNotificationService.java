@@ -198,42 +198,39 @@ public class ApiNotificationService extends Service {
                                 TaskTimeout taskTimeout = new TaskTimeout();
                                 taskTimeout.execute();
                                 int delay= 9999999;//until receive response
-                                int timeout = 1500;//after receive response, wait more 1,5ms
+                                int timeout = 1500;//after receive response, wait more 1,5s
                                 while(true){
                                     if(taskTimeout.getTimeout()==0) {
                                         taskTimeout.setTimeout(delay);
                                         handler.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                {
-                                                    webApp
-                                                            .evalJavaScript(
-                                                                    "url('" + "https://realappexample.shop/userNotifications.json" + "').get().response().data",
-                                                                    new ValueCallback() {
-                                                                        @Override
-                                                                        public void onReceiveValue(Object response) {
-                                                                            try {
-                                                                                JsonObject responseJsonObject = JsonParser.parseString((String) response).getAsJsonObject();
-                                                                                JsonArray dataJsonArray = responseJsonObject.getAsJsonArray("data");
-                                                                                for( JsonElement jsonElement  : dataJsonArray.asList()) {
-                                                                                    String name = jsonElement.getAsJsonObject().get("name").getAsString();
-                                                                                    String title = jsonElement.getAsJsonObject().get("title").getAsString();
-                                                                                    String message = jsonElement.getAsJsonObject().get("message").getAsString();
-                                                                                    if(!receivedUserNotifications.contains(name)){
-                                                                                        receivedUserNotifications.add(name);
-                                                                                        showUserNotification(title, message);
-                                                                                    }
-                                                                                }
-                                                                                if(summaryNotification==null){
-                                                                                    notificationManager.notify(SUMMARY_ID, getSummaryNotification());
-                                                                                }
-                                                                                taskTimeout.setTimeout(timeout);
-                                                                            } catch (Exception e) {
-                                                                                e.printStackTrace();
-                                                                            }
+                                                webApp.evalJavaScript(
+                                                        "url('" + "https://realappexample.shop/userNotifications.json" + "').get().response().data",
+                                                        new ValueCallback() {
+                                                            @Override
+                                                            public void onReceiveValue(Object response) {
+                                                                try {
+                                                                    JsonObject responseJsonObject = JsonParser.parseString((String) response).getAsJsonObject();
+                                                                    JsonArray dataJsonArray = responseJsonObject.getAsJsonArray("data");
+                                                                    for( JsonElement jsonElement  : dataJsonArray.asList()) {
+                                                                        String name = jsonElement.getAsJsonObject().get("name").getAsString();
+                                                                        String title = jsonElement.getAsJsonObject().get("title").getAsString();
+                                                                        String message = jsonElement.getAsJsonObject().get("message").getAsString();
+                                                                        if(!receivedUserNotifications.contains(name)){
+                                                                            receivedUserNotifications.add(name);
+                                                                            showUserNotification(title, message);
                                                                         }
-                                                                    });
-                                                }
+                                                                    }
+                                                                    if(!receivedUserNotifications.isEmpty() && summaryNotification==null){
+                                                                        notificationManager.notify(SUMMARY_ID, getSummaryNotification());
+                                                                    }
+                                                                    taskTimeout.setTimeout(timeout);
+                                                                } catch (Exception e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        });
                                             }
                                         });
                                     }
