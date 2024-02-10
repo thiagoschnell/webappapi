@@ -9,39 +9,11 @@ Through the integrated AppMessage allow request Api by activity A and Return the
 
 _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
-<h1>Download Android Studio and Configure</h1>
+## Download Android Studio and Configure
 
+Now Webapp Api can run with your favorite android version with full compatible with latest versions:
 
-Now Webapp Api can run with your favorite android version with full compatible with latest versions:<br>
-- Android Studio Iguana(Release candidate) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.2.1.21/android-studio-2023.2.1.21-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.2.1.21/android-studio-2023.2.1.21-windows.exe)<br>
-- Android Studio Jellyfish(Preview - canary) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.3.1.8/android-studio-2023.3.1.8-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.3.1.8/android-studio-2023.3.1.8-windows.exe)<br>
-- Android Studio Hedgehog(Stable - current release) [.zip](https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2023.1.1.28/android-studio-2023.1.1.28-windows.zip) [.exe](https://redirector.gvt1.com/edgedl/android/studio/install/2023.1.1.28/android-studio-2023.1.1.28-windows.exe)<br>
-
-Android Studio download archives [here](https://developer.android.com/studio/archive)<br>
-Install Android Studio [here](https://developer.android.com/studio/install)
-
-**Choose your download version**
-* [Android Studio Preview download page](https://developer.android.com/studio/preview)
-* [Android Studio Stable download page](https://developer.android.com/studio)
-
-<h3>SDK Location</h3>
-Please follow the below steps:
-
-    Go to Android Studio and open WebApp Api Project then go to the android directory and open the following file:
-
-    local.properties
-
-    click on the line ico as in the image below to open the settings dialog to change the directory 
-    
-![sdk2](https://github.com/thiagoschnell/webappapi/assets/78884351/ccd1830b-dfed-425a-b31b-61dd8e4ff8b0)
-
-<h3>Gradle sync - Android Gradle Plugin (AGP)</h3>
-   If a message appears in Android Studio like the image below
-   
-<img alt="alt_text" width="300px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/94f56e26-32be-41bb-b24d-0c8b2948f9aa" /> <br>
-
-Then click "Sync project" to finish the configuration.
-
+* [Download Android Studio & Configure SDK and AGP](https://github.com/thiagoschnell/webappapi/wiki/Download-Android-Studio-&-Configure-SDK-and-AGP) This guide page for download Android Studio and Configure SDK and AGP
 
 ## License
 
