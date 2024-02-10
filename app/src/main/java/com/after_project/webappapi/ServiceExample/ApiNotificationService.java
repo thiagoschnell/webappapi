@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 public class ApiNotificationService extends Service {
     final public static String TAG = ApiNotificationService.class.getSimpleName();
@@ -34,6 +35,7 @@ public class ApiNotificationService extends Service {
     private final String GROUP_KEY = "GK";
     private final String CHANNEL_ID = "channel_id";
     private final int SUMMARY_ID = 100;
+    private int last_receivedCount = -1;
     private ArrayList receivedUserNotifications = new ArrayList();
     private NotificationManager notificationManager = null;
     private Notification summaryNotification = null;
@@ -73,15 +75,23 @@ public class ApiNotificationService extends Service {
                 .setGroup(GROUP_KEY);
         getNotificationManager().notify(generate_random(999,99999), nb.build());
     }
+    private Notification getSummaryNotification(NotificationCompat.Style style){
+        androidx.core.app.NotificationCompat.Builder nb = new NotificationCompat.Builder(this, CHANNEL_ID);
+        nb
+                .setSmallIcon(android.R.drawable.stat_notify_sync)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setGroup(GROUP_KEY)
+                .setGroupSummary(true);
+        if(style!=null) {
+            nb.setStyle(style);
+        }
+        return nb.build();
+    }
     private Notification getSummaryNotification(){
         if(summaryNotification!=null){
             return summaryNotification;
         };
-         summaryNotification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.stat_notify_sync)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setGroup(GROUP_KEY)
-                .setGroupSummary(true).build();
+        summaryNotification = getSummaryNotification(null);
         return summaryNotification;
     }
     @Override
@@ -99,11 +109,11 @@ public class ApiNotificationService extends Service {
             return timeout;
         }
         public void setTimeout(long timeout) {
-           if(timeout!=0){
-               endTime= getTickCount();
-               startTime = getTickCount();
-               this.timeout = timeout;
-           }
+            if(timeout!=0){
+                endTime= getTickCount();
+                startTime = getTickCount();
+                this.timeout = timeout;
+            }
         }
         @Override
         protected String doInBackground(Void... voids) {
@@ -151,7 +161,7 @@ public class ApiNotificationService extends Service {
                         // [START] CORS domains
                         // [END] CORS domains
                         // [START] Website domain
-                            "realappexample.shop"
+                        "realappexample.shop"
                         // [END] Website domain
                 };
                 WebView webview = new WebView(this);
@@ -211,19 +221,66 @@ public class ApiNotificationService extends Service {
                                                             @Override
                                                             public void onReceiveValue(Object response) {
                                                                 try {
+                                                                    if(response==null){
+                                                                        //response is null
+                                                                        return;
+                                                                    }
                                                                     JsonObject responseJsonObject = JsonParser.parseString((String) response).getAsJsonObject();
+                                                                    if(responseJsonObject.has("data")){
+                                                                        //continue your routine
+                                                                    }else if (responseJsonObject.getAsJsonObject("error").has("xhr")) {
+                                                                        //"Connection Error";
+                                                                        return;
+                                                                    }else {
+                                                                        //"Script Error";
+                                                                        return;
+                                                                    }
                                                                     JsonArray dataJsonArray = responseJsonObject.getAsJsonArray("data");
                                                                     for( JsonElement jsonElement  : dataJsonArray.asList()) {
                                                                         String name = jsonElement.getAsJsonObject().get("name").getAsString();
                                                                         String title = jsonElement.getAsJsonObject().get("title").getAsString();
                                                                         String message = jsonElement.getAsJsonObject().get("message").getAsString();
+                                                                        List<JsonElement> lastest_receivedUserNotifications = new ArrayList<JsonElement>();
                                                                         if(!receivedUserNotifications.contains(name)){
                                                                             receivedUserNotifications.add(name);
+                                                                            //start api < 24
+                                                                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                                                                                lastest_receivedUserNotifications.add(jsonElement);
+                                                                            }
+                                                                            //end api < 24
                                                                             showUserNotification(title, message);
                                                                         }
                                                                     }
-                                                                    if(!receivedUserNotifications.isEmpty() && summaryNotification==null){
-                                                                        notificationManager.notify(SUMMARY_ID, getSummaryNotification());
+                                                                    if(!receivedUserNotifications.isEmpty()){
+                                                                        boolean createSummary = true;
+                                                                        //start api < 24
+                                                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                                                                            if (receivedUserNotifications.size() > last_receivedCount) {
+                                                                                NotificationCompat.Style style = new NotificationCompat.InboxStyle();
+                                                                                for (JsonElement jsonElement : dataJsonArray.asList()) {
+                                                                                    String title = jsonElement.getAsJsonObject().get("title").getAsString();
+                                                                                    String message = jsonElement.getAsJsonObject().get("message").getAsString();
+                                                                                    ((NotificationCompat.InboxStyle) style).addLine(title + "    " + message);
+                                                                                }
+                                                                                if(createSummary) {
+                                                                                    //when api is 19 then canceall to summary work properly
+                                                                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                                                                                        notificationManager.cancelAll();
+                                                                                    }
+                                                                                    notificationManager.notify(SUMMARY_ID, getSummaryNotification(style));
+                                                                                }
+                                                                            }
+                                                                            last_receivedCount = receivedUserNotifications.size();
+                                                                        }
+                                                                        //end api < 24
+                                                                        //start api > 24
+                                                                        else {
+                                                                            if(createSummary)
+                                                                                if(summaryNotification==null){
+                                                                                    notificationManager.notify(SUMMARY_ID, getSummaryNotification());
+                                                                                }
+                                                                        }
+                                                                        //end api > 24
                                                                     }
                                                                     taskTimeout.setTimeout(timeout);
                                                                 } catch (Exception e) {
@@ -261,12 +318,12 @@ public class ApiNotificationService extends Service {
     public void onDestroy() {
         if(keepRunningAfterAppClosed) {
             final Context context = getBaseContext();
-                new Thread() {
-                    @Override
-                    public void run() {
-                        Utils.returnUpMyService(context, TAG);
-                    }
-                }.start();
+            new Thread() {
+                @Override
+                public void run() {
+                    Utils.returnUpMyService(context, TAG);
+                }
+            }.start();
         }
     }
     @Nullable
