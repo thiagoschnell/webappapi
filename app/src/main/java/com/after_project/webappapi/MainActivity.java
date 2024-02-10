@@ -153,6 +153,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Service Example
+        {
+            Button buttonOpenServiceExample = (Button) findViewById(R.id.ButtonOpenServiceExample);
+            buttonOpenServiceExample.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, ServiceExampleMainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
