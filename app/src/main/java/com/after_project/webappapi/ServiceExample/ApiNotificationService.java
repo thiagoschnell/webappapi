@@ -35,7 +35,7 @@ public class ApiNotificationService extends Service {
     private final String GROUP_KEY = "GK";
     private final String CHANNEL_ID = "channel_id";
     private final int SUMMARY_ID = 100;
-    private int last_receivedCount = -1;
+    private int last_receivedCount = 0;
     private ArrayList receivedUserNotifications = new ArrayList();
     private NotificationManager notificationManager = null;
     private Notification summaryNotification = null;
@@ -236,11 +236,11 @@ public class ApiNotificationService extends Service {
                                                                         return;
                                                                     }
                                                                     JsonArray dataJsonArray = responseJsonObject.getAsJsonArray("data");
+                                                                    List<JsonElement> lastest_receivedUserNotifications = new ArrayList<JsonElement>();
                                                                     for( JsonElement jsonElement  : dataJsonArray.asList()) {
                                                                         String name = jsonElement.getAsJsonObject().get("name").getAsString();
                                                                         String title = jsonElement.getAsJsonObject().get("title").getAsString();
                                                                         String message = jsonElement.getAsJsonObject().get("message").getAsString();
-                                                                        List<JsonElement> lastest_receivedUserNotifications = new ArrayList<JsonElement>();
                                                                         if(!receivedUserNotifications.contains(name)){
                                                                             receivedUserNotifications.add(name);
                                                                             //start api < 24
@@ -255,15 +255,15 @@ public class ApiNotificationService extends Service {
                                                                         boolean createSummary = true;
                                                                         //start api < 24
                                                                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                                                                            if (receivedUserNotifications.size() > last_receivedCount) {
+                                                                            if (receivedUserNotifications.size() - last_receivedCount > 1) {
                                                                                 NotificationCompat.Style style = new NotificationCompat.InboxStyle();
-                                                                                for (JsonElement jsonElement : dataJsonArray.asList()) {
+                                                                                for (JsonElement jsonElement : lastest_receivedUserNotifications) {
                                                                                     String title = jsonElement.getAsJsonObject().get("title").getAsString();
                                                                                     String message = jsonElement.getAsJsonObject().get("message").getAsString();
                                                                                     ((NotificationCompat.InboxStyle) style).addLine(title + "    " + message);
                                                                                 }
                                                                                 if(createSummary) {
-                                                                                    //when api is 19 then canceall to summary work properly
+                                                                                    //when api is 19 then cancelAll to summary work properly
                                                                                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                                                                                         notificationManager.cancelAll();
                                                                                     }
