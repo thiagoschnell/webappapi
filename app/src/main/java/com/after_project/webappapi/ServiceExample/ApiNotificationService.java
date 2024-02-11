@@ -255,12 +255,28 @@ public class ApiNotificationService extends Service {
                                                                         boolean createSummary = true;
                                                                         //start api < 24
                                                                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                                                                            if (receivedUserNotifications.size() - last_receivedCount > 1) {
+                                                                            if ( (receivedUserNotifications.size() + last_receivedCount > 1 )
+                                                                                    &&
+                                                                                    receivedUserNotifications.size() - last_receivedCount > 0) {
                                                                                 NotificationCompat.Style style = new NotificationCompat.InboxStyle();
                                                                                 for (JsonElement jsonElement : lastest_receivedUserNotifications) {
                                                                                     String title = jsonElement.getAsJsonObject().get("title").getAsString();
                                                                                     String message = jsonElement.getAsJsonObject().get("message").getAsString();
                                                                                     ((NotificationCompat.InboxStyle) style).addLine(title + "    " + message);
+                                                                                }
+                                                                                int lines_total=5;
+                                                                                if(lastest_receivedUserNotifications.size()<lines_total){
+                                                                                    int lines_count=0;
+                                                                                    for( JsonElement jsonElement  : dataJsonArray.asList()) {
+                                                                                        String title = jsonElement.getAsJsonObject().get("title").getAsString();
+                                                                                        String message = jsonElement.getAsJsonObject().get("message").getAsString();
+                                                                                        if(!lastest_receivedUserNotifications.contains(jsonElement)) {
+                                                                                            ((NotificationCompat.InboxStyle) style).addLine(title + "    " + message);
+                                                                                        }if(lines_count==lines_total){
+                                                                                            break;
+                                                                                        }
+                                                                                        lines_count++;
+                                                                                    }
                                                                                 }
                                                                                 if(createSummary) {
                                                                                     //when api is 19 then cancelAll to summary work properly
