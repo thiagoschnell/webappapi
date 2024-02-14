@@ -15,7 +15,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.IntDef;
@@ -80,7 +79,12 @@ public class InternetConnection {
         schedulerThread = Executors.newSingleThreadScheduledExecutor();
         connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         initSharedCallback();
-        taskTimeout = new TaskTimeout();
+        taskTimeout = new TaskTimeout(new TaskTimeout.TaskTimeoutCallback() {
+            @Override
+            public void onTimeoutReached() {
+                schedule();
+            }
+        });
         taskTimeout.execute();
     }
     @RequiresApi(19)
@@ -409,55 +413,4 @@ public class InternetConnection {
             }
         };
     }
-    private class TaskTimeout extends AsyncTask<Void,Void,String> {
-        private long startTime = 0;
-        private long timeout = 0;
-        private long endTime = 0;
-        private long getTickCount(){
-            return System.currentTimeMillis();
-        }
-        public long getTimeout() {
-            return timeout;
-        }
-        public void setTimeout(long timeout) {
-            endTime= getTickCount();
-            startTime = getTickCount();
-            this.timeout = timeout;
-        }
-        @Override
-        protected String doInBackground(Void... voids) {
-            while(true){
-                int count = 0;
-                while(endTime - startTime  < timeout){
-                    endTime= getTickCount();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    count++;
-                }
-                if(timeout!=0){
-                    timeout = 0;
-                    schedule();
-                }else if(timeout==0){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if(1==2)break;
-            }
-            return null;
-        }
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    };
 }

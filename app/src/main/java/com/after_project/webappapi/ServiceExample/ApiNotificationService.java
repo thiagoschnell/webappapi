@@ -9,7 +9,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -98,58 +97,6 @@ public class ApiNotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
     }
-    private class TaskTimeout extends AsyncTask<Void,Void,String> {
-        private long startTime = 0;
-        private long timeout = 0;
-        private long endTime = 0;
-        private long getTickCount(){
-            return System.currentTimeMillis();
-        }
-        public long getTimeout() {
-            return timeout;
-        }
-        public void setTimeout(long timeout) {
-            if(timeout!=0){
-                endTime= getTickCount();
-                startTime = getTickCount();
-                this.timeout = timeout;
-            }
-        }
-        @Override
-        protected String doInBackground(Void... voids) {
-            while(true){
-                int count = 0;
-                while(endTime - startTime  < timeout){
-                    endTime= getTickCount();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    count++;
-                }
-                if(timeout!=0){
-                    timeout = 0;
-                }else if(timeout==0){
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if(1==2)break;
-            }
-            return null;
-        }
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    };
     @Override
     public void onCreate() {
         super.onCreate();
@@ -194,10 +141,18 @@ public class ApiNotificationService extends Service {
                 }
             }
             new Thread(() -> {
+                TaskTimeout taskTimeout = new TaskTimeout();
+                taskTimeout.setTimeout(5000);
+                taskTimeout.execute();
                 while (webAppStatus == MyApp.WEBAPP_STATUS_NONE){
                     try {
+                        if(taskTimeout.getTimeout()==0){
+                            throw new Exception("WebApp load timeout");
+                        }
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -205,8 +160,7 @@ public class ApiNotificationService extends Service {
                     case WEBAPP_STATUS_LOAD_FINISHED:{
                         {
                             Thread backgroundThread = new Thread(() -> {
-                                TaskTimeout taskTimeout = new TaskTimeout();
-                                taskTimeout.execute();
+                                taskTimeout.reset();
                                 int delay= 9999999;//until receive response
                                 int timeout = 1500;//after receive response, wait more 1,5s
                                 while(true){

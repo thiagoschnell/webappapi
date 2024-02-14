@@ -14,6 +14,7 @@ interface WebAppApiRequestInterface {
     void onRequestApiException(Exception e);
 }
 interface WebAppApiResponseInterface {
+    void onReceiveResponse(String response);
     void onResponseApi(String receiverName, int param, String event, String data);
     void onResponseApiConnectionError(String receiverName, JsonObject xhrError);
     void onResponseApiScriptError(JsonObject error);
@@ -113,6 +114,9 @@ class WebAppApiRequest  implements WebAppApiRequestInterface{
     }
 }
 class WebAppApiResponse implements WebAppApiResponseInterface {
+    @Override
+    public void onReceiveResponse(String response) {
+    }
     @Override
     public void onResponseApi(String receiverName, int param, String event, String data) {
     }

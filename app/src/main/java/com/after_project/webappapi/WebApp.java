@@ -279,6 +279,7 @@ public class WebApp {
             }else
             if(api.response()!=null) {
                 try {
+                    api.response().onReceiveResponse(response);
                     JsonObject json = JsonParser.parseString(response).getAsJsonObject();
                     if(json.has("cb")) {
                         if(!json.get("cb").isJsonNull()) {
