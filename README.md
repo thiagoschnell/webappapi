@@ -50,7 +50,7 @@ Shop Site Demo for usage example purpouses
 
 **WebApp Service**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
 
-Example of WebApp Service ThreadLess and request without UI Thread Blocking ![service source files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ServiceExample)
+Example of WebApp Service ThreadLess and request without UI Thread Blocking ![example](https://github.com/thiagoschnell/webappapi/blob/main/app/src/main/java/com/after_project/webappapi/ServiceExample/WebAppServiceActivity.java), ![service source files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ServiceExample)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/84fc49a7-8325-4663-b33d-78acb027072b" />
 
