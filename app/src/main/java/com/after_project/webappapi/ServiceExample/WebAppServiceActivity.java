@@ -100,7 +100,7 @@ public class WebAppServiceActivity extends AppCompatActivity {
                                     if(responseJsonObject.has("data")){
                                         // todo success
                                         ((TextView) findViewById(R.id.WebAppServiceLayoutTextviewLoadingText)).append("\nRequest "+(async?"Async":"Sync")+" id(" + getMyid() + ") success");
-                                        responseCallback.onResponse(responseJsonObject.toString());
+                                        responseCallback.onResponse(responseJsonObject.get("data").toString());
                                     }else if (responseJsonObject.getAsJsonObject("error").has("xhr")) {
                                         //todo xhr error
                                         ((TextView) findViewById(R.id.WebAppServiceLayoutTextviewLoadingText)).append("\nRequest "+(async?"Async":"Sync")+" id(" + getMyid() + ")  \"Connection Error\"");
