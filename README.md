@@ -48,7 +48,13 @@ Shop Site Demo for usage example purpouses
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
-**Api Notification Service**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+**WebApp Service**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+
+Example of WebApp Service ThreadLess and request without UI Thread Blocking
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/84fc49a7-8325-4663-b33d-78acb027072b" />
+
+**Api Notification Service**
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1db44422-0140-4e68-8de4-96b8709d01b2" />
 
@@ -67,7 +73,7 @@ This is example of Zip Website  using CORS Example shows how setup allowed CORS 
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/296e9f05-02a8-4067-9e9e-eea506a894c7" />
 
-**Internet Connection - Realtime Network Status**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+**Internet Connection - Realtime Network Status**
 
 Check the internet status in realtime before requesting any url
 
