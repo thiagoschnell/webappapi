@@ -22,6 +22,9 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
         <activity
+            android:name=".WebAppServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ServiceExampleMainActivity"
             android:exported="false" />
         <activity
@@ -112,7 +115,9 @@
         <service
             android:name=".ApiNotificationService"
             android:exported="false"
-            android:foregroundServiceType="remoteMessaging" />
+            android:foregroundServiceType="remoteMessaging" >
+        </service>
+        <service android:name=".WebAppService"></service>
     </application>
 
 </manifest>

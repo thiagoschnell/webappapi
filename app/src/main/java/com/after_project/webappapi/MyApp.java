@@ -1,19 +1,19 @@
 package com.after_project.webappapi;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import androidx.annotation.IntDef;
+import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
+import androidx.work.Data;
 import com.google.gson.JsonObject;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 public class MyApp extends MultiDexApplication {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
-    protected @WebAppStatus int getWebAppStatus() {
-        return WebAppStatus;
+    private MutableLiveData WebAppLiveData = new MutableLiveData<Data>();
+    public MutableLiveData getWebAppLiveData() {
+        return WebAppLiveData;
     }
     protected WebApp getWebApp() {
         return webApp;
@@ -30,13 +30,6 @@ public class MyApp extends MultiDexApplication {
         }
         return appMessage;
     }
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({WEBAPP_STATUS_NONE, WEBAPP_STATUS_LOAD_FINISHED, WEBAPP_STATUS_LOAD_ERROR})
-    protected @interface WebAppStatus {}
-    private @WebAppStatus int WebAppStatus;
-    protected static final int WEBAPP_STATUS_NONE = 0;
-    protected static final int WEBAPP_STATUS_LOAD_FINISHED = 1;
-    protected static final int WEBAPP_STATUS_LOAD_ERROR = 2;
     private AppMessage appMessage = null;
     private AppMessageReceiver appMessageReceiver = null;
     @Override
@@ -74,7 +67,6 @@ public class MyApp extends MultiDexApplication {
                                 //load server_url finished
                                 webApp.detachWebAppCallback();
                                 webApp.api.setWebAppApiResponse(webAppApiResponse);
-                                WebAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
                             }
                             @Override
                             public void onLoadError(WebView view,
@@ -83,7 +75,6 @@ public class MyApp extends MultiDexApplication {
                             {
                                 //load server_url error
                                 webApp.detachWebAppCallback();
-                                WebAppStatus = WEBAPP_STATUS_LOAD_ERROR;
                             }
                         });
             } catch (Exception e) {

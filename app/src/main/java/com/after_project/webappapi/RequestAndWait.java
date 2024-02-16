@@ -1,6 +1,7 @@
 package com.after_project.webappapi;
 // Copyright (c) Thiago Schnell.
 // Licensed under the MIT License.
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
 import android.os.AsyncTask;
 import android.webkit.ValueCallback;
 import androidx.annotation.IntDef;
@@ -62,7 +63,7 @@ public class RequestAndWait {
                 @Override
                 public void proc() {
                     try {
-                        if(MyApp.getInstance().getWebAppStatus() == MyApp.WEBAPP_STATUS_LOAD_FINISHED) {
+                        if(MyApp.getInstance().getWebApp().getStatus() == WEBAPP_STATUS_LOAD_FINISHED) {
                             try {
                                 if(requestURLAndWaitCallback!=null){
                                     MyApp.getInstance().getWebApp().evalJavaScript(

@@ -41,6 +41,27 @@ class WebAppCallback implements WebAppInterface {
     }
 }
 public class WebApp {
+    private static final int WEBAPP_MODE_UNSET = 0;
+    private static final int WEBAPP_MODE_LIVEDATA = 1;
+    protected static final int WEBAPP_MODE_CALLBACK = 2;
+    protected static final int WEBAPP_MODE_CALLBACK_RESPONSE_ONLY = 3;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({WEBAPP_MODE_UNSET, WEBAPP_MODE_LIVEDATA, WEBAPP_MODE_CALLBACK, WEBAPP_MODE_CALLBACK_RESPONSE_ONLY})
+    private @interface WebAppMode {}
+    private @WebApp.WebAppMode int webAppMode = WEBAPP_MODE_UNSET;
+    private void setWebAppMode(@WebApp.WebAppMode int webAppMode) {
+        this.webAppMode = webAppMode;
+    }
+    protected static final int WEBAPP_STATUS_NONE = 0;
+    protected static final int WEBAPP_STATUS_LOAD_FINISHED = 1;
+    protected static final int WEBAPP_STATUS_LOAD_ERROR = 2;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({WEBAPP_STATUS_NONE, WEBAPP_STATUS_LOAD_FINISHED, WEBAPP_STATUS_LOAD_ERROR})
+    private @interface WebAppStatus {}
+    private @WebApp.WebAppStatus int webAppStatus;
+    protected @WebApp.WebAppStatus int getStatus() {
+        return webAppStatus;
+    }
     protected static final int FLAG_CLEAR_CACHE_RAM_ONLY = 1; // clear RAM cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
     protected static final int FLAG_CLEAR_CACHE = 1<<1; // Clears the resource cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.
     protected static final int FLAG_CLEAR_HISTORY = 1<<2; // Clear its internal back/forward list.
@@ -219,6 +240,7 @@ public class WebApp {
                 webAppCallback.onLoadError(view, request, error,
                         error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
             }
+            webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
@@ -229,11 +251,15 @@ public class WebApp {
                 webAppCallback.onLoadError(view,null,null,
                         errorCode, description, failingUrl);
             }
+            webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
         }
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if(webAppCallback != null) webAppCallback.onLoadFinish(view,url);
+            if(webAppCallback != null){
+                webAppCallback.onLoadFinish(view,url);
+            }
+            webAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
         }
         @Override
         @RequiresApi(21)
@@ -265,44 +291,77 @@ public class WebApp {
         webView.loadDataWithBaseURL(server_url,
                 rawResource.toString(), "text/html", "UTF-8",null);
     }
+    protected void loadDataWithBaseUrl(String server_url, RawResource rawResource, WebAppCallback wb, @WebAppMode int webAppMode){
+        loadDataWithBaseUrl(server_url,rawResource,wb);
+        setWebAppMode(webAppMode);
+    }
     protected void load(String server_url){
         load(server_url, null);    }
+    private @WebAppMode int getMode(){
+        @WebAppMode int mode = WEBAPP_MODE_UNSET;
+        if(webAppMode==WEBAPP_MODE_UNSET){
+            //[start] support for old method
+            if(liveData!=null){
+                mode = WEBAPP_MODE_LIVEDATA;
+            }else{
+                mode = WEBAPP_MODE_CALLBACK;
+            }
+            //[end] support for old method
+        }else{
+            mode = webAppMode;
+        }
+        return mode;
+    }
     private class WebAppJavaScriptInterface {
         WebAppJavaScriptInterface() {
         }
         @JavascriptInterface
         public void response_url(String response) {
-            if(liveData!=null){
-                WebAppApiDataWrapper dataWrapper = new WebAppApiDataWrapper();
-                dataWrapper.setData(response);
-                liveData.postValue(dataWrapper);
-            }else
-            if(api.response()!=null) {
-                try {
+            switch (getMode()){
+                case WEBAPP_MODE_CALLBACK_RESPONSE_ONLY:{
                     api.response().onReceiveResponse(response);
-                    JsonObject json = JsonParser.parseString(response).getAsJsonObject();
-                    if(json.has("cb")) {
-                        if(!json.get("cb").isJsonNull()) {
-                            JsonObject cb = json.get("cb").getAsJsonObject();
-                            if (json.getAsJsonObject("error").has("xhr")) {
-                                api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString(),
-                                        json.getAsJsonObject("error").get("xhr").getAsJsonObject());
-                            } else if (json.getAsJsonObject("error").has("message")) {
-                                api.response().onResponseApiScriptError(json.getAsJsonObject("error"));
-                            } else {
-                                JsonObject data = json.get("data").getAsJsonObject();
-                                api.response().onResponseApi(
-                                        cb.get("receiverName").getAsString(),
-                                        cb.get("param").getAsInt(),
-                                        cb.get("event").getAsString(),
-                                        data.toString()
-                                );
+                    break;
+                }
+                case WEBAPP_MODE_UNSET:
+                case WEBAPP_MODE_CALLBACK:{
+                    if(api.response()!=null) {
+                        try {
+                            api.response().onReceiveResponse(response);
+                            JsonObject json = JsonParser.parseString(response).getAsJsonObject();
+                            if(json.has("cb")) {
+                                if(!json.get("cb").isJsonNull()) {
+                                    JsonObject cb = json.get("cb").getAsJsonObject();
+                                    if (json.getAsJsonObject("error").has("xhr")) {
+                                        api.response().onResponseApiConnectionError(cb.get("receiverName").getAsString(),
+                                                json.getAsJsonObject("error").get("xhr").getAsJsonObject());
+                                    } else if (json.getAsJsonObject("error").has("message")) {
+                                        api.response().onResponseApiScriptError(json.getAsJsonObject("error"));
+                                    } else {
+                                        api.response().onResponseApi(
+                                                cb.get("receiverName").getAsString(),
+                                                cb.get("param").getAsInt(),
+                                                cb.get("event").getAsString(),
+                                                json.get("data").toString()
+                                        );
+                                    }
+                                }
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            api.response().onResponseApiException(e);
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    api.response().onResponseApiException(e);
+                    break;
+                }
+                case WEBAPP_MODE_LIVEDATA:{
+                        try {
+                            WebAppApiDataWrapper dataWrapper = new WebAppApiDataWrapper();
+                            dataWrapper.setData(response);
+                            liveData.postValue(dataWrapper);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    break;
                 }
             }
         }

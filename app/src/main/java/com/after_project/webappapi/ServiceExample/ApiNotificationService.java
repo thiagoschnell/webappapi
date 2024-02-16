@@ -1,6 +1,7 @@
 package com.after_project.webappapi;
-import static com.after_project.webappapi.MyApp.WEBAPP_STATUS_LOAD_ERROR;
-import static com.after_project.webappapi.MyApp.WEBAPP_STATUS_LOAD_FINISHED;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_ERROR;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_NONE;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.Random;
 public class ApiNotificationService extends Service {
     final public static String TAG = ApiNotificationService.class.getSimpleName();
-    private @MyApp.WebAppStatus int webAppStatus;
     private WebApp webApp = null;
     private boolean keepRunningAfterAppClosed = true;
     private final String GROUP_KEY = "GK";
@@ -125,7 +125,6 @@ public class ApiNotificationService extends Service {
                                 @Override
                                 public void onLoadFinish(WebView view, String url) {
                                     webApp.detachWebAppCallback();
-                                    webAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
                                 }
                                 @Override
                                 public void onLoadError(WebView view,
@@ -133,7 +132,6 @@ public class ApiNotificationService extends Service {
                                         /*RequiresApi(api >=19)*/ int errorCode, String description, String failingUrl)
                                 {
                                     webApp.detachWebAppCallback();
-                                    webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
                                 }
                             });
                 } catch (Exception e) {
@@ -144,7 +142,7 @@ public class ApiNotificationService extends Service {
                 TaskTimeout taskTimeout = new TaskTimeout();
                 taskTimeout.setTimeout(5000);
                 taskTimeout.execute();
-                while (webAppStatus == MyApp.WEBAPP_STATUS_NONE){
+                while (webApp.getStatus() == WEBAPP_STATUS_NONE){
                     try {
                         if(taskTimeout.getTimeout()==0){
                             throw new Exception("WebApp load timeout");
@@ -156,7 +154,7 @@ public class ApiNotificationService extends Service {
                         throw new RuntimeException(e);
                     }
                 }
-                switch (webAppStatus){
+                switch (webApp.getStatus()){
                     case WEBAPP_STATUS_LOAD_FINISHED:{
                         {
                             Thread backgroundThread = new Thread(() -> {

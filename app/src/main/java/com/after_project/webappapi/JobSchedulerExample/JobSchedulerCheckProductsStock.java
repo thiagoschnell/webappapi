@@ -1,5 +1,6 @@
 package com.after_project.webappapi;
 import static com.after_project.webappapi.WebApp.REQUEST_JSON_OPTIONS_SYNC;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ public class JobSchedulerCheckProductsStock extends AppCompatActivity {
         if (getIntent().getExtras() != null ) {
             try{
                 JsonObject jsonProducts = JsonParser.parseString(getIntent().getStringExtra("jsonProducts")).getAsJsonObject();
-                if(MyApp.getInstance().getWebAppStatus() == MyApp.WEBAPP_STATUS_LOAD_FINISHED){
+                if(MyApp.getInstance().getWebApp().getStatus() == WEBAPP_STATUS_LOAD_FINISHED){
                     OneTimeWorkRequest work = new OneTimeWorkRequest.Builder(MyWorkerParam.class)
                             .setInitialDelay(100, TimeUnit.MILLISECONDS)
                             .setInputData(

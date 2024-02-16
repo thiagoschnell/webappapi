@@ -1,4 +1,5 @@
 package com.after_project.webappapi;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class DownloadExamplePdfDownloadAndSave extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_example_pdf_download_and_save);
-        if(MyApp.getInstance().getWebAppStatus() == MyApp.WEBAPP_STATUS_LOAD_FINISHED) {
+        if(MyApp.getInstance().getWebApp().getStatus() == WEBAPP_STATUS_LOAD_FINISHED) {
             Add_Loading_Text("Downloading pdf...");
             {
                 try {

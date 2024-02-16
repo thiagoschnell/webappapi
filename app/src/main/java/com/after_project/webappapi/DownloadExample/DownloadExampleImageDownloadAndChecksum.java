@@ -1,4 +1,5 @@
 package com.after_project.webappapi;
+import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ public class DownloadExampleImageDownloadAndChecksum extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_download_example_image_download_and_checksum);
-        if(MyApp.getInstance().getWebAppStatus() == MyApp.WEBAPP_STATUS_LOAD_FINISHED) {
+        if(MyApp.getInstance().getWebApp().getStatus() == WEBAPP_STATUS_LOAD_FINISHED) {
             try
             {
                 Add_Loading_Text("Downloading image...");

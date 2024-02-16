@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WebAppServiceActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingBottom="40dp"
+               android:text="webapp service activity"></TextView>
+
+           <Button
+               android:id="@+id/WebAppServiceLayoutButtonSendSync"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Send sync"></Button>
+           <Button
+               android:id="@+id/WebAppServiceLayoutButtonSendAsync"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Send async"></Button>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
+                    <TextView
+                        android:id="@+id/WebAppServiceLayoutTextviewLoadingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"></TextView>
+                </ScrollView>
+       </LinearLayout>
+   </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
