@@ -52,11 +52,7 @@ Shop Site Demo for usage example purpouses
 
 Example of WebApp Service ThreadLess and request without UI Thread Blocking ![example](https://github.com/thiagoschnell/webappapi/blob/main/app/src/main/java/com/after_project/webappapi/ServiceExample/WebAppServiceActivity.java), ![service source files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ServiceExample)
 
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/84fc49a7-8325-4663-b33d-78acb027072b" />
-
-**Api Notification Service**
-
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1db44422-0140-4e68-8de4-96b8709d01b2" />
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/f1caea70-000e-4883-9b69-2ab45a50c3b6" />
 
 <h3>**Zip Website Example**</h3>
 
@@ -72,6 +68,10 @@ Website to your Android app made easy its just need a zip file! [Zip Website fil
 This is example of Zip Website  using CORS Example shows how setup allowed CORS domains for incoming request links in the websitewithcors.zip files. [Example here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ZipWebsiteToWebViewExampleWithCORS.java), [Apache MultiViews documentation](https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/296e9f05-02a8-4067-9e9e-eea506a894c7" />
+
+**Api Notification Service**
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1db44422-0140-4e68-8de4-96b8709d01b2" />
 
 **Internet Connection - Realtime Network Status**
 
