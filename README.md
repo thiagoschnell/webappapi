@@ -52,7 +52,7 @@ Shop Site Demo for usage example purpouses
 
 Example of WebApp Service ThreadLess and request without UI Thread Blocking ![example](https://github.com/thiagoschnell/webappapi/blob/main/app/src/main/java/com/after_project/webappapi/ServiceExample/WebAppServiceActivity.java), ![service source files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/ServiceExample)
 
-<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/f1caea70-000e-4883-9b69-2ab45a50c3b6" />
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/6fa464f7-4965-4358-97ad-c7850a8222d3" />
 
 <h3>**Zip Website Example**</h3>
 
