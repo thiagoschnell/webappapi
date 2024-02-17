@@ -41,12 +41,13 @@ public class WebAppServiceActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     try {
-                        newWebAppServiceRequestSynchronous("https://realappexample.shop/userNotifications.json", new onResponseCallback() {
+                        onResponseCallback responseCallback = new onResponseCallback() {
                             @Override
                             public void onResponse(String data) {
-                                //todo response data
+                                // todo response data
                             }
-                        });
+                        };
+                        newWebAppServiceRequestSynchronous("https://realappexample.shop/userNotifications.json", responseCallback);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -59,12 +60,13 @@ public class WebAppServiceActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     try {
-                        newWebAppServiceRequest("https://realappexample.shop/userNotifications.json", new onResponseCallback() {
+                        onResponseCallback responseCallback = new onResponseCallback() {
                             @Override
                             public void onResponse(String data) {
                                 // todo response data
                             }
-                        });
+                        };
+                        newWebAppServiceRequest("https://realappexample.shop/userNotifications.json",responseCallback );
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

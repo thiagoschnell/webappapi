@@ -109,7 +109,7 @@ public class WebAppService extends AbstractService {
         //[start MSG_REQUEST_SYNC]
             {
                 webApp.evalJavaScript(
-                        "url('" + url + "').get().response().data",
+                        "url('" + url + "',{ 'async': false}).get().response().data",
                         new ValueCallback() {
                             @Override
                             public void onReceiveValue(Object response) {
