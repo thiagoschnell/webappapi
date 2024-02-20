@@ -5,7 +5,9 @@ WebApp Api is Android extended Webview Client are flexible, safe and easier requ
 
 This sample WebApp app uses App Message integration for send and receive messages through broadcasts.
 
-Through the integrated AppMessage allow request Api by activity A and Return the Response to activity B or A.
+Through the integrated AppMessage allow request Api by activity A and Return the Response to activity B or A.<br><br>
+**NEWS: New integration Messenger Service are writen from zero and that will replacing the old AppMessage integration.** <br>
+**next examples will be writen using LiveData Lifecycle listener to communicate between activities.**<br>
 
 _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
@@ -49,6 +51,8 @@ Shop Site Demo for usage example purpouses
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/ade0c69e-a7b7-404e-b552-04bae45b29fe" />
 
 **Messenger Service Example**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /><img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
+
+In this example whe extended the application with Messenger Service to become usage with Livedata, on this listening changes they send request as messenger client and then execute it inside messenger server that are running the webapp and back it to handler click callback. ![Example usage](https://github.com/thiagoschnell/webappapi/blob/main/app/src/main/java/com/after_project/webappapi/MessengerService/MessengerServiceActivity.java), ![Messenger Service files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/MessengerService)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/0db1d4da-b12c-4f38-bd41-4b296d08af07" />
 
