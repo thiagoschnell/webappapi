@@ -1,4 +1,5 @@
 package com.after_project.webappapi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,10 @@ public class ServiceExampleMainActivity extends AppCompatActivity {
             ((Button)findViewById(R.id.ServiceExampleLayoutButtonApiNotificationService)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utils.StartMyService(getApplicationContext(),ApiNotificationService.TAG);
+                    Context context = getApplicationContext();
+                    Intent intent = new Intent(context, ApiNotificationService.class);
+                    MyApp.getInstance().getServiceUtils().schedule(50).startMyService(context,intent);
+                   // MyApp.getInstance().getServiceUtils().StartMyService(context,intent);
                 }
             });
         }
@@ -24,6 +28,16 @@ public class ServiceExampleMainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ServiceExampleMainActivity.this, WebAppServiceActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        //Messenger Service
+        {
+            ((Button)findViewById(R.id.ServiceExampleLayoutButtonMessengerService)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ServiceExampleMainActivity.this, MessengerServiceActivity.class);
                     startActivity(intent);
                 }
             });

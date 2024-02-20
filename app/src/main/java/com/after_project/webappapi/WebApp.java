@@ -41,6 +41,11 @@ class WebAppCallback implements WebAppInterface {
     }
 }
 public class WebApp {
+    protected static final int RESPONSE_CONNECTION_ERROR = 1;
+    protected static final int RESPONSE_JAVASCRIPT_ERROR = 2;
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({RESPONSE_CONNECTION_ERROR, RESPONSE_JAVASCRIPT_ERROR})
+    protected @interface ResponseError {}
     private static final int WEBAPP_MODE_UNSET = 0;
     private static final int WEBAPP_MODE_LIVEDATA = 1;
     protected static final int WEBAPP_MODE_CALLBACK = 2;

@@ -1,22 +1,25 @@
 package com.after_project.webappapi;
+// Copyright (c) Thiago Schnell.
+// Licensed under the MIT License.
+import static android.content.Context.ACTIVITY_SERVICE;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-class Utils {
-    static void returnUpMyService(final Context context, String serviceTag) {
-        if (killServiceIfRun(context)) {
-            startServiceOn(context,serviceTag);
+class ServiceUtils{
+    protected void StartUpMyService(final Context context, Intent intent) {
+        if (StopService(context, intent)) {
+            StartService(context,intent,50);
         }
     }
-    private static boolean killServiceIfRun(final Context context) {
-        boolean isRunning = isMyServiceRunning(context);
+     boolean StopService(final Context context, Intent intent) {
+        boolean isRunning = isServiceRunning(context);
         if (!isRunning) { return true; }
         try {
-            ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
             if (manager != null) {
-                manager.killBackgroundProcesses(getServicename(context));
+                context.stopService(intent);
                 return true;
             }
             return true;
@@ -25,8 +28,65 @@ class Utils {
         }
         return false;
     }
-    private static boolean isServiceInCache(final Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    void StopMyService(Context context, Intent intent) {
+        if (isServiceRunning(context) && !isServiceInCache(context)) {
+            StopService(context,intent);
+        }
+        if (isServiceInCache(context)) {
+            StopService(context,intent);
+        }
+    }
+    private void StartMyService(Context context, Intent intent, int delay) {
+        if (isServiceRunning(context) && !isServiceInCache(context)) {
+            return;
+        }
+        if (isServiceInCache(context)) {
+            StartUpMyService(context,intent);
+        } else {
+            StartService(context,intent,delay);
+        }
+    }
+    protected void StartMyService(Context context, Intent intent){
+        StartMyService(context,intent,0);
+    }
+    private void StartService(final Context context, Intent intent,int delay) {
+        if (delay != 0) {
+            new ScheduledThreadPoolExecutor(1).schedule(() -> {
+                if (intent != null) {
+                    context.startService(intent);
+                }
+            }, delay, TimeUnit.MILLISECONDS);
+        }else{
+            context.startService(intent);
+        }
+    }
+    synchronized ServiceSchedule schedule (int delay){
+        return new ServiceSchedule(delay);
+    }
+    class ServiceSchedule{
+        private int delay = 0;
+        ServiceSchedule(int dealy){
+            this.delay = dealy;
+        }
+        void startMyService(Context context, Intent intent){
+            StartMyService(context,intent,delay);
+        }
+    }
+    private boolean isServiceRunning(final Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        if (manager != null && manager.getRunningAppProcesses() != null) {
+            if (manager.getRunningAppProcesses().size() > 0) {
+                for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
+                    if (process != null && process.processName != null && process.processName.equalsIgnoreCase(getServicename(context))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    private boolean isServiceInCache(final Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         if (manager != null && manager.getRunningAppProcesses() != null) {
             if (manager.getRunningAppProcesses().size() > 0) {
                 for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
@@ -42,42 +102,7 @@ class Utils {
         }
         return false;
     }
-    static void StartMyService(Context context,String serviceTag) {
-        if (isMyServiceRunning(context) && !isServiceInCache(context)) {
-            return;
-        }
-        if (isServiceInCache(context)) {
-            returnUpMyService(context,serviceTag);
-        } else {
-            startServiceOn(context,serviceTag);
-        }
-    }
-    private static void startServiceOn(final Context context,String serviceTag) {
-        new ScheduledThreadPoolExecutor(1).schedule(() -> {
-            Intent launchIntent = null;
-            if(serviceTag.equals(ApiNotificationService.TAG)){
-                ApiNotificationService service = new ApiNotificationService();
-                launchIntent = new Intent(context, service.getClass());
-            }
-            if(launchIntent!=null){
-                context.startService(launchIntent);
-            }
-        }, 50, TimeUnit.MILLISECONDS);
-    }
-    private static boolean isMyServiceRunning(final Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (manager != null && manager.getRunningAppProcesses() != null) {
-            if (manager.getRunningAppProcesses().size() > 0) {
-                for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
-                    if (process != null && process.processName != null && process.processName.equalsIgnoreCase(getServicename(context))) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    private static String getServicename(final Context context) {
-        return context.getPackageName() + ":serviceNonStoppable";
+    private String getServicename(final Context context) {
+        return context.getPackageName();
     }
 }

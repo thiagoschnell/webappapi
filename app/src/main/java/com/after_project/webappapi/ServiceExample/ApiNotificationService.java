@@ -289,7 +289,7 @@ public class ApiNotificationService extends Service {
             new Thread() {
                 @Override
                 public void run() {
-                    Utils.returnUpMyService(context, TAG);
+                    MyApp.getInstance().getServiceUtils().StartUpMyService(context, new Intent(context, ApiNotificationService.class));
                 }
             }.start();
         }

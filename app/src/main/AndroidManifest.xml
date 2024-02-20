@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- [START] FILE SAVE EXTERNAL REQUIRED PERMISSIONS -->
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -21,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
+        <activity
+            android:name=".MessengerServiceActivity"
+            android:exported="false" />
         <activity
             android:name=".WebAppServiceActivity"
             android:exported="false" />
@@ -112,12 +114,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".ApiNotificationService"
             android:exported="false"
-            android:foregroundServiceType="remoteMessaging" >
-        </service>
-        <service android:name=".WebAppService"></service>
+            android:foregroundServiceType="remoteMessaging"></service>
+        <service android:name=".WebAppService" />
+        <service android:name=".MessengerServerService" />
     </application>
 
 </manifest>

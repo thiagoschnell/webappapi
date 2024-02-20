@@ -101,7 +101,7 @@ public class WebAppService extends AbstractService {
         final String myid= String.valueOf(msg.getData().getInt("myid",-1));
         final String url = msg.getData().getString("url",null);
         if (msg.what == MSG_REQUEST_ASYNC) {
-        //[start MSG_REQUEST_SYNC]
+        //[start MSG_REQUEST_ASYNC]
             webApp.runJavaScript("url('" + url + "',{ 'async': true},{'myid':'"+myid+"'}).addAndroidCallback().get()");
         //[end MSG_REQUEST_ASYNC]
         }else
