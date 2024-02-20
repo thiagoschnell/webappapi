@@ -77,7 +77,8 @@ This is example of Zip Website  using CORS Example shows how setup allowed CORS 
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/296e9f05-02a8-4067-9e9e-eea506a894c7" />
 
-**Api Notification Service**
+**Api Notification Service**<br>
+Note: in Android API 33 and higher you are required asking the user for grant permissions to post notifications.
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1db44422-0140-4e68-8de4-96b8709d01b2" />
 
