@@ -6,8 +6,8 @@ WebApp Api is Android extended Webview Client are flexible, safe and easier requ
 This sample WebApp app uses App Message integration for send and receive messages through broadcasts.
 
 Through the integrated AppMessage allow request Api by activity A and Return the Response to activity B or A.<br><br>
-**NEWS: New integration Messenger Service are writen from zero and that will replacing the old AppMessage integration.** <br>
-**next examples will be writen using LiveData Lifecycle listener to communicate between activities.**<br>
+**NEWS: New integration Messenger Service are written from zero and that will replacing the old AppMessage integration.** <br>
+**next examples will be written using LiveData Lifecycle listener to communicate between activities.**<br>
 
 _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
