@@ -1,6 +1,4 @@
 package com.after_project.webappapi;
-// Copyright (c) Thiago Schnell.
-// Licensed under the MIT License.
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
