@@ -64,22 +64,13 @@ public class MyApp extends MessengerClient{
                     public void onMessageHandle(Message msg) {
                         switch (msg.what) {
                             case MSG_WEBAPP_LOADED:{
-                                {
-                                    com.after_project.webappapi.WebAppServiceActivity.onResponseCallback responseCallback = new com.after_project.webappapi.WebAppServiceActivity.onResponseCallback() {
-                                        @Override
-                                        public void onResponse(String data) {
-                                            // todo response data
-                                        }
-                                    };
-                                    String url = "https://realappexample.shop/userNotifications.json";
-                                }
                                 break;
                             }
                             case MSG_WEBAPP_RESPONSE:
                                 if(msg.getData()!=null){
                                     if(msg.getData().containsKey("data")) {
                                         String data = msg.getData().getString("data").toString();
-                                        MyApp.getInstance().getWebAppLiveData().setValue(data);
+                                        getWebAppLiveData().setValue(data);
                                     }else{
                                     }
                                 }
