@@ -57,7 +57,7 @@ public class MyApp extends MessengerClient{
         //MessengerService
         {
             getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));
-            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));
+            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//startService is optional - added for testing only
             try {
                 menssengerClientCallback = new MessengerClient.MenssengerClientCallback() {
                     @Override
