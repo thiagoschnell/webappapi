@@ -1,5 +1,5 @@
 package com.after_project.webappapi;
-// Copyright (c) Thiago Schnell.
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
 // Licensed under the MIT License.
 import static com.after_project.webappapi.WebApp.WEBAPP_STATUS_LOAD_FINISHED;
 import android.os.AsyncTask;

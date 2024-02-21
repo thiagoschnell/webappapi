@@ -1,5 +1,5 @@
 package com.after_project.webappapi;
-// Copyright (c) Thiago Schnell.
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
 // Licensed under the MIT License.
 import android.content.ComponentName;
 import android.content.Context;
@@ -33,27 +33,22 @@ public class MessengerClient extends MultiDexApplication {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MessengerServerService.MSG_WEBAPP_REQUEST_ASYNC:{
-                    break;
-                }
-                case MessengerServerService.MSG_WEBAPP_RESPONSE:{
-                    if(menssengerClientCallback!=null) {
-                        menssengerClientCallback.onMessageHandle(msg);
-                    }
-                    break;
-                }
                 case MessengerServerService.MSG_SERVICE_CONNECTED:{
+                    messengerClientStatus = MESSENGER_CLIENT_STATUS_CONNECTED;
                     if(menssengerClientCallback!=null) {
                         menssengerClientCallback.onServiceConnected();
                     }
                     break;
                 }
-                case MessengerServerService.MSG_WEBAPP_LOADED:{
-                    if(menssengerClientCallback!=null) {
-                        menssengerClientCallback.onMessageHandle(msg);
+                case MessengerServerService.MSG_SERVICE_DISCONNECTED:{
+                    messengerClientStatus = MESSENGER_CLIENT_STATUS_DISCONNECTED;
+                    if(menssengerClientCallback!=null){
+                        menssengerClientCallback.onServiceDisconnected();
                     }
                     break;
                 }
+                case MessengerServerService.MSG_WEBAPP_RESPONSE:
+                case MessengerServerService.MSG_WEBAPP_LOADED:
                 case MessengerServerService.MSG_WEBAPP_ERROR:{
                     if(menssengerClientCallback!=null) {
                         menssengerClientCallback.onMessageHandle(msg);
@@ -70,7 +65,6 @@ public class MessengerClient extends MultiDexApplication {
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             mService = new Messenger(service);
-            messengerClientStatus = MESSENGER_CLIENT_STATUS_CONNECTED;
             if(menssengerClientCallback!=null){
                 menssengerClientCallback.onServiceAttached();
             }
@@ -83,9 +77,8 @@ public class MessengerClient extends MultiDexApplication {
         }
         public void onServiceDisconnected(ComponentName className) {
             mService = null;
-            messengerClientStatus = MESSENGER_CLIENT_STATUS_DISCONNECTED;
             if(menssengerClientCallback!=null){
-                menssengerClientCallback.onServiceDisconnected();
+                menssengerClientCallback.onClose();
             }
         }
     };
@@ -145,6 +138,10 @@ public class MessengerClient extends MultiDexApplication {
         @Override
         public void onServiceAttached() {
         }
+
+        @Override
+        public void onClose() {
+        }
         @Override
         public void onServiceBinding() {
         }
@@ -161,6 +158,7 @@ public class MessengerClient extends MultiDexApplication {
     private interface MenssengerServiceClientCallback {
         void onServiceConnected();
         void onServiceAttached();
+        void onClose();
         void onServiceBinding();
         void onServiceDisconnected();
         void onServiceUnbinding();

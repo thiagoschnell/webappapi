@@ -1,5 +1,5 @@
 package com.after_project.webappapi;
-// Copyright (c) Thiago Schnell.
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
 // Licensed under the MIT License.
 import static android.content.Context.ACTIVITY_SERVICE;
 import android.app.ActivityManager;
