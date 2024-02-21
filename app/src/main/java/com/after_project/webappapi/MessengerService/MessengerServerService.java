@@ -15,8 +15,8 @@ import androidx.webkit.WebViewAssetLoader;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class MessengerServerService extends MessengerService {
-    protected static final int MSG_SERVICE_CONNECTED = 10;
-    protected static final int MSG_SERVICE_DISCONNECTED = 11;
+    protected static final int MSG_CLIENT_CONNECTED = 10;
+    protected static final int MSG_CLIENT_DISCONNECTED = 11;
     protected static final int MSG_WEBAPP_LOADED = 23;
     protected static final int MSG_WEBAPP_ERROR = 25;
     private static int reserved_id = 0;
@@ -124,12 +124,12 @@ public class MessengerServerService extends MessengerService {
             case MSG_REGISTER_CLIENT:{
                 if(mClients.size() < maxConnectionClients) {
                     mClients.add(msg.replyTo);
-                    sendMessageToClient(Message.obtain(null,MSG_SERVICE_CONNECTED));
+                    sendMessageToClient(Message.obtain(null,MSG_CLIENT_CONNECTED));
                 }
                 break;
             }
             case MSG_UNREGISTER_CLIENT:{
-                sendMessageToClient(Message.obtain(null,MSG_SERVICE_DISCONNECTED));
+                sendMessageToClient(Message.obtain(null,MSG_CLIENT_DISCONNECTED));
                 mClients.remove(msg.replyTo);
                 break;
             }

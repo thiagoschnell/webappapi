@@ -19,8 +19,9 @@ public class MessengerClient extends MultiDexApplication {
     protected static final int MESSENGER_CLIENT_STATUS_DISCONNECTED = 2;
     protected static final int MESSENGER_CLIENT_STATUS_BINDING = 3;
     protected static final int MESSENGER_CLIENT_STATUS_UNBINDING = 4;
+    protected static final int MESSENGER_CLIENT_STATUS_CLOSE = 5;
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({MESSENGER_CLIENT_STATUS_CONNECTED, MESSENGER_CLIENT_STATUS_DISCONNECTED, MESSENGER_CLIENT_STATUS_BINDING, MESSENGER_CLIENT_STATUS_UNBINDING})
+    @IntDef({MESSENGER_CLIENT_STATUS_CONNECTED, MESSENGER_CLIENT_STATUS_DISCONNECTED, MESSENGER_CLIENT_STATUS_BINDING, MESSENGER_CLIENT_STATUS_UNBINDING, MESSENGER_CLIENT_STATUS_CLOSE})
     private @interface MessengerClientStatus {}
     private @MessengerClientStatus int messengerClientStatus;
     protected @MessengerClientStatus int getMessengerClientStatus() {
@@ -33,17 +34,17 @@ public class MessengerClient extends MultiDexApplication {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MessengerServerService.MSG_SERVICE_CONNECTED:{
+                case MessengerServerService.MSG_CLIENT_CONNECTED:{
                     messengerClientStatus = MESSENGER_CLIENT_STATUS_CONNECTED;
                     if(menssengerClientCallback!=null) {
-                        menssengerClientCallback.onServiceConnected();
+                        menssengerClientCallback.onConnected();
                     }
                     break;
                 }
-                case MessengerServerService.MSG_SERVICE_DISCONNECTED:{
+                case MessengerServerService.MSG_CLIENT_DISCONNECTED:{
                     messengerClientStatus = MESSENGER_CLIENT_STATUS_DISCONNECTED;
                     if(menssengerClientCallback!=null){
-                        menssengerClientCallback.onServiceDisconnected();
+                        menssengerClientCallback.onDisconnected();
                     }
                     break;
                 }
@@ -66,7 +67,7 @@ public class MessengerClient extends MultiDexApplication {
                                        IBinder service) {
             mService = new Messenger(service);
             if(menssengerClientCallback!=null){
-                menssengerClientCallback.onServiceAttached();
+                menssengerClientCallback.onAttached();
             }
             {
                 Message msg = Message.obtain(null,
@@ -77,6 +78,7 @@ public class MessengerClient extends MultiDexApplication {
         }
         public void onServiceDisconnected(ComponentName className) {
             mService = null;
+            messengerClientStatus = MESSENGER_CLIENT_STATUS_CLOSE;
             if(menssengerClientCallback!=null){
                 menssengerClientCallback.onClose();
             }
@@ -106,7 +108,7 @@ public class MessengerClient extends MultiDexApplication {
         mIsBound = true;
         messengerClientStatus = MESSENGER_CLIENT_STATUS_BINDING;
         if(menssengerClientCallback!=null){
-            menssengerClientCallback.onServiceBinding();
+            menssengerClientCallback.onBinding();
         }
     }
     protected void MessengerClientDisconnect() {
@@ -126,42 +128,41 @@ public class MessengerClient extends MultiDexApplication {
                 mIsBound = false;
                 messengerClientStatus = MESSENGER_CLIENT_STATUS_UNBINDING;
                 if(menssengerClientCallback!=null){
-                    menssengerClientCallback.onServiceUnbinding();
+                    menssengerClientCallback.onUnbinding();
                 }
             }
         }
     }
     protected class MenssengerClientCallback implements MenssengerServiceClientCallback {
         @Override
-        public void onServiceConnected() {
+        public void onConnected() {
         }
         @Override
-        public void onServiceAttached() {
+        public void onAttached() {
         }
-
         @Override
         public void onClose() {
         }
         @Override
-        public void onServiceBinding() {
+        public void onBinding() {
         }
         @Override
-        public void onServiceDisconnected() {
+        public void onDisconnected() {
         }
         @Override
-        public void onServiceUnbinding() {
+        public void onUnbinding() {
         }
         @Override
         public void onMessageHandle(Message msg) {
         }
     }
     private interface MenssengerServiceClientCallback {
-        void onServiceConnected();
-        void onServiceAttached();
+        void onConnected();
+        void onAttached();
         void onClose();
-        void onServiceBinding();
-        void onServiceDisconnected();
-        void onServiceUnbinding();
+        void onBinding();
+        void onDisconnected();
+        void onUnbinding();
         void onMessageHandle(Message msg);
     }
 }
