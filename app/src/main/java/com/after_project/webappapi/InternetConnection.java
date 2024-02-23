@@ -4,6 +4,7 @@ package com.after_project.webappapi;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.O;
+import static android.os.Build.VERSION_CODES.TIRAMISU;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -159,6 +160,9 @@ public class InternetConnection {
         connectivityManager=null;
     }
     private void initMode1(){
+        if (Build.VERSION.SDK_INT > TIRAMISU) {
+            return;
+        }
         if (broadcastReceiver == null) {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override

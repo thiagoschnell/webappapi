@@ -12,6 +12,9 @@ public class MessengerServiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger_service);
+        /**
+         *  On high demaind request you shold use more timeout time the default timeout is 3000
+         */
         //Button Send sync
         {
             ((Button)findViewById(R.id.MessengerServiceLayoutButtonSendSync)).setOnClickListener(new View.OnClickListener() {
