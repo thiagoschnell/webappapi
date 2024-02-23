@@ -104,11 +104,12 @@ public class MessengerClient extends MultiDexApplication {
         Intent i = new Intent(this,
                 MessengerServerService.class);
         i.putExtra("maxConnectionClients",1);
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-        mIsBound = true;
-        messengerClientStatus = MESSENGER_CLIENT_STATUS_BINDING;
-        if(menssengerClientCallback!=null){
-            menssengerClientCallback.onBinding();
+        if(bindService(i, mConnection, Context.BIND_AUTO_CREATE)) {
+            mIsBound = true;
+            messengerClientStatus = MESSENGER_CLIENT_STATUS_BINDING;
+            if (menssengerClientCallback != null) {
+                menssengerClientCallback.onBinding();
+            }
         }
     }
     protected void MessengerClientDisconnect() {

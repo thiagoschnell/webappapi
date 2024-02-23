@@ -57,7 +57,6 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
         return appMessage;
     }
     private AppMessage appMessage = null;
-    LifecycleOwner lifecycleOwner = this;
     private AppMessageReceiver appMessageReceiver = null;
     private com.after_project.webappapi.ServiceUtils serviceUtils = null;
     @Override
@@ -68,8 +67,12 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
         lifecycleRegistry.setCurrentState(Lifecycle.State.STARTED);
         //MessengerService
         {
-            getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));
-            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//startService is optional - added for testing only
+            getServiceUtils().isServiceRunningOrServiceInCache(this);
+            //[start]
+            //start service MessengerServerService is optional
+            getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));//must stopService bofere start it
+            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//start service MessengerServerService added for testing only
+            //[end]
             try {
                 menssengerClientCallback = new MessengerClient.MenssengerClientCallback() {
                     @Override

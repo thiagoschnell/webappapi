@@ -4,8 +4,8 @@ plugins {
 
 android {
     namespace 'com.after_project.webappapi'
-    compileSdkPreview 'VanillaIceCream'
     compileSdk 34
+    //compileSdkPreview 'VanillaIceCream'
 
     defaultConfig {
         applicationId "com.after_project.webappapi"
@@ -25,6 +25,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        //sourceCompatibility JavaVersion.VERSION_17
+        //targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         buildConfig = true
@@ -32,13 +34,13 @@ android {
 }
 
 dependencies {
-    implementation libs.appcompat
-    implementation libs.material
-    implementation libs.activity
-    implementation libs.constraintlayout
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
     implementation libs.gson
-    implementation libs.webkit
+    implementation libs.androidx.webkit
     implementation libs.androidx.appcompat
     implementation libs.androidx.work.runtime
     implementation libs.androidx.multidex
+    implementation libs.androidx.material
+    implementation libs.material
 }
