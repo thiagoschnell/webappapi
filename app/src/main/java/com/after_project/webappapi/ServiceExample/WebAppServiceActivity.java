@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class WebAppServiceActivity extends AppCompatActivity {
@@ -119,7 +118,7 @@ public class WebAppServiceActivity extends AppCompatActivity {
                         }
                     }
                 };
-                MyApp.getInstance().getWebAppLiveData().observe(ProcessLifecycleOwner.get(),observer);
+                MyApp.getInstance().getWebAppLiveData().observe(WebAppServiceActivity.this, observer);
             }
         }
     }

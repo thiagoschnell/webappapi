@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.work.BackoffPolicy;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
@@ -37,7 +36,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
         MyApp.getInstance().getWebApp().setLiveData(null);
         mWorkManager = WorkManager.getInstance();
         Operation operation = jobScheduler();
-        operation.getState().observe(ProcessLifecycleOwner.get(), (state -> {
+        operation.getState().observe(this, (state -> {
             if (state instanceof Operation.State.SUCCESS) {
                 //Operation successfully
                 Add_Loading_Text("Worker success");
@@ -63,7 +62,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
     }
     private void handleJobScheduler(){
         mWorkManager.getWorkInfoByIdLiveData(work.getId())
-                .observe(ProcessLifecycleOwner.get(), (state -> {
+                .observe(this, (state -> {
                     if(state!=null) {
                         if (state.getState().equals(WorkInfo.State.ENQUEUED)) {
                             if(state.getRunAttemptCount()==1) {

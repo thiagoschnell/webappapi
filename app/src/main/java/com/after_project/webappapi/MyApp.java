@@ -7,18 +7,27 @@ import android.content.Intent;
 import android.os.Message;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.work.Data;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-public class MyApp extends MessengerClient{
+public class MyApp extends MessengerClient implements LifecycleOwner {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
+    LifecycleRegistry lifecycleRegistry = null;
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return lifecycleRegistry;
+    }
     protected class Messenger{
         protected void send(Message msg, int myid, String url) throws Exception {
             sendMsgRequest(msg,myid,url);
@@ -43,17 +52,20 @@ public class MyApp extends MessengerClient{
     }
     protected synchronized AppMessage getAppMessage() {
         if(appMessage==null){
-            appMessage = new AppMessage(this);
+            appMessage = new AppMessage(getBaseContext());
         }
         return appMessage;
     }
     private AppMessage appMessage = null;
+    LifecycleOwner lifecycleOwner = this;
     private AppMessageReceiver appMessageReceiver = null;
     private com.after_project.webappapi.ServiceUtils serviceUtils = null;
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        lifecycleRegistry = new LifecycleRegistry(this);
+        lifecycleRegistry.setCurrentState(Lifecycle.State.STARTED);
         //MessengerService
         {
             getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));
@@ -64,6 +76,24 @@ public class MyApp extends MessengerClient{
                     public void onMessageHandle(Message msg) {
                         switch (msg.what) {
                             case MSG_WEBAPP_LOADED:{
+                                //App LiveData Listener
+                                {
+                                    AppLiveData.observe(MyApp.this::getLifecycle, new Observer() {
+                                        @Override
+                                        public void onChanged(Object o) {
+                                            JsonObject json = JsonParser.parseString((String) o).getAsJsonObject();
+                                            try {
+                                                if(!json.get("async").getAsBoolean()) {
+                                                    getMessenger().send(Message.obtain(null, MSG_WEBAPP_REQUEST_SYNC), json.get("myid").getAsInt(), json.get("url").getAsString());
+                                                }else{
+                                                    getMessenger().send(Message.obtain(null, MSG_WEBAPP_REQUEST_ASYNC), json.get("myid").getAsInt(), json.get("url").getAsString());
+                                                }
+                                            } catch (Exception e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                }
                                 break;
                             }
                             case MSG_WEBAPP_RESPONSE:
@@ -172,31 +202,13 @@ public class MyApp extends MessengerClient{
                         }
                     }
                 };
-                getWebAppLiveData().observe(ProcessLifecycleOwner.get(),observer);
+                getWebAppLiveData().observe(MyApp.this::getLifecycle, observer);
             }
         }
     }
     protected interface onResponseCallback {
         void onResponse(MessengerServerServiceCustomRequest request, String data);
         void onError(MessengerServerServiceCustomRequest request, @WebApp.ResponseError int responseError);
-    }
-    //App LiveData Listener
-    {
-        AppLiveData.observe(ProcessLifecycleOwner.get(), new Observer() {
-            @Override
-            public void onChanged(Object o) {
-                JsonObject json = JsonParser.parseString((String) o).getAsJsonObject();
-                try {
-                    if(!json.get("async").getAsBoolean()) {
-                        getMessenger().send(Message.obtain(null, MSG_WEBAPP_REQUEST_SYNC), json.get("myid").getAsInt(), json.get("url").getAsString());
-                    }else{
-                        getMessenger().send(Message.obtain(null, MSG_WEBAPP_REQUEST_ASYNC), json.get("myid").getAsInt(), json.get("url").getAsString());
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
     }
     protected com.after_project.webappapi.ServiceUtils getServiceUtils(){
         if(serviceUtils==null){

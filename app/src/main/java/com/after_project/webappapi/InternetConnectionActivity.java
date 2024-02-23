@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ProcessLifecycleOwner;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class InternetConnectionActivity extends AppCompatActivity {
@@ -29,16 +28,16 @@ public class InternetConnectionActivity extends AppCompatActivity {
             internetConnection.setMode(flags);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            internetConnection.mutableLiveDataAvailable.observe( ProcessLifecycleOwner.get(), (state -> {
+            internetConnection.mutableLiveDataAvailable.observe(this, (state -> {
                 ((TextView)findViewById(R.id.InternetConnectionTextviewIsAvailable)).setText("IsAvailable: " + state);
             }));
         } else{
             ((TextView)findViewById(R.id.InternetConnectionTextviewIsAvailable)).setText("IsAvailable: " + " Android version is not supported");
         }
-        internetConnection.mutableLiveDataOffline.observe( ProcessLifecycleOwner.get(), (state -> {
+        internetConnection.mutableLiveDataOffline.observe(this, (state -> {
             ((TextView)findViewById(R.id.InternetConnectionTextviewIsOffline)).setText("IsOffline: " + state);
         }));
-        internetConnection.mutableLiveDataOnline.observe( ProcessLifecycleOwner.get(), (state -> {
+        internetConnection.mutableLiveDataOnline.observe(this, (state -> {
             ((TextView)findViewById(R.id.InternetConnectionTextviewIsOnline)).setText("IsOnline: " + state);
         }));
         ((Button) findViewById(R.id.InternetConnectionButtonCheckInternetConnectionAndRequestUrl)).setOnClickListener(new View.OnClickListener() {

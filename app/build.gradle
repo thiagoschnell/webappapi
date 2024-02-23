@@ -4,6 +4,7 @@ plugins {
 
 android {
     namespace 'com.after_project.webappapi'
+    compileSdkPreview 'VanillaIceCream'
     compileSdk 34
 
     defaultConfig {
@@ -40,5 +41,4 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.androidx.work.runtime
     implementation libs.androidx.multidex
-    implementation libs.androidx.lifecycle.process
 }
