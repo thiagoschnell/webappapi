@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 class ServiceUtils{
     protected void StartUpMyService(final Context context, Intent intent) {
-       // if (StopService(context, intent)) {
             StartService(context,intent,50);
     }
      private boolean StopService(final Context context, Intent intent) {
