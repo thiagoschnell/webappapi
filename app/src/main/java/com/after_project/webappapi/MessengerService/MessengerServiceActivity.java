@@ -13,7 +13,7 @@ public class MessengerServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messenger_service);
         /**
-         *  On high demaind request you shold use more timeout time the default timeout is 3000
+         *  In high demand requests you should use more timeout, the default timeout value is 3000.
          */
         //Button Send sync
         {
