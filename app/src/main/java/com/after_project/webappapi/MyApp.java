@@ -23,6 +23,9 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
     private static MyApp mInstance;
     private WebApp webApp = null;
     LifecycleRegistry lifecycleRegistry = null;
+    void disconnectMessengerClient(){
+        MessengerClientDisconnect();
+    }
     @NonNull
     @Override
     public Lifecycle getLifecycle() {
@@ -70,8 +73,7 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
             getServiceUtils().isServiceRunningOrServiceInCache(this);
             //[start]
             //start service MessengerServerService is optional
-            getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));//must stopService bofere start it
-            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//start service MessengerServerService added for testing only
+            getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//start service MessengerServerService has added for testing only
             //[end]
             try {
                 menssengerClientCallback = new MessengerClient.MenssengerClientCallback() {

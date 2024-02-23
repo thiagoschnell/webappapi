@@ -33,24 +33,6 @@ class ServiceUtils{
             StopService(context,intent);
         }
     }
-    void StopMyService_(Context context, Intent intent) {
-        if (isServiceRunning(context) && !isServiceInCache(context)) {
-            StopService(context,intent);
-        }
-        if (isServiceInCache(context)) {
-            StopService(context,intent);
-        }
-    }
-    private void StartMyService_(Context context, Intent intent, int delay) {
-        if (isServiceRunning(context) && !isServiceInCache(context)) {
-            return;
-        }
-        if (isServiceInCache(context)) {
-            StartUpMyService(context,intent);
-        } else {
-            StartService(context,intent,delay);
-        }
-    }
     private void StartMyService(Context context, Intent intent, int delay) {
         int  ServiceRunningResult = isServiceRunningOrServiceInCache(context);
         if (ServiceRunningResult == 1) {
@@ -105,36 +87,6 @@ class ServiceUtils{
             }
         }
         return 0;
-    }
-    private boolean isServiceRunning(final Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        if (manager != null && manager.getRunningAppProcesses() != null) {
-            if (manager.getRunningAppProcesses().size() > 0) {
-                for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
-                    if (process != null && process.processName != null && process.processName.equalsIgnoreCase(getServicename(context))) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    private boolean isServiceInCache(final Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        if (manager != null && manager.getRunningAppProcesses() != null) {
-            if (manager.getRunningAppProcesses().size() > 0) {
-                for (ActivityManager.RunningAppProcessInfo process : manager.getRunningAppProcesses()) {
-                    if (process.processName != null) {
-                        if (process.processName.equalsIgnoreCase(getServicename(context))) {
-                            if (process.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_SERVICE) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
     private String getServicename(final Context context) {
         return context.getPackageName();

@@ -165,6 +165,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApp.getInstance().disconnectMessengerClient();
+        MyApp.getInstance().getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));
+    }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
         public void onReceiveMessage ( int param, String event, String data){
