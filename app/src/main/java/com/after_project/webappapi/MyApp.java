@@ -22,7 +22,7 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
     private WebApp webApp = null;
-    LifecycleRegistry lifecycleRegistry = null;
+    private LifecycleRegistry lifecycleRegistry = null;
     void disconnectMessengerClient(){
         MessengerClientDisconnect();
     }
@@ -62,6 +62,9 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
     private AppMessage appMessage = null;
     private AppMessageReceiver appMessageReceiver = null;
     private com.after_project.webappapi.ServiceUtils serviceUtils = null;
+    void setLifeRegistryDestroyed(){
+        lifecycleRegistry.setCurrentState(Lifecycle.State.DESTROYED);
+    }
     @Override
     public void onCreate() {
         super.onCreate();
@@ -70,7 +73,6 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
         lifecycleRegistry.setCurrentState(Lifecycle.State.STARTED);
         //MessengerService
         {
-            getServiceUtils().isServiceRunningOrServiceInCache(this);
             //[start]
             //start service MessengerServerService is optional
             getServiceUtils().StartMyService(this,new Intent(this,MessengerServerService.class));//start service MessengerServerService has added for testing only

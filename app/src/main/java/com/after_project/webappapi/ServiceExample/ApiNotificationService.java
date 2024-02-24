@@ -286,10 +286,11 @@ public class ApiNotificationService extends Service {
     public void onDestroy() {
         if(keepRunningAfterAppClosed) {
             final Context context = getBaseContext();
+            final Intent intent = new Intent(context, ApiNotificationService.class);
             new Thread() {
                 @Override
                 public void run() {
-                    MyApp.getInstance().getServiceUtils().StartUpMyService(context, new Intent(context, ApiNotificationService.class));
+                    MyApp.getInstance().getServiceUtils().StartUpMyService(context, intent);
                 }
             }.start();
         }

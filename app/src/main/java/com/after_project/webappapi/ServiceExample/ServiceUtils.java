@@ -9,7 +9,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 class ServiceUtils{
     protected void StartUpMyService(final Context context, Intent intent) {
-            StartService(context,intent,50);
+        context.stopService(intent);
+        StartService(context,intent,50);
     }
      private boolean StopService(final Context context, Intent intent) {
         try {
@@ -69,7 +70,7 @@ class ServiceUtils{
             StartMyService(context,intent,delay);
         }
     }
-    protected int isServiceRunningOrServiceInCache(final Context context) {
+    private int isServiceRunningOrServiceInCache(final Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         if (manager != null && manager.getRunningAppProcesses() != null) {
             if (manager.getRunningAppProcesses().size() > 0) {

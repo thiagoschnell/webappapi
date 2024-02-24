@@ -1,5 +1,6 @@
 package com.after_project.webappapi;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -166,15 +167,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyApp.getInstance().disconnectMessengerClient();
-        MyApp.getInstance().getServiceUtils().StopMyService(this,new Intent(this,MessengerServerService.class));
+        final Context context = this;
+        final Intent intent = new Intent(this,MessengerServerService.class);
+        new Thread() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    MyApp.getInstance().setLifeRegistryDestroyed();
+                });
+                MyApp.getInstance().disconnectMessengerClient();
+                context.stopService(intent);
+            }
+        }.start();
     }
     private AppMessageReceiver.ReceiverCallback appMessageReceiverCallback = new AppMessageReceiver.ReceiverCallback() {
         @Override
         public void onReceiveMessage ( int param, String event, String data){
-            System.out.println("MainAcitivty onReceiveMessage...");
         }
     };
 }
