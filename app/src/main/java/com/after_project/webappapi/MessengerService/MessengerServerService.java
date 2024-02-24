@@ -173,7 +173,9 @@ public class MessengerServerService extends MessengerService {
     private void sendMessageToClient(Message msg) {
         for (int i=mClients.size()-1; i>=0; i--) {
             try {
-                mClients.get(i).send(msg);
+                Message message = new Message();
+                message.copyFrom(msg);
+                mClients.get(i).send(message);
             }
             catch (RemoteException e) {
                 e.printStackTrace();
