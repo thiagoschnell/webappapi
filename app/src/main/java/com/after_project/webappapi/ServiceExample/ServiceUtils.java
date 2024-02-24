@@ -8,32 +8,13 @@ import android.content.Intent;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 class ServiceUtils{
+    protected void StartMyService(Context context, Intent intent){
+        StartMyService(context,intent,0);
+    }
     protected void StartUpMyService(final Context context, Intent intent) {
         context.stopService(intent);
         StartService(context,intent,50);
-    }
-     private boolean StopService(final Context context, Intent intent) {
-        try {
-            ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-            if (manager != null) {
-                context.stopService(intent);
-                return true;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    void StopMyService(Context context, Intent intent) {
-        int  ServiceRunningResult = isServiceRunningOrServiceInCache(context);
-        if (ServiceRunningResult==1) {
-            StopService(context,intent);
-        }else
-        if(ServiceRunningResult == 2) {
-            StopService(context,intent);
-        }
-    }
+    }    
     private void StartMyService(Context context, Intent intent, int delay) {
         int  ServiceRunningResult = isServiceRunningOrServiceInCache(context);
         if (ServiceRunningResult == 1) {
@@ -43,9 +24,6 @@ class ServiceUtils{
         } else {
             StartService(context,intent,delay);
         }
-    }
-    protected void StartMyService(Context context, Intent intent){
-        StartMyService(context,intent,0);
     }
     private void StartService(final Context context, Intent intent,int delay) {
         if (delay != 0) {
