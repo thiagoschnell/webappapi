@@ -1,7 +1,6 @@
 package com.after_project.webappapi;
 // Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
 // Licensed under the MIT License.
-import android.app.Activity;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -181,13 +180,13 @@ public class WebApp {
         void onSucceed();
         void onError(String errorMessage);
     }
-    private class JavaScriptInputSecurityImpl extends Activity implements JavaScriptInputSecurityCallback{
+    private class JavaScriptInputSecurityImpl implements JavaScriptInputSecurityCallback{
         @Override
         public void onSucceed() {
         }
         @Override
         public void onError(String errorMessage) {
-            Toast.makeText(getBaseContext(),errorMessage,Toast.LENGTH_LONG).show();
+            Toast.makeText(webView.getContext(), errorMessage,Toast.LENGTH_LONG).show();
         }
     }
     private void javaScriptInputSecurity(String js,JavaScriptInputSecurityCallback javaScriptInputSecurityCallback){
