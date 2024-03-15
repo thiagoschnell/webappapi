@@ -1,6 +1,7 @@
 package com.after_project.webappapi;
 // Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
 // Licensed under the MIT License.
+import android.app.Activity;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -180,13 +181,13 @@ public class WebApp {
         void onSucceed();
         void onError(String errorMessage);
     }
-    private class JavaScriptInputSecurityImpl implements JavaScriptInputSecurityCallback{
+    private class JavaScriptInputSecurityImpl extends Activity implements JavaScriptInputSecurityCallback{
         @Override
         public void onSucceed() {
         }
         @Override
         public void onError(String errorMessage) {
-            Toast.makeText(MyApp.getInstance(),errorMessage,Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),errorMessage,Toast.LENGTH_LONG).show();
         }
     }
     private void javaScriptInputSecurity(String js,JavaScriptInputSecurityCallback javaScriptInputSecurityCallback){
@@ -244,8 +245,8 @@ public class WebApp {
             if(webAppCallback != null){
                 webAppCallback.onLoadError(view, request, error,
                         error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString() );
+                webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
             }
-            webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
         }
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
@@ -255,16 +256,16 @@ public class WebApp {
             if(webAppCallback != null){
                 webAppCallback.onLoadError(view,null,null,
                         errorCode, description, failingUrl);
+                webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
             }
-            webAppStatus = WEBAPP_STATUS_LOAD_ERROR;
         }
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             if(webAppCallback != null){
                 webAppCallback.onLoadFinish(view,url);
+                webAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
             }
-            webAppStatus = WEBAPP_STATUS_LOAD_FINISHED;
         }
         @Override
         @RequiresApi(21)
