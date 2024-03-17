@@ -185,14 +185,14 @@ public class AppMessenger extends AbstractMessengerConnection{
     void sendMsgTest(Message msg) throws Exception{
         send(msg);
     }
-    protected void sendMsgRequest(Message msg, Request request, MultiClientOptions multiClientRequestOptions) throws Exception {
+    protected void sendMsgRequest(Message msg, Request request, MultiClientOptions multiClientOptions) throws Exception {
         if(getStatus()!=MESSENGER_CLIENT_STATUS_CONNECTED){
             return;
         }
         String jsonRequest = new Gson().toJson(request,Request.class);
-        String jsonMultiClientRequestOptions = new Gson().toJson(multiClientRequestOptions,MultiClientOptions.class);
+        String jsonMultiClientOptions = new Gson().toJson(multiClientOptions,MultiClientOptions.class);
         msg.getData().putString("request", jsonRequest);
-        msg.getData().putString("multiClientRequestOptions", jsonMultiClientRequestOptions);
+        msg.getData().putString("multiClientOptions", jsonMultiClientOptions);
         msg.getData().putInt("connectionId", connection.getConnectionId());
         send(msg);
     }

@@ -266,9 +266,9 @@ public class Messenger extends Service {
         Link(JsonObject jsonObject) throws Exception{
             this.jsonObject = new JsonObject();
             connectionId = jsonObject.get("connectionId").getAsInt();
-            if(jsonObject.has("multiClientRequestOptions")) {
-                multiClientOptions = new Gson().fromJson(jsonObject.get("multiClientRequestOptions").getAsString(),MultiClientOptions.class);
-                jsonObject.addProperty("multiClientRequestOptions", new Gson().toJson(multiClientOptions, MultiClientOptions.class));
+            if(jsonObject.has("multiClientOptions")) {
+                multiClientOptions = new Gson().fromJson(jsonObject.get("multiClientOptions").getAsString(),MultiClientOptions.class);
+                jsonObject.addProperty("multiClientOptions", new Gson().toJson(multiClientOptions, MultiClientOptions.class));
             }
             request = new Gson().fromJson(jsonObject.get("request").getAsString(), AppMessenger.Request.class);
             jsonObject.addProperty("request", new Gson().toJson(request,AppMessenger.Request.class));
@@ -277,9 +277,9 @@ public class Messenger extends Service {
         Link(final android.os.Message msg) throws Exception{
             jsonObject = new JsonObject();
             connectionId = msg.getData().getInt("connectionId");
-            if(msg.getData().containsKey("multiClientRequestOptions")) {
-                multiClientOptions = new Gson().fromJson(msg.getData().getString("multiClientRequestOptions"),MultiClientOptions.class);
-                jsonObject.addProperty("multiClientRequestOptions", new Gson().toJson(multiClientOptions, MultiClientOptions.class));
+            if(msg.getData().containsKey("multiClientOptions")) {
+                multiClientOptions = new Gson().fromJson(msg.getData().getString("multiClientOptions"),MultiClientOptions.class);
+                jsonObject.addProperty("multiClientOptions", new Gson().toJson(multiClientOptions, MultiClientOptions.class));
             }
             request = new Gson().fromJson(msg.getData().getString("request"), AppMessenger.Request.class);
             jsonObject.addProperty("request", new Gson().toJson(request,AppMessenger.Request.class));
@@ -337,21 +337,21 @@ public class Messenger extends Service {
             }
         }
     }
-    private void sendMessageToClients(final android.os.Message msg, final MultiClientOptions multiClientRequestOptions) throws Exception{
+    private void sendMessageToClients(final android.os.Message msg, final MultiClientOptions multiClientOptions) throws Exception{
         Iterator<Map.Entry<android.os.Messenger,MessengerConnection>> myVeryOwnIterator = mClients.entrySet().iterator();
         while(myVeryOwnIterator.hasNext()) {
             HashMap.Entry<android.os.Messenger,MessengerConnection> entry = myVeryOwnIterator.next();
             Message message = new Message();
             message.copyFrom(msg);
-            for(RequestRulesMatch requestRulesMatch : multiClientRequestOptions.requestRulesMatches){
-                if (requestRulesMatch.rulesMatchType.equals(RulesMatchType.MATCH_TYPE_NAME)) {
-                    if (!requestRulesMatch.matchWith(requestRulesMatch.toArray(), entry.getValue().getName())) {
+            for(ClientRulesMatch clientRulesMatch : multiClientOptions.clientRulesMatches){
+                if (clientRulesMatch.rulesMatchType.equals(RulesMatchType.MATCH_TYPE_NAME)) {
+                    if (!clientRulesMatch.matchWith(clientRulesMatch.toArray(), entry.getValue().getName())) {
                     } else {
                         entry.getKey().send(message);
                     }
                 }
-                if (requestRulesMatch.rulesMatchType.equals(RulesMatchType.MATCH_TYPE_TAG)) {
-                    if (!requestRulesMatch.matchWith(requestRulesMatch.toArray(), entry.getValue().getTag())) {
+                if (clientRulesMatch.rulesMatchType.equals(RulesMatchType.MATCH_TYPE_TAG)) {
+                    if (!clientRulesMatch.matchWith(clientRulesMatch.toArray(), entry.getValue().getTag())) {
                     } else {
                         entry.getKey().send(message);
                     }
@@ -374,24 +374,24 @@ public class Messenger extends Service {
     }
 }
 class MultiClientOptions{
-    RequestRulesMatch[] requestRulesMatches = null;
-    MultiClientOptions(RequestRulesMatch... requestRulesMatches ){
-        this.requestRulesMatches = requestRulesMatches;
+    ClientRulesMatch[] clientRulesMatches = null;
+    MultiClientOptions(ClientRulesMatch... clientRulesMatches ){
+        this.clientRulesMatches = clientRulesMatches;
     }
 }
-class RequestRulesMatch extends RulesMatch {
-    RequestRulesMatch(String...stringsToMatch){
+class ClientRulesMatch extends RulesMatch {
+    ClientRulesMatch(String...stringsToMatch){
         super(stringsToMatch);
     }
 }
-class RequestMatchByTags extends RequestRulesMatch {
-    RequestMatchByTags(String...matchs){
+class ClientMatchByTags extends ClientRulesMatch {
+    ClientMatchByTags(String...matchs){
         super(matchs);
         this.rulesMatchType = RulesMatchType.MATCH_TYPE_TAG;
     }
 }
-class RequestMatchByNames extends RequestRulesMatch {
-    RequestMatchByNames(String...matchs){
+class ClientMatchByNames extends ClientRulesMatch {
+    ClientMatchByNames(String...matchs){
         super(matchs);
         this.rulesMatchType = RulesMatchType.MATCH_TYPE_NAME;
     }

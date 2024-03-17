@@ -39,9 +39,9 @@ public class UltimateRealAppCustomerProfileActivity extends AppCompatActivity {
                         {
                             AppMessenger.Request  request = new AppMessenger.Request("https://realappexample.shop/customer_profile.json");
                             request.setAsync(false);
-                            MultiClientOptions multiClientRequestOptions = new MultiClientOptions(new RequestMatchByNames("ultprofile","ultmain"), new RequestMatchByTags("tag1,tag2"));
+                            MultiClientOptions multiClientOptions = new MultiClientOptions(new ClientMatchByNames("ultprofile","ultmain"), new ClientMatchByTags("tag1,tag2"));
                             try {
-                                appMessenger.sendMsgRequest(Message.obtain(null, Messenger.MSG_WEBAPP_REQUEST_ASYNC),request,multiClientRequestOptions);
+                                appMessenger.sendMsgRequest(Message.obtain(null, Messenger.MSG_WEBAPP_REQUEST_ASYNC),request,multiClientOptions);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
