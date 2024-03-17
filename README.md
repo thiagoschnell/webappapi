@@ -27,6 +27,8 @@ This repository is available under the [MIT License](https://github.com/thiagosc
 Android Integrations such as **App Message**, **Webview** has also provides demo with detailed usage.
 * [App Message demo](https://github.com/after-project/appmessage/)
 * [Webview the basics demo](https://github.com/after-project/webview/)
+* [App Messenger demo](https://github.com/thiagoschnell/appmessenger)(NEW)
+* [Shuffle Crypt demo](https://github.com/thiagoschnell/shufflecrypt)(NEW)
 
 Server Files for this WebApp app sample
 * [PHP files](https://github.com/after-project/webappapi-php/)
@@ -48,8 +50,8 @@ Shop Site Demo for usage example purpouses
 
 **ULTIMATE WEBAPP EXAMPLE**<img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /> <img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" /><img alt="alt_text" width="44" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b653c8bf-5247-4297-81c1-317d2ecb552a" />
 
-The Ultimate WebApp Example uses the new AppMessenger.java and the service Messenger.java based of last example Messenger Service. With Appmessenger you can send request to messenger(Server service) and response back to other active client connection (AppMessenger) that you have created. To allow you to create a new connection you must go to MessengerConnectionManager.java and then go to the constructor MessengerConnectionManager() and add the class you want to allow. there are some extra information how help examples e usage to add the class activity to be allowed.
-And also , now all request informations are crypted by ShuffleCrypt.java. This is all, and probably is the last example for upcoming. ![Ultimate Webapp  example files](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/UltimateWebAppExample)
+The Ultimate WebApp Example uses the new AppMessenger.java and the service Messenger.java based of last example Messenger Service. With Appmessenger you can send request to messenger(Server service) and response back to other active client connection (AppMessenger) that you have created. To allow you to create a new connection you must go to MessengerConnectionManager.java and then go to the constructor MessengerConnectionManager() and add the class you want to allow. there are some extra information how help examples and usage to add the class activity to be registered.
+And also , now all request informations are crypted by ShuffleCrypt.java.<br> ![Ultimate Webapp example files here](https://github.com/thiagoschnell/webappapi/tree/main/app/src/main/java/com/after_project/webappapi/UltimateWebAppExample)
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/52bfff87-3e38-4e59-9989-7eaa25475c16" />
 
