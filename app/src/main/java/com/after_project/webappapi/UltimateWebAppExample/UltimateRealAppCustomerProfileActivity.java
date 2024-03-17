@@ -3,6 +3,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -57,17 +58,27 @@ public class UltimateRealAppCustomerProfileActivity extends AppCompatActivity {
                             }
                             case Messenger.MSG_WEBAPP_RESPONSE: {
                                 String response = msg.getData().getString("data");
+                                System.out.println("response=" + response);
                                 JsonObject jsonObjectResponse= JsonParser.parseString(response).getAsJsonObject();
-                                JsonObject json =  jsonObjectResponse.get("data").getAsJsonObject();
-                                {
-                                    setContentView(R.layout.activity_real_app_customer_profile);
-                                    JsonObject customer_profile_json = JsonParser.parseString(json.toString()).getAsJsonObject();
-                                    ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerName))
-                                            .setText(getResources().getString(R.string.customer_profile_name, customer_profile_json.get("customer_name")));
-                                    ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerEmail))
-                                            .setText(getResources().getString(R.string.customer_profile_email, customer_profile_json.get("customer_email")));
-                                    ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerPhone))
-                                            .setText(getResources().getString(R.string.customer_profile_phone, customer_profile_json.get("customer_phone")));
+                                if(jsonObjectResponse.has("data")){
+                                    // todo success
+                                    {
+                                        JsonObject json =  jsonObjectResponse.get("data").getAsJsonObject();
+                                        setContentView(R.layout.activity_real_app_customer_profile);
+                                        JsonObject customer_profile_json = JsonParser.parseString(json.toString()).getAsJsonObject();
+                                        ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerName))
+                                                .setText(getResources().getString(R.string.customer_profile_name, customer_profile_json.get("customer_name")));
+                                        ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerEmail))
+                                                .setText(getResources().getString(R.string.customer_profile_email, customer_profile_json.get("customer_email")));
+                                        ((TextView)findViewById(R.id.RealAppMyProfileLayoutTextviewCustomerPhone))
+                                                .setText(getResources().getString(R.string.customer_profile_phone, customer_profile_json.get("customer_phone")));
+                                    }
+                                }else if (jsonObjectResponse.getAsJsonObject("error").has("xhr")) {
+                                    //todo xhr error
+                                    Toast.makeText(UltimateRealAppCustomerProfileActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                                }else {
+                                    //todo javascript error
+                                    Toast.makeText(UltimateRealAppCustomerProfileActivity.this,"Javascript Error",Toast.LENGTH_LONG).show();
                                 }
                                 break;
                             }

@@ -5,6 +5,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -67,17 +68,26 @@ public class UltimateRealAppShopActivity extends AppCompatActivity {
                             case Messenger.MSG_WEBAPP_RESPONSE: {
                                 String response = msg.getData().getString("data");
                                 JsonObject jsonObjectResponse= JsonParser.parseString(response).getAsJsonObject();
-                                JsonObject shop_products_json = jsonObjectResponse.get("data").getAsJsonObject();
-                                {
-                                    JsonArray products_list = shop_products_json.getAsJsonArray("products_list");
-                                    for (int i=0; i<products_list.size(); i++){
-                                        JsonObject jsonProductObject = products_list.get(i).getAsJsonObject();
-                                        String product_id = jsonProductObject.get("product_id").getAsString();
-                                        String product_name = jsonProductObject.get("product_name").getAsString();
-                                        String amount = jsonProductObject.get("amount").getAsString();
-                                        ((TextView)findViewById(R.id.RealAppShopLayoutTextviewProductsList))
-                                                .append(getResources().getString(R.string.shop_product_list_append_text,product_id,product_name,amount));
+                                if(jsonObjectResponse.has("data")){
+                                    // todo success
+                                    {
+                                        JsonObject shop_products_json = jsonObjectResponse.get("data").getAsJsonObject();
+                                        JsonArray products_list = shop_products_json.getAsJsonArray("products_list");
+                                        for (int i=0; i<products_list.size(); i++){
+                                            JsonObject jsonProductObject = products_list.get(i).getAsJsonObject();
+                                            String product_id = jsonProductObject.get("product_id").getAsString();
+                                            String product_name = jsonProductObject.get("product_name").getAsString();
+                                            String amount = jsonProductObject.get("amount").getAsString();
+                                            ((TextView)findViewById(R.id.RealAppShopLayoutTextviewProductsList))
+                                                    .append(getResources().getString(R.string.shop_product_list_append_text,product_id,product_name,amount));
+                                        }
                                     }
+                                }else if (jsonObjectResponse.getAsJsonObject("error").has("xhr")) {
+                                    //todo xhr error
+                                    Toast.makeText(UltimateRealAppShopActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                                }else {
+                                    //todo javascript error
+                                    Toast.makeText(UltimateRealAppShopActivity.this,"Javascript Error",Toast.LENGTH_LONG).show();
                                 }
                                 break;
                             }

@@ -335,8 +335,6 @@ and if you CONNECTION_MULTCLIENT then use  ConnectionMulticlientMatchByNames
         jsonObjectChanges.addProperty("connectionState", String.valueOf(MessengerConnection.ConnectionState.CONNECTION_STATE_ENDED));
         jsonObjectChanges.addProperty("connectionStatus", String.valueOf(MessengerConnection.ConnectionStatus.CONNECTION_CLIENT_DISCONNECTED));
         JsonObject jsonObject =  JsonParser.parseString(json).getAsJsonObject();
-        jsonObject.addProperty("connectionState", String.valueOf(MessengerConnection.ConnectionState.CONNECTION_STATE_ENDED));
-        jsonObject.addProperty("connectionStatus", String.valueOf(MessengerConnection.ConnectionStatus.CONNECTION_CLIENT_DISCONNECTED));
         Map<String, JsonElement> map = jsonObject.asMap();
         map.putAll(jsonObjectChanges.asMap());
         connections.get(connectionId).setValue(new Gson().fromJson(jsonObject,MessengerConnection.class));

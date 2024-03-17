@@ -3,6 +3,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -58,10 +59,12 @@ public class UltimateRealAppMyPurchasesActivity extends AppCompatActivity {
                                 break;
                             }
                             case Messenger.MSG_WEBAPP_RESPONSE: {
-                                String response = msg.getData().getString("data");
-                                JsonObject jsonObjectResponse= JsonParser.parseString(response).getAsJsonObject();
-                                    JsonObject my_purchases_json = jsonObjectResponse.get("data").getAsJsonObject();
+                                    String response = msg.getData().getString("data");
+                                    JsonObject jsonObjectResponse= JsonParser.parseString(response).getAsJsonObject();
+                                if(jsonObjectResponse.has("data")){
+                                    // todo success
                                     {
+                                        JsonObject my_purchases_json = jsonObjectResponse.get("data").getAsJsonObject();
                                         JsonArray purchases_list = my_purchases_json.getAsJsonArray("purchases_list");
                                         for (int i=0; i<purchases_list.size(); i++){
                                             JsonObject jsonPurchaseObject = purchases_list.get(i).getAsJsonObject();
@@ -74,6 +77,13 @@ public class UltimateRealAppMyPurchasesActivity extends AppCompatActivity {
                                                     .append(getResources().getString(R.string.purchase_list_append_text,product_id,product_name,purchase_quantity,purchase_status,purchase_stage));
                                         }
                                     }
+                                }else if (jsonObjectResponse.getAsJsonObject("error").has("xhr")) {
+                                    //todo xhr error
+                                    Toast.makeText(UltimateRealAppMyPurchasesActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                                }else {
+                                    //todo javascript error
+                                    Toast.makeText(UltimateRealAppMyPurchasesActivity.this,"Javascript Error",Toast.LENGTH_LONG).show();
+                                }
                                 break;
                             }
                             default:

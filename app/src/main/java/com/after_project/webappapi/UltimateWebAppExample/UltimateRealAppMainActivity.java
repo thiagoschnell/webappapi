@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class UltimateRealAppMainActivity extends AppCompatActivity {
@@ -79,9 +80,20 @@ public class UltimateRealAppMainActivity extends AppCompatActivity {
                             case Messenger.MSG_WEBAPP_RESPONSE: {
                                 String response = msg.getData().getString("data");
                                 JsonObject jsonObjectResponse= JsonParser.parseString(response).getAsJsonObject();
-                                JsonObject json =  jsonObjectResponse.get("data").getAsJsonObject();
-                                 ((TextView)findViewById(R.id.RealAppLayoutTextviewHello))
-                                         .setText(getResources().getString(R.string.welcome_messages, json.get("customer_name"), 0));
+                                if(jsonObjectResponse.has("data")){
+                                    // todo success
+                                    {
+                                        JsonObject json =  jsonObjectResponse.get("data").getAsJsonObject();
+                                        ((TextView)findViewById(R.id.RealAppLayoutTextviewHello))
+                                                .setText(getResources().getString(R.string.welcome_messages, json.get("customer_name"), 0));
+                                    }
+                                }else if (jsonObjectResponse.getAsJsonObject("error").has("xhr")) {
+                                    //todo xhr error
+                                    Toast.makeText(UltimateRealAppMainActivity.this,"Connection Error",Toast.LENGTH_LONG).show();
+                                }else {
+                                    //todo javascript error
+                                    Toast.makeText(UltimateRealAppMainActivity.this,"Javascript Error",Toast.LENGTH_LONG).show();
+                                }
                                 break;
                             }
                             default:
