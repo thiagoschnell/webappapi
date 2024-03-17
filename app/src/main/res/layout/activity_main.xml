@@ -6,111 +6,140 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
-    <Button
-        android:id="@+id/ButtonOpenActivity2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Single Request"></Button>
-    <Button
-        android:id="@+id/ButtonOpenActivity3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="On Demand Requests"></Button>
-    <Button
-        android:id="@+id/ButtonOpenActivity3Parallel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="On Demand Parallel Requests"></Button>
-    <Button
-        android:id="@+id/ButtonOpenActivity4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LoadDataWithBaseUrl Request"></Button>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/ButtonOpenJobScheduler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="JobScheduler Example"></Button>
-      <Button
-          android:id="@+id/ButtonOpenServiceExample"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Service Example"></Button>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-      <Button
-          android:id="@+id/ButtonNewSynchronousRequest"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="New Synchronous\nRequest"></Button>
-
-      <Button
-          android:id="@+id/ButtonNewASynchronousRequest"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="New ASynchronous\nRequest"></Button>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/ButtonOpenDownloadExample"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Download Example"></Button>
-      <Button
-          android:id="@+id/ButtonOpenInternetConnection"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Internet Connection"></Button>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-      <Button
-          android:id="@+id/ButtonOpenZipWebsiteToWebViewExample"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Zip Website Example"></Button>
-      <Button
-          android:id="@+id/ButtonOpenZipWebsiteToWebViewExampleWithCORS"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Zip Website with CORS"></Button>
-    </LinearLayout>
-  </LinearLayout>
-
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:gravity="center|center">
-    <Button
-        android:id="@+id/ButtonOpenRealApp"
-        android:layout_width="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_height="wrap_content"
-        android:text="Click here to see a demo of one\n Real App example"></Button>
-  </LinearLayout>
+      android:orientation="vertical">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <Button
+          android:id="@+id/ButtonOpenActivity2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Single Request"></Button>
+
+      <Button
+          android:id="@+id/ButtonOpenActivity3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="On Demand Requests"></Button>
+
+      <Button
+          android:id="@+id/ButtonOpenActivity3Parallel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="On Demand Parallel Requests"></Button>
+
+      <Button
+          android:id="@+id/ButtonOpenActivity4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="LoadDataWithBaseUrl Request"></Button>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ButtonOpenJobScheduler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JobScheduler Example"></Button>
+
+        <Button
+            android:id="@+id/ButtonOpenServiceExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service Example"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ButtonNewSynchronousRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Synchronous\nRequest"></Button>
+
+        <Button
+            android:id="@+id/ButtonNewASynchronousRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New ASynchronous\nRequest"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ButtonOpenDownloadExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Download Example"></Button>
+
+        <Button
+            android:id="@+id/ButtonOpenInternetConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Internet Connection"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ButtonOpenZipWebsiteToWebViewExample"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zip Website Example"></Button>
+
+        <Button
+            android:id="@+id/ButtonOpenZipWebsiteToWebViewExampleWithCORS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zip Website with CORS"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ButtonOpenUltimateWebAppExample"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ultimate WebApp Example"></Button>
+
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|center"
+        android:orientation="vertical">
+
+      <Button
+          android:id="@+id/ButtonOpenRealApp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="0dp"
+          android:text="Click here to see a demo of one\n Real App example"></Button>
+    </LinearLayout>
+
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

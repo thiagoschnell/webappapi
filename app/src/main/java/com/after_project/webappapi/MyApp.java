@@ -4,6 +4,7 @@ import static com.after_project.webappapi.MessengerServerService.MSG_WEBAPP_REQU
 import static com.after_project.webappapi.MessengerServerService.MSG_WEBAPP_REQUEST_SYNC;
 import static com.after_project.webappapi.MessengerServerService.MSG_WEBAPP_RESPONSE;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -18,6 +19,12 @@ import androidx.webkit.WebViewAssetLoader;
 import androidx.work.Data;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Set;
+
 public class MyApp extends MessengerClient implements LifecycleOwner {
     static String className = MyApp.class.getSimpleName();
     private static MyApp mInstance;
@@ -250,4 +257,16 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
             throw new Error(error.toString());
         }
     };
+
+    protected String BundleToJSON(Bundle bundle){
+        JSONObject json = new JSONObject();
+        Set<String> keys = bundle.keySet();
+        for (String key : keys) {
+            try {
+                json.put(key, JSONObject.wrap(bundle.get(key)));
+            } catch(JSONException e) {
+            }
+        }
+        return json.toString();
+    }
 }

@@ -21,6 +21,18 @@
         android:theme="@style/Theme.WebAppApi"
         tools:targetApi="34">
         <activity
+            android:name=".UltimateRealAppMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UltimateRealAppCustomerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UltimateRealAppMyPurchasesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UltimateRealAppShopActivity"
+            android:exported="false" />
+        <activity
             android:name=".MessengerServiceActivity"
             android:exported="false" />
         <activity
@@ -114,6 +126,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".Messenger"></service>
 
         <service
             android:name=".ApiNotificationService"

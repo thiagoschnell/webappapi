@@ -53,8 +53,8 @@ public class WebApp {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({WEBAPP_MODE_UNSET, WEBAPP_MODE_LIVEDATA, WEBAPP_MODE_CALLBACK, WEBAPP_MODE_CALLBACK_RESPONSE_ONLY})
     private @interface WebAppMode {}
-    private @WebApp.WebAppMode int webAppMode = WEBAPP_MODE_UNSET;
-    private void setWebAppMode(@WebApp.WebAppMode int webAppMode) {
+    private @WebAppMode int webAppMode = WEBAPP_MODE_UNSET;
+    private void setWebAppMode(@WebAppMode int webAppMode) {
         this.webAppMode = webAppMode;
     }
     protected static final int WEBAPP_STATUS_NONE = 0;
@@ -63,8 +63,8 @@ public class WebApp {
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({WEBAPP_STATUS_NONE, WEBAPP_STATUS_LOAD_FINISHED, WEBAPP_STATUS_LOAD_ERROR})
     private @interface WebAppStatus {}
-    private @WebApp.WebAppStatus int webAppStatus;
-    protected @WebApp.WebAppStatus int getStatus() {
+    private @WebAppStatus int webAppStatus;
+    protected @WebAppStatus int getStatus() {
         return webAppStatus;
     }
     protected static final int FLAG_CLEAR_CACHE_RAM_ONLY = 1; // clear RAM cache ; Note that the cache is per-application, so this will clear the cache for all WebViews used.

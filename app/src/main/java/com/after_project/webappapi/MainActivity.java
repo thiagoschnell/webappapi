@@ -165,6 +165,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Button Ultimate WebApp Example
+        {
+            Button buttonOpenServiceExample = (Button) findViewById(R.id.ButtonOpenUltimateWebAppExample);
+            buttonOpenServiceExample.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, UltimateRealAppMainActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     @Override
     protected void onPause() {
