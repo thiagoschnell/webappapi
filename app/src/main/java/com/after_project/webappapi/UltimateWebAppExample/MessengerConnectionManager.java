@@ -90,6 +90,7 @@ public class MessengerConnectionManager {
             this.connectionType = connectionType;
             this.maxConnections = maxConnections;
             this.connectionRules = connectionRules;
+            checkForConnectionPoliceDuplicates(this);
         }
         ConnectionType getConnectionType() {
             return connectionType;
@@ -103,6 +104,18 @@ public class MessengerConnectionManager {
     }
     private ArrayList<ConnectionPolicy> connectionPolicies = new ArrayList<>();
     private List<AbstractMap.SimpleEntry< Messenger,MessengerConnection>> connections = new ArrayList<>();
+    private void checkForConnectionPoliceDuplicates(ConnectionPolicy _connectionPolicy){
+        int count = 0;
+        for(ConnectionPolicy connectionPolicy: connectionPolicies){
+            final String json = new Gson().toJson(connectionPolicy,ConnectionPolicy.class);
+            if(json.equals(new Gson().toJson(_connectionPolicy,ConnectionPolicy.class))){
+                throw new Error("Connection Police Duplicate found connectionPolicies.index(" + count + ")");
+            }else  if(connectionPolicy.clazz.getSimpleName().equals(_connectionPolicy.clazz.getSimpleName())){
+                throw new Error("Connection Police for "+_connectionPolicy.clazz.getSimpleName()+" already exists");
+            }
+            count++;
+        }
+    }
     MessengerConnectionManager(){
         /*
         CONNECTION_MULTCLIENT is a connection that are able to send response back for any active connection in your application.
@@ -123,7 +136,7 @@ and if you CONNECTION_MULTCLIENT then use  ConnectionMulticlientMatchByNames
                 1, new ConnectionRules(false,0, new ConnectionNormalMatchByNames("ultpurchases")))  );
         connectionPolicies.add(new ConnectionPolicy(UltimateRealAppShopActivity.class, ConnectionType.CONNECTION_NORMAL,
                 1, new ConnectionRules(false,0, new ConnectionNormalMatchByNames("ultshop")))  );
-         connectionPolicies.add(new ConnectionPolicy(UltimateRealAppCustomerProfileActivity.class, CONNECTION_MULTCLIENT,
+        connectionPolicies.add(new ConnectionPolicy(UltimateRealAppCustomerProfileActivity.class, CONNECTION_MULTCLIENT,
                 1, new ConnectionRules(false,0, new ConnectionMulticlientMatchByNames("ultprofile")))  );
     }
     protected static MessengerConnection.ConnectionStatus ConnectionStatusValueOf(String value) {
