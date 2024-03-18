@@ -108,7 +108,11 @@ public class MessengerConnectionManager {
         int count = 0;
         for(ConnectionPolicy connectionPolicy: connectionPolicies){
             final String json = new Gson().toJson(connectionPolicy,ConnectionPolicy.class);
-            if(json.equals(new Gson().toJson(_connectionPolicy,ConnectionPolicy.class))){
+            JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+            jsonObject.addProperty("clazz",connectionPolicy.clazz.getSimpleName());
+            JsonObject _jsonObject = JsonParser.parseString(new Gson().toJson(_connectionPolicy,ConnectionPolicy.class)).getAsJsonObject();
+            _jsonObject.addProperty("clazz",_connectionPolicy.clazz.getSimpleName());
+            if(jsonObject.toString().equals(_jsonObject.toString())){
                 throw new Error("Connection Police Duplicate found connectionPolicies.index(" + count + ")");
             }else  if(connectionPolicy.clazz.getSimpleName().equals(_connectionPolicy.clazz.getSimpleName())){
                 throw new Error("Connection Police for "+_connectionPolicy.clazz.getSimpleName()+" already exists");
