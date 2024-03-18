@@ -301,7 +301,7 @@ public class AppMessenger extends AbstractMessengerConnection{
                 break;
             }
             case ERROR_CONNECTION_TAG_NOT_REGISTERED: {
-                errorMessage = "Not encountered tag registry. please go to Registration.java and move to superclass Registration() and add a new tagRegistries like ex: tagRegistries.add(MainActivity.this...";
+                errorMessage = "Not encountered tag registry. please go to MessengerConnectionManager.java and move to superclass MessengerConnectionManager() and add a new ConnectionPolicy like ex: connectionPolicies.add(new ConnectionPolicy(UltimateRealAppMyPurchasesActivity.class, ConnectionType....";
                 break;
             }
             case ERROR_CONNECTION_RULES_INCOMPLETE_MATCH_ARGUMENTS: {
