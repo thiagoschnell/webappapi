@@ -10,7 +10,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import androidx.annotation.IntDef;
-import androidx.lifecycle.Observer;
 import com.google.gson.Gson;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -37,7 +36,6 @@ public class AppMessenger extends AbstractMessengerConnection{
         boolean getAsync(){
             return async;
         }
-        Observer observer ;
         Request(String url){
             reserved_request_id++;
             this.requestId = new Integer(reserved_request_id);
