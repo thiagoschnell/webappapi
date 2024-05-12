@@ -31,6 +31,7 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    buildToolsVersion '35.0.0 rc3'
 }
 
 dependencies {
@@ -39,7 +40,7 @@ dependencies {
     implementation libs.gson
     implementation libs.androidx.webkit
     implementation libs.androidx.appcompat
-    implementation libs.androidx.work.runtime
+    implementation libs.androidx.work.runtime  //update to latest may cause JobSchedulerExample errors in android API 19
     implementation libs.androidx.multidex
     implementation libs.androidx.material
     implementation libs.material

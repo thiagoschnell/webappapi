@@ -48,7 +48,7 @@ public class RealAppMainActivity extends AppCompatActivity {
             builder.addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
             webapp = new WebApp(webview, builder.build(), alloweDomains, WebApp.FLAG_CLEAR_CACHE);
             try {
-                webapp.load("https://realappexample.shop/index.html", //server url here
+                webapp.load("https://realappexample.shop/home.html", //server url here
                         new WebAppCallback() {
                             @Override
                             public void onLoadFinish(WebView view, String url) {

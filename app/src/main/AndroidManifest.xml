@@ -9,6 +9,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- [END] FILE SAVE EXTERNAL REQUIRED PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-sdk tools:overrideLibrary="androidx.compose.material.ripple, androidx.appcompat.resources, androidx.appcompat,
+     androidx.compose.material,
+     androidx.compose.foundation.layout, androidx.compose.foundation, androidx.compose.animation,
+     androidx.compose.animation.core, androidx.compose.material.icons, androidx.compose.ui.geometry,
+     androidx.compose.ui.unit, androidx.compose.ui.text, androidx.compose.ui.graphics, androidx.compose.ui.util,
+     androidx.compose.ui, androidx.lifecycle.runtime.compose, androidx.graphics.path, androidx.compose.runtime.saveable,
+     androidx.compose.runtime" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"

@@ -1,4 +1,5 @@
 package com.after_project.webappapi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -138,8 +139,18 @@ public class MainActivity extends AppCompatActivity {
             buttonOpenZipWebsiteToWebViewExampleWithCORS.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, ZipWebsiteToWebViewExampleWithCORS.class);
-                    startActivity(intent);
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder
+                                .setMessage("We are running out of Credits\n We don't know when this example and the server will come back online")
+                                .setIcon(android.R.drawable.ic_dialog_alert);
+                        builder.setPositiveButton("OK",(dialog, which) -> {});
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+
+                    //Intent intent = new Intent(MainActivity.this, ZipWebsiteToWebViewExampleWithCORS.class);
+                    //startActivity(intent);
                 }
             });
         }
