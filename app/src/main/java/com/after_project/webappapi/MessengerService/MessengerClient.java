@@ -11,6 +11,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import androidx.annotation.IntDef;
+import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -165,5 +166,10 @@ public class MessengerClient extends MultiDexApplication {
         void onDisconnected();
         void onUnbinding();
         void onMessageHandle(Message msg);
+    }
+    @Override
+    protected void attachBaseContext(Context base) { // fix: this stop JobScheduler Errors in android API 19
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
