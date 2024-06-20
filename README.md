@@ -17,6 +17,15 @@ Now Webapp Api can run with your favorite android version with full compatible w
 
 * [Download Android Studio & Configure SDK and AGP](https://github.com/thiagoschnell/webappapi/wiki/Download-Android-Studio-&-Configure-SDK-and-AGP) This guide page for download Android Studio and Configure SDK and AGP
 
+## Android 15 - June 	Beta 3
+
+ Android 15 ready
+ 
+ see more details about android 15 preview [here](https://developer.android.com/about/versions/15/overview).
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/b83f8a41-363d-4350-b446-f9e2cab57ef2" />
+
+
 ## License
 
 This repository is available under the [MIT License](https://github.com/thiagoschnell/webappapi/blob/main/LICENSE).
@@ -92,6 +101,10 @@ This is example of Zip Website  using CORS Example shows how setup allowed CORS 
 Note: in Android API 33 and higher you are required asking the user for grant permissions to post notifications.
 
 <img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/1db44422-0140-4e68-8de4-96b8709d01b2" />
+
+for grant permissions manual then go to Android Settings > Apps > Webapp Api> Notifications like below image:
+
+<img alt="alt_text" width="192px" src="https://github.com/thiagoschnell/webappapi/assets/78884351/c60a1d2a-45d1-411b-a0d0-6134b1f74589" />
 
 **Internet Connection - Realtime Network Status**
 
