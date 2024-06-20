@@ -4,13 +4,12 @@ plugins {
 
 android {
     namespace 'com.after_project.webappapi'
-    compileSdk 34
-    //compileSdkPreview 'VanillaIceCream'
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.after_project.webappapi"
         minSdk 19
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName '1.0'
         multiDexEnabled true
@@ -31,7 +30,7 @@ android {
     buildFeatures {
         buildConfig = true
     }
-    buildToolsVersion '35.0.0 rc3'
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {

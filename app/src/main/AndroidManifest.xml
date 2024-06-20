@@ -9,13 +9,15 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- [END] FILE SAVE EXTERNAL REQUIRED PERMISSIONS -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- [START] compatibility for android api 19  -->
     <uses-sdk tools:overrideLibrary="androidx.compose.material.ripple, androidx.appcompat.resources, androidx.appcompat,
      androidx.compose.material,
      androidx.compose.foundation.layout, androidx.compose.foundation, androidx.compose.animation,
      androidx.compose.animation.core, androidx.compose.material.icons, androidx.compose.ui.geometry,
      androidx.compose.ui.unit, androidx.compose.ui.text, androidx.compose.ui.graphics, androidx.compose.ui.util,
      androidx.compose.ui, androidx.lifecycle.runtime.compose, androidx.graphics.path, androidx.compose.runtime.saveable,
-     androidx.compose.runtime" />
+     androidx.compose.runtime, androidx.webkit" />
+    <!-- [END] compatibility for android api 19  -->
 
     <application
         android:name=".MyApp"
@@ -27,7 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WebAppApi"
-        tools:targetApi="34">
+        tools:targetApi="35">
         <activity
             android:name=".UltimateRealAppMainActivity"
             android:exported="false" />
