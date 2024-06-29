@@ -5,7 +5,7 @@ WebApp Api is Android extended Webview Client are flexible, safe and easier requ
 
 _**minimum SDK version**: Android 5.0 (API 21) (recommended), but you also can run on Android 4.4 (API 19) and higher._
 
-* We are starting a new integration for handling supports After Executions in Android ![project](https://github.com/thiagoschnell/afterexecute) <br>
+* New support for After Execute integration is starting ![project](https://github.com/thiagoschnell/afterexecute) <br>
 
 ## Download Android Studio and Configure
 
