@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 public class Thread2 extends Thread{
     Runnable r;
+    ExecutorService es = Executors.newSingleThreadExecutor();
     Thread2(Runnable r){
         this.r = r;
     }
@@ -19,7 +20,6 @@ public class Thread2 extends Thread{
     }
     void exec(){
         {
-            ExecutorService es = Executors.newSingleThreadExecutor();
             try {
                 es.execute(new Thread(() -> {
                     try {

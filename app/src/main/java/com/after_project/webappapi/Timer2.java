@@ -4,15 +4,38 @@ package com.after_project.webappapi;
 public class Timer2 {
 }
 class FutureTimer{
-    void start(int interval, FutureTimerInterface futureTimerInterface ){
-        new Thread2(() -> {
-            try {
-                Thread.sleep(interval);
+    Thread2 t1;
+    private FutureTimerInterface futureTimerInterface;
+    FutureTimer(FutureTimerInterface futureTimerInterface){
+        this.futureTimerInterface = futureTimerInterface;
+    }
+    private Integer interval = null;
+    void setInterval(int interval){
+        this.interval = interval;
+    }
+    void setNewInterval(int interval){
+        stopTimer();
+        this.interval = interval;
+        startTimer();
+    }
+    void stopTimer(){
+        if(t1!=null && t1.es!=null){
+            t1.es.shutdownNow();
+        }
+    }
+    void startTimer(){
+        if(interval!=null) {
+            t1 = new Thread2(() -> {
+                try {
+                    Thread.sleep(interval);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 futureTimerInterface.onComplete();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+                interval = null;
+            });
+            t1.start();
+        }
     }
     interface FutureTimerInterface{
         void onComplete();
