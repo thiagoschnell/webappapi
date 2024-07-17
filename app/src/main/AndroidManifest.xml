@@ -16,7 +16,8 @@
      androidx.compose.animation.core, androidx.compose.material.icons, androidx.compose.ui.geometry,
      androidx.compose.ui.unit, androidx.compose.ui.text, androidx.compose.ui.graphics, androidx.compose.ui.util,
      androidx.compose.ui, androidx.lifecycle.runtime.compose, androidx.graphics.path, androidx.compose.runtime.saveable,
-     androidx.compose.runtime, androidx.webkit" />
+     androidx.compose.runtime, androidx.webkit,
+     com.google.android.material" />
     <!-- [END] compatibility for android api 19  -->
 
     <application
