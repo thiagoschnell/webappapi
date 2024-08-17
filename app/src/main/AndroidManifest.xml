@@ -17,7 +17,7 @@
      androidx.compose.ui.unit, androidx.compose.ui.text, androidx.compose.ui.graphics, androidx.compose.ui.util,
      androidx.compose.ui, androidx.lifecycle.runtime.compose, androidx.graphics.path, androidx.compose.runtime.saveable,
      androidx.compose.runtime, androidx.webkit,
-     com.google.android.material" />
+     com.google.android.material,androidx.constraintlayout.widget" />
     <!-- [END] compatibility for android api 19  -->
 
     <application
