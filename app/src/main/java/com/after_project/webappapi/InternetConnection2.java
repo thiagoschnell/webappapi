@@ -1,4 +1,6 @@
 package com.after_project.webappapi;
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/webappapi/blob/main/LICENSE
+// Licensed under the MIT License.
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
