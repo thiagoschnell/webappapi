@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Internet Connection \nRealtime Network Status"
+            android:text="Internet Connection2 \nRealtime Network Status"
             android:gravity="center"
             android:textSize="32dp"></TextView>
         <TextView
