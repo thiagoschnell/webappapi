@@ -59,7 +59,7 @@ Shop Site Demo for usage example purpouses
 
 
 The new Internet Connection 2<b> is very similar like Firebase Connection State</b>, but firebase sometimes bug. 
-however Internet Connection 2 works with logic operations, and confirm if there is already in offline and then when handle disconnection a timer is started to run next 60 seconds to confirm isConnected;
+however Internet Connection 2 works with logic operations, and confirm if there is already in offline and then when handle disconnection a timer is started to run next 60 seconds to confirm isConnected. ![InternetConnection2.java](https://github.com/thiagoschnell/webappapi/blob/main/app/src/main/java/com/after_project/webappapi/InternetConnection2.java)
 
 <img alt="alt_text" width="192px" src="https://github.com/user-attachments/assets/c0590d0d-573f-466d-8148-e4ec893656ab" />
 
