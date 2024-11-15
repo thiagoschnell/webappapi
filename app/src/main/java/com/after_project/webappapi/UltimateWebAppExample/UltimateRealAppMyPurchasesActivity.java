@@ -47,7 +47,7 @@ public class UltimateRealAppMyPurchasesActivity extends AppCompatActivity {
                             }
                             case Messenger.MSG_WEBAPP_LOADED:{
                                 {
-                                    AppMessenger.Request  request = new AppMessenger.Request("https://realappexample.shop/purchases.json");
+                                    AppMessenger.Request  request = new AppMessenger.Request("https://"+getResources().getString(R.string.websiteMainDomain)+"/purchases.json");
                                     request.setAsync(false);
                                     MultiClientOptions multiClientRequestOptions = null;
                                     try {

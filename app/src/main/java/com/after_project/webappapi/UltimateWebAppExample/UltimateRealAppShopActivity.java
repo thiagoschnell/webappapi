@@ -20,7 +20,7 @@ public class UltimateRealAppShopActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 {
-                    AppMessenger.Request  request = new AppMessenger.Request("https://realappexample.shop/products.json");
+                    AppMessenger.Request  request = new AppMessenger.Request("https://"+getResources().getString(R.string.websiteMainDomain)+"/products.json");
                     request.setAsync(false);
                     MultiClientOptions multiClientRequestOptions = null;
                     try {

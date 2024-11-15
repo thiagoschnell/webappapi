@@ -195,7 +195,7 @@ public class Messenger extends Service {
         }
         {
             String[] allowedDomains = {
-                    "realappexample.shop"
+                    getResources().getString(R.string.websiteMainDomain)
             };
             WebView webview = new WebView(this);
             webApp = new WebApp(webview,new WebViewAssetLoader.Builder()
@@ -205,7 +205,7 @@ public class Messenger extends Service {
                     allowedDomains,
                     WebApp.FLAG_CLEAR_CACHE);
             try {
-                webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+                webApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.websiteMainDomain)+"/",
                         new RawResource(getAssets(),"home.html"),
                         new WebAppCallback() {
                             @Override

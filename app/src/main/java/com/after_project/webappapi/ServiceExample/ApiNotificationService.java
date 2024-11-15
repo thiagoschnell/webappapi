@@ -108,7 +108,7 @@ public class ApiNotificationService extends Service {
                         // [START] CORS domains
                         // [END] CORS domains
                         // [START] Website domain
-                        "realappexample.shop"
+                        getResources().getString(R.string.websiteMainDomain)
                         // [END] Website domain
                 };
                 WebView webview = new WebView(this);
@@ -119,7 +119,7 @@ public class ApiNotificationService extends Service {
                         allowedDomains,
                         WebApp.FLAG_CLEAR_CACHE);
                 try {
-                    webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+                    webApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.websiteMainDomain)+"/",
                             new RawResource(getAssets(),"home.html"),
                             new WebAppCallback() {
                                 @Override
@@ -168,7 +168,7 @@ public class ApiNotificationService extends Service {
                                             @Override
                                             public void run() {
                                                 webApp.evalJavaScript(
-                                                        "url('" + "https://realappexample.shop/userNotifications.json" + "').get().response().data",
+                                                        "url('" + "https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json" + "').get().response().data",
                                                         new ValueCallback() {
                                                             @Override
                                                             public void onReceiveValue(Object response) {

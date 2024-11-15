@@ -46,7 +46,7 @@ public class WebAppServiceActivity extends AppCompatActivity {
                                 // todo response data
                             }
                         };
-                        newWebAppServiceRequestSynchronous("https://realappexample.shop/userNotifications.json", responseCallback);
+                        newWebAppServiceRequestSynchronous("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -65,7 +65,7 @@ public class WebAppServiceActivity extends AppCompatActivity {
                                 // todo response data
                             }
                         };
-                        newWebAppServiceRequest("https://realappexample.shop/userNotifications.json",responseCallback );
+                        newWebAppServiceRequest("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json",responseCallback );
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

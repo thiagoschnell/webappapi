@@ -65,7 +65,7 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
                             // Download and install the patch.zip and wait its finish
                             // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
-                                new RequestDownloadAndWait("https://realappexample.shop/patch.zip",
+                                new RequestDownloadAndWait("https://"+getResources().getString(R.string.websiteMainDomain)+"/patch.zip",
                                         new RequestAndWait.RequestURLAndWaitCallback() {
                                             @Override
                                             public void onComplete() {
@@ -121,7 +121,7 @@ public class ZipWebsiteToWebViewExampleMainActivity extends AppCompatActivity {
                             // Download and install the update.zip and wait its finish
                             // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
-                                new RequestDownloadAndWait("https://realappexample.shop/update.zip",
+                                new RequestDownloadAndWait("https://"+getResources().getString(R.string.websiteMainDomain)+"/update.zip",
                                         new RequestAndWait.RequestURLAndWaitCallback() {
                                             @Override
                                             public void onComplete() {

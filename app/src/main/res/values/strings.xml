@@ -7,4 +7,6 @@
     <string name="purchase_list_append_text">product_id: %1$s product_name: %2$s purchase_quantity: %3$s purchase_status: %4$s purchase_stage: %5$s \n --------------\n</string>
     <string name="shop_product_list_append_text">product_id: %1$s product_name: %2$s amount: %3$s \n --------------\n</string>
     <string name="notice_server_php">Maybe the serve takes 1 or 2 minutes to wake up due of inactive usage.</string>
+    <string name="websiteMainDomain">realappexample.co</string>
+    <string name="serverZipWebsiteToWebViewExampleWithCORSDomain">server.realappexample.shop</string>
 </resources>

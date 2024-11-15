@@ -37,7 +37,7 @@ public class UltimateRealAppCustomerProfileActivity extends AppCompatActivity {
                     @Override
                     public void onConnected(Message msg) {
                         {
-                            AppMessenger.Request  request = new AppMessenger.Request("https://realappexample.shop/customer_profile.json");
+                            AppMessenger.Request  request = new AppMessenger.Request("https://"+getResources().getString(R.string.websiteMainDomain)+"/customer_profile.json");
                             request.setAsync(false);
                             MultiClientOptions multiClientOptions = new MultiClientOptions(new ClientMatchByNames("ultprofile","ultmain"), new ClientMatchByTags("tag1,tag2"));
                             try {

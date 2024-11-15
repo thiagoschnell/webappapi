@@ -154,10 +154,10 @@ public class WebApp {
         this.webView.addJavascriptInterface(new WebAppJavaScriptInterface(), "android");
     }
     /**Example of use allowedDomains and CORS
-     * if you use webApp.load("https://realappexample.shop/") or webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+     * if you use webApp.load("https://"+getResources().getString(R.string.main_domain)+"/") or webApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.main_domain)+"/",
      * and want request apis with urls have domain name "webappapi-server.azurewebsites.net"
      * then add the "webappapi-server.azurewebsites.net" in the allowedDomains at below variable,
-     * now go to your server hosting that are using the domain "realappexample.shop"
+     * now go to your server hosting that are using the domain "getResources().getString(R.string.main_domain)"
      * and make this CORS settings:
      *
      * Access-Control-Allow-Origin
@@ -165,7 +165,7 @@ public class WebApp {
      *
      *
      * You may also must add headers in the file you are requesting
-     * For example in PHP file, to allow a site at "realappexample.shop" to access the resource using CORS, the header should be:
+     * For example in PHP file, to allow a site at "getResources().getString(R.string.main_domain)" to access the resource using CORS, the header should be:
      *
      * < ?php  header("Access-Control-Allow-Origin: webappapi-server.azurewebsites.net"); ?>
      *

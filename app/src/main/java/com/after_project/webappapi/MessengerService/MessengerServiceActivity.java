@@ -37,12 +37,12 @@ public class MessengerServiceActivity extends AppCompatActivity {
                                 ((TextView) findViewById(R.id.MessengerServiceLayoutTextviewLoadingText)).append("\nRequest "+(request.async?"Async":"Sync")+" id(" + request.getMyid() + ") " + getErrorMessage(responseError));
                             }
                         };
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendSync("https://realappexample.shop/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendSync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -72,12 +72,12 @@ public class MessengerServiceActivity extends AppCompatActivity {
                                 ((TextView) findViewById(R.id.MessengerServiceLayoutTextviewLoadingText)).append("\nRequest "+(request.async?"Async":"Sync")+" id(" + request.getMyid() + ") " + getErrorMessage(responseError));
                             }
                         };
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
-                        sendAsync("https://realappexample.shop/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
+                        sendAsync("https://"+getResources().getString(R.string.websiteMainDomain)+"/userNotifications.json", responseCallback);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

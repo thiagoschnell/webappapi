@@ -35,7 +35,7 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
 
                 //if not previous added the domain to allowedDomains list then just call .ignoreDomain(),
                 // prefer to add the allowed domain by constructor or use bellow example
-                //MyApp.getInstance().getWebApp().ignoreDomain("server.realappexample.shop");
+                //MyApp.getInstance().getWebApp().ignoreDomain( getResources().getString(R.string.serverZipWebsiteToWebViewExampleWithCORSDomain) );
 
                 // ATTENTION : This examples use apache MultiViews link: https://httpd.apache.org/docs/2.2/content-negotiation.html#multiviews
                 // NOTE : by enabling server MultiViews not required use .ignoreDomain("patch.zip"); .ignoreDomain("update.zip"); .ignoreDomain("products.json"); .ignoreDomain("purchases.json"); .ignoreDomain("profile.json");  as previous example in ZipWebsiteToWebViewExampleMainActivity.java
@@ -71,7 +71,7 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
                             // Download and install the patch.zip and wait its finish
                             // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
-                                new RequestDownloadAndWait("https://server.realappexample.shop/patch",
+                                new RequestDownloadAndWait("https://"+getResources().getString(R.string.serverZipWebsiteToWebViewExampleWithCORSDomain)+"/patch",
                                         new RequestAndWait.RequestURLAndWaitCallback() {
                                             @Override
                                             public void onComplete() {
@@ -127,7 +127,7 @@ public class ZipWebsiteToWebViewExampleWithCORS extends AppCompatActivity {
                             // Download and install the update.zip and wait its finish
                             // then if all done with success the RequestAndWait.onComplete() method will be call to startWebviewActivity().
                             {
-                                new RequestDownloadAndWait("https://server.realappexample.shop/update",
+                                new RequestDownloadAndWait("https://"+getResources().getString(R.string.serverZipWebsiteToWebViewExampleWithCORSDomain)+"/update",
                                         new RequestAndWait.RequestURLAndWaitCallback() {
                                             @Override
                                             public void onComplete() {

@@ -58,7 +58,7 @@ public class MessengerServerService extends MessengerService {
                     // [START] CORS domains
                     // [END] CORS domains
                     // [START] Website domain
-                    "realappexample.shop"
+                    getResources().getString(R.string.websiteMainDomain)
                     // [END] Website domain
             };
             WebView webview = new WebView(this);
@@ -69,7 +69,7 @@ public class MessengerServerService extends MessengerService {
                     allowedDomains,
                     WebApp.FLAG_CLEAR_CACHE);
             try {
-                webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+                webApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.websiteMainDomain)+"/",
                         new RawResource(getAssets(),"home.html"),
                         new WebAppCallback() {
                             @Override

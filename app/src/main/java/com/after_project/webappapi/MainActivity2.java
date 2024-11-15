@@ -32,7 +32,7 @@ public class MainActivity2 extends AppCompatActivity {
         //WebApp
         {
             String[] allowedDomains = {
-                    // [START] CORS domains //"realappexample.shop",
+                    // [START] CORS domains
 
                     // [END] CORS domains
                     // [START] Website domain

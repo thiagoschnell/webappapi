@@ -27,7 +27,7 @@ public class DownloadExamplePdfDownload extends AppCompatActivity {
             Add_Loading_Text("Downloading pdf...");
             {
                 try {
-                    MyApp.getInstance().getWebApp().evalJavaScript("request_download('https://realappexample.shop/SampleFile.pdf')",
+                    MyApp.getInstance().getWebApp().evalJavaScript("request_download('https://"+getResources().getString(R.string.websiteMainDomain)+"/SampleFile.pdf')",
                             new ValueCallback() {
                                 @Override
                                 public void onReceiveValue(Object value) {

@@ -54,7 +54,7 @@ public class InternetConnectionActivity extends AppCompatActivity {
                             MyApp.getInstance()
                                     .getWebApp()
                                     .evalJavaScript(
-                                            "url('https://realappexample.shop/products.json').get().response().data",
+                                            "url('https://"+getResources().getString(R.string.websiteMainDomain)+"/products.json').get().response().data",
                                             new ValueCallback() {
                                                 @Override
                                                 public void onReceiveValue(Object response) {

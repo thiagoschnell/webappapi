@@ -23,7 +23,7 @@ public class DownloadExampleImageDownloadAndSave extends AppCompatActivity {
             ImageView imageview = (ImageView) findViewById(R.id.DownloadExampleImageDownloadAndSaveImageView);
             try {
                 Add_Loading_Text("Downloading image...");
-                MyApp.getInstance().getWebApp().evalJavaScript("request_download('https://realappexample.shop/i-logo.png')",
+                MyApp.getInstance().getWebApp().evalJavaScript("request_download('https://"+getResources().getString(R.string.websiteMainDomain)+"/i-logo.png')",
                         new ValueCallback() {
                             @Override
                             public void onReceiveValue(Object value) {

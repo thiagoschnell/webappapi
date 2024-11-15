@@ -36,7 +36,7 @@ public class MainActivity4 extends AppCompatActivity {
 
                     // [END] CORS domains
                     // [START] Website domain
-                            "realappexample.shop"
+                            getResources().getString(R.string.websiteMainDomain)
                     // [END] Website domain
             };
             WebView webview = new WebView(this);
@@ -49,7 +49,7 @@ public class MainActivity4 extends AppCompatActivity {
             try {
                 Add_Loading_Text("\n Starting load server url ...");
                 //load server_url for get ready the origin
-                mainActivity4WebApp.loadDataWithBaseUrl("https://realappexample.shop/",
+                mainActivity4WebApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.websiteMainDomain)+"/",
                         new RawResource(getAssets(),"home.html"),
                         new WebAppCallback() {
                             @Override

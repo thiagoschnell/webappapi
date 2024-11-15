@@ -135,10 +135,10 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
         {
             String[] allowedDomains = {
                 // [START] CORS domains //"webappapi-server.azurewebsites.net",
-                        "server.realappexample.shop",
+                        getResources().getString(R.string.serverZipWebsiteToWebViewExampleWithCORSDomain),
                 // [END] CORS domains
                 // [START] Website domain
-                        "realappexample.shop"
+                        getResources().getString(R.string.websiteMainDomain)
                 // [END] Website domain
             };
             WebView webview = new WebView(this);
@@ -150,7 +150,7 @@ public class MyApp extends MessengerClient implements LifecycleOwner {
                     WebApp.FLAG_CLEAR_CACHE);
             try {
                 //load server_url for get ready the origin
-                webApp.loadDataWithBaseUrl("https://realappexample.shop/",
+                webApp.loadDataWithBaseUrl("https://"+getResources().getString(R.string.websiteMainDomain)+"/",
                         new RawResource(getAssets(),"home.html"),
                         new WebAppCallback() {
                             @Override

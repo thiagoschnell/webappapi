@@ -33,7 +33,7 @@ public class DownloadExampleStreamDownload extends AppCompatActivity {
             ArrayList<String> rangeBytesChunks =  getRangeBytes(5000,17834); //getRangeBytes array
             int chunk_count = 0;
             for(String rangeBytes : rangeBytesChunks) {
-                String js = "download('https://realappexample.shop/new.png',{'Accept':'*/*','Range':'"+rangeBytes+"'})";
+                String js = "download('https://"+getResources().getString(R.string.websiteMainDomain)+"/new.png',{'Accept':'*/*','Range':'"+rangeBytes+"'})";
                 if(download_error){
                     fos.close();
                     break;

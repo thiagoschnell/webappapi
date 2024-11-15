@@ -74,7 +74,7 @@ public class JobSchedulerCheckPurchaseStatus extends AppCompatActivity {
                                                     MyApp.getInstance().getWebApp().runJavaScript(js);
                                                 }
                                             }))
-                                            .prepare("https://realappexample.shop/purchases.json",
+                                            .prepare("https://"+getResources().getString(R.string.websiteMainDomain)+"/purchases.json",
                                                     new JSONObject(WebApp.DEFAULT_REQUEST_JSON_OPTIONS),
                                                     new JSONObject() {{
                                                         put("receiverName", JobSchedulerCheckPurchaseStatus.className);
