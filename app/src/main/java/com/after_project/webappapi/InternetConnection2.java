@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-@RequiresApi(23)
+@RequiresApi(21)
 public class InternetConnection2 {
     private Boolean isOnline = false;
     private boolean isOffline = false;
@@ -33,10 +33,11 @@ public class InternetConnection2 {
         connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         networkRequest  = getNetworkRequest();
     }
-    @RequiresApi(23)
+    @RequiresApi(21)
     void initNetworkStateHandle(){
         new Thread(() -> {
             setConnected(isInternetAccessSuccess());
+            networkStateLive.postValue(isConnected());
             registerNetworkStateChanges(networkRequest);
         }).start();
     }
@@ -45,14 +46,23 @@ public class InternetConnection2 {
     }
     private void handleCapabilitiesChanged( NetworkCapabilities networkCapabilities){
         if(networkCapabilities==null) return;
-        if (connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork())
-                .hasCapability(NET_CAPABILITY_VALIDATED)) {
-            if(connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork())
-                    .hasCapability(NET_CAPABILITY_INTERNET)){
-                {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork())
+                    .hasCapability(NET_CAPABILITY_VALIDATED)){
+                if (connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork())
+                        .hasCapability(NET_CAPABILITY_INTERNET)) {
+                    {
+                        handleOnLineState();
+                    }
+                }
+            }
+        }else if (Build.VERSION.SDK_INT >= LOLLIPOP) {
+            if (networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED)){
+                if (networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)) {
                     handleOnLineState();
                 }
             }
+
         }
     }
     private NetworkRequest getNetworkRequest(){

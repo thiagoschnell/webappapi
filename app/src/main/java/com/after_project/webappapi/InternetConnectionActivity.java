@@ -15,7 +15,7 @@ public class InternetConnectionActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             internetConnection2.stopNetworkStateHandle();
         }
     }
@@ -23,7 +23,7 @@ public class InternetConnectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_internet_connection);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             internetConnection2 = new InternetConnection2(this);
             internetConnection2.initNetworkStateHandle();
             internetConnection2.getNetworkStateLive().observe(this, (state -> {
@@ -39,7 +39,7 @@ public class InternetConnectionActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.InternetConnectionButtonCheckInternetConnectionAndRequestUrl)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if(!internetConnection2.isConnected()){
                         String error = "{\"error\":{\"xhr\":{\"readyState\":0,\"status\":0,\"statusText\":\"NetworkError: no internet connection access.\"}}}";
                         JsonObject responseJsonObject = JsonParser.parseString((String) error).getAsJsonObject();
